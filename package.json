@@ -1,0 +1,16 @@
+{
+  "author": "David Petersen <davjpetersen@gmail.com>",
+  "name": "subway",
+  "version": "0.1.0",
+  "main": "./lib/hookio",
+  "bin": {
+    "subway": "./bin/subway"
+  },
+  "engines": {
+    "node": ">= v0.4.7"
+  },
+  "dependencies": {
+    "irc": "",
+    "socket.io":""
+  }
+}
