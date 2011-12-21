@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "express":"",
+    "jade":"",
+    "connect-assets":"",
     "irc": "",
     "socket.io":""
   }
