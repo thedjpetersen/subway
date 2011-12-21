@@ -10,6 +10,7 @@
     "node": ">= v0.4.7"
   },
   "dependencies": {
+    "express":"",
     "irc": "",
     "socket.io":""
   }
