@@ -1,19 +1,21 @@
 {
-  "author": "David Petersen <davjpetersen@gmail.com>",
   "name": "subway",
+  "description": "A browser-based IRC client with server",
+  "keywords": ["irc"],
+  "author": "David Petersen <davjpetersen@gmail.com>",
   "version": "0.1.0",
-  "main": "./lib/hookio",
+  "main": "./lib/subway.js",
   "bin": {
     "subway": "./bin/subway"
   },
   "engines": {
-    "node": ">= v0.4.7"
+    "node": ">=0.6.1"
   },
   "dependencies": {
-    "express":"",
-    "jade":"",
-    "connect-assets":"",
+    "express": "",
+    "jade": "",
+    "connect-assets": "",
     "irc": "",
-    "socket.io":""
+    "socket.io": ""
   }
 }
