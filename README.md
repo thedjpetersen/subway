@@ -52,8 +52,8 @@ History
 Subway is a combination of two projects that started independently 
 with a similar technology stack and similar aims:
 
-- [subway web](https://github.com/thedjpetersen/subway-web) / 
-  [subway server](https://github.com/thedjpetersen/subway-server)
+- [subway-web](https://github.com/thedjpetersen/subway-web) / 
+  [subway-server](https://github.com/thedjpetersen/subway-server)
   by David Petersen
 - [web-irc](https://github.com/akavlie/web-irc) by Aaron Kavlie
 
