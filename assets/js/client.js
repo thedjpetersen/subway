@@ -4,4 +4,6 @@
 //= require 'libs/underscore-min.js'
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
+//= require_tree 'models'
+//= require_tree 'views'
 //= require 'app.js'
