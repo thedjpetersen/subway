@@ -7,6 +7,14 @@
 //= require_tree 'models'
 //= require_tree 'views'
 
+var ChatApplicationRouter = Backbone.Router.extend({
+  initialize: function(options) {
+    this.socket = io.connect();
+    this.model = new ChatApplicationModel({});
+    this.view = new ChatApplicationView({model: this.model, socket: this.socket});
+  }
+});
+
 $(function() {
-  window.socket = io.connect();
+  window.app = new ChatApplicationRouter({});
 })

@@ -1,0 +1,177 @@
+/* Here are the styles for the sidebar */
+
+.sidebar > h2 {
+  text-align: center;
+}
+
+#channels{
+  margin-top: 25px;
+}
+
+#channels > .channel{
+  padding: 5% 10% 5% 20%;
+  color: #333333;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+#channels > .channel:not(.active):hover{
+  background: #A7DBD8;
+  color: #444444;
+  cursor: pointer;
+}
+
+#channels > .active{
+  background: #315857;
+  color: whiteSmoke;
+  font-weight: bold;
+}
+
+.channel > .unread, .channel > .unread_mentions {
+  padding: 2px 6px 2px 6px;
+  color: whiteSmoke;
+  font-weight: bold;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  float: right;
+}
+
+.unread{
+  background: #980000;
+}
+
+.unread_mentions{
+  background: #0B2666;
+  margin-right: 0.3em;
+}
+
+#logo{
+  text-align: center;
+}
+
+#logo > img{
+  margin-top: 10%;
+}
+
+/* Here are the styles for the chat window */
+
+#chat_window{
+  min-height: 100%;
+  width: 80%;
+  border-right: 1px solid #DDD;
+  float: left;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box; // for Mozilla
+  -webkit-box-sizing: border-box; // for WebKit
+  -ms-box-sizing: border-box; // for IE8
+}
+
+#chat_bar, #users_bar{
+  height: 5%;
+  background: whiteSmoke;
+  border-bottom: 1px solid #DDD;
+
+  background-image: linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
+  background-image: -o-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
+  background-image: -moz-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
+  background-image: -webkit-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
+  background-image: -ms-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
+
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.22, rgb(230,230,230)),
+    color-stop(0.53, rgb(241,241,241)),
+    color-stop(0.77, rgb(245,245,245))
+  );
+}
+
+.titlebar{
+  padding-top: 0.5em;
+  font-size: 1.2em;
+  padding-left: 0.5em;
+}
+
+.window_title{
+  font-weight:bold;
+  margin-right: 2%;
+}
+
+#titlebar #topic{
+  color: #777;
+}
+
+#chat_words{
+  height: 85%;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 0% 3% 0% 3%;
+}
+
+#chat_input_container{
+  height: 10%;
+  border-top: 2px solid #DDD;
+}
+
+#chat_input_container .input{
+  padding-top: 2%;
+}
+
+#chat_input_container .input input{
+  width: 83%;
+  margin-right: 5%;
+  float: left;
+  margin-left: 2%;
+}
+
+#chat_input_container .input a{
+  font-size: 1.3em;
+}
+
+.chat_time {
+  width: 100%;
+  color: #888888;
+  text-align: right;
+}
+
+.chat_time span{
+  display: inline-block;
+}
+
+.chat_time span.timeline {
+  border-top: 1px solid #BBBBBB;
+  display: block;
+  height: 1px;
+  width: 79%;
+  position: relative;
+  left: 0;
+  top: 1em;
+}
+
+.chat_message{
+  padding: 0.3em 0em 0.3em 0em;
+}
+
+.chat_message .embed img{
+  display: block;
+  max-width: 100%;
+  max-height: 60%;
+  padding: 10px;
+}
+
+.mention{
+  color: #0B2666;
+  font-weight: bold;
+}
+
+/* Here are the styles for the user window */
+#users_window{
+  min-height: 100%;
+  width: 20%;
+  float: left;
+}
+
+#users_list{
+  overflow-y: auto;
+  height: 95%;
+}
