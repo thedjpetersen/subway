@@ -6,4 +6,7 @@
 //= require 'libs/ICanHaz.min.js'
 //= require_tree 'models'
 //= require_tree 'views'
-//= require 'app.js'
+
+$(function() {
+  window.socket = io.connect();
+})
