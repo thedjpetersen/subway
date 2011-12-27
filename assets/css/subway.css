@@ -5,7 +5,7 @@
 }
 
 #overview{
-  width: 500px;
+  width: 50%;
   margin:10% auto 0px auto;
   text-align: center;
 }
@@ -21,6 +21,7 @@
   padding: 10px;
   margin:0px 10px 0px 10px;
   text-align: center;
+  width: 130px;
 }
 
 #overview ul li:hover{
