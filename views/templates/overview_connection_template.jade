@@ -5,10 +5,9 @@ script(id="overview_connection", type="text/html")
     .clearfix
       label Server
       .input
-        input
+        input#connect_server
     .clearfix
       label Nick
       .input
-        input
-    .actions
-      input(type="submit", class="btn primary", value="Connect")
+        input#connect_nick
+    a(id="connect_button", class="btn primary") Connect
