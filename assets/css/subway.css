@@ -4,6 +4,40 @@
   text-align: center;
 }
 
+#overview{
+  width: 500px;
+  margin:10% auto 0px auto;
+  text-align: center;
+}
+
+#overview ul{
+  padding: 10px;  
+  background: whiteSmoke;
+  border: 2px solid #DDD;
+}
+
+#overview ul li{
+  display: inline-block; 
+  padding: 10px;
+  margin:0px 10px 0px 10px;
+  text-align: center;
+}
+
+#overview ul li:hover{
+  background: #A7DBD8;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#overview ul li img{ 
+  height: 75px;
+}
+
+#overview li span{
+  display: block; 
+  font-weight: bold;
+}
+
 #channels{
   margin-top: 25px;
 }

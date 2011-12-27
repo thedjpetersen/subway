@@ -16,5 +16,6 @@ var ChatApplicationRouter = Backbone.Router.extend({
 });
 
 $(function() {
+  window.connected = false;
   window.app = new ChatApplicationRouter({});
 })

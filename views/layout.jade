@@ -2,9 +2,11 @@
 html
   head
     title Subway
+    link(href='/assets/images/favicon.ico', rel='icon', type='image/x-icon')
     != css('bootstrap')
     != css('subway')
     != js('client')
     include templates/chat_window_template
+    include templates/overview_template
   body
     block content
