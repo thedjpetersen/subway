@@ -8,12 +8,9 @@
   width: 50%;
   margin:10% auto 0px auto;
   text-align: center;
-}
-
-#overview ul{
   padding: 10px;  
   background: whiteSmoke;
-  border: 2px solid #DDD;
+  border: 2px solid #DDD; 
 }
 
 #overview ul li{
