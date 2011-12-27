@@ -48,6 +48,11 @@
   cursor: pointer;
 }
 
+#overview form #loading_image{
+  position: fixed; 
+  margin-left: 10px;
+}
+
 #channels{
   margin-top: 25px;
 }
