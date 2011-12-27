@@ -36,6 +36,18 @@
   font-weight: bold;
 }
 
+#overview #home_parent {
+  height: 20px; 
+  width: 100%;
+}
+
+#overview #home {
+  color: black;
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+}
+
 #channels{
   margin-top: 25px;
 }
