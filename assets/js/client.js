@@ -4,7 +4,7 @@
 //= require 'libs/underscore-min.js'
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
-//= require_tree 'models'
+//= require 'models.js'
 //= require_tree 'views'
 
 var ChatApplicationRouter = Backbone.Router.extend({
