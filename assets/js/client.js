@@ -27,11 +27,17 @@ $(function() {
 
   // EVENTS //
 
-  // Message of the Day event (on joining a server)
-  this.socket.on('motd', function(data) {
-      data.motd.split('\n').forEach(function(line) {
-          irc.frames.getByName('status').stream.add({sender: '', raw: line});
-      });
+
+  // Registration (server joined)
+  app.socket.on('registered', function(data) {
+    irc.frames.getByName('status').stream.add({sender: '', raw: data.message});
+  });
+
+  // Message of the Day
+  app.socket.on('motd', function(data) {
+    data.motd.split('\n').forEach(function(line) {
+      irc.frames.getByName('status').stream.add({sender: '', raw: line});
+    });
   });
 
 
