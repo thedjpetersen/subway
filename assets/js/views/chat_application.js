@@ -8,7 +8,7 @@ var ChatApplicationView = Backbone.View.extend({
   render: function() {
     $('body').html($(this.el).append(ich.chat_application()));
     if (!window.connected) {
-      var overview = new OverviewView({});
+      var overview = new OverviewView();
       this.$('content').html(overview.render());
     } else {
     }
