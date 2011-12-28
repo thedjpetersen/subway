@@ -3,6 +3,12 @@ var OverviewView = Backbone.View.extend({
     this.render();
   },
 
+  events: {
+    'click #connect-button': 'connect',
+    'keypress': 'connectOnEnter'
+
+  },
+
   el: '.content',
 
   render: function(event) {
@@ -14,22 +20,34 @@ var OverviewView = Backbone.View.extend({
       var func = ich['overview_' + event.currentTarget.id];
       $('#overview').html(func());
     }
-    $('.overview_button').bind('click', jQuery.proxy(this.render, this));
-    $('#connect_button').bind('click', function() {
-      $('.error').removeClass('error');
-      if (!$('#connect_server').val()) {
-        $('#connect_server').closest('.clearfix').addClass('error');
-        $('#connect_server').addClass('error');
-      }
-      if (!$('#connect_nick').val()) {
-        $('#connect_nick').closest('.clearfix').addClass('error');
-        $('#connect_nick').addClass('error');
-      }
-      if ($('#connect_nick').val() && $('#connect_server')) {
-        $('form').append(ich.load_image());
-        $('#connect_button').addClass('disabled');
-      }
-    });
+    $('.overview_button').bind('click', $.proxy(this.render, this));
     return this;
+  },
+
+  connectOnEnter: function(event) {
+      if (event.keyCode !== 13) return;
+      this.connect();
+  },
+
+  connect: function() {
+    $('.error').removeClass('error');
+    if (!$('#connect-server').val()) {
+      $('#connect-server').closest('.clearfix').addClass('error');
+      $('#connect-server').addClass('error');
+    }
+    if (!$('#connect-nick').val()) {
+      $('#connect-nick').closest('.clearfix').addClass('error');
+      $('#connect-nick').addClass('error');
+    }
+    if ($('#connect-nick').val() && $('#connect-server')) {
+      $('form').append(ich.load_image());
+      $('#connect-button').addClass('disabled');
+
+      var connectInfo = {
+        nick: $('#connect-nick').val(),
+        server: $('#connect-server').val()
+      };
+      app.socket.emit('connect', connectInfo);
+    }
   }
 });
