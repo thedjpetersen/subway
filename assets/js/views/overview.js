@@ -1,4 +1,4 @@
-var OverViewView = Backbone.View.extend({
+var OverviewView = Backbone.View.extend({
   initialize: function() {
     this.render();
   },
