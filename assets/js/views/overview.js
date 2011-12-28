@@ -3,10 +3,10 @@ var OverviewView = Backbone.View.extend({
     this.render();
   },
 
-  className: 'container-fluid',
+  el: '.content',
 
   render: function(event) {
-    $('.content').html($(this.el).html(ich.overview()));
+    $(this.el).html(ich.overview());
     if (event === undefined) {
       $('#overview').html(ich.overview_home());
     } else {
