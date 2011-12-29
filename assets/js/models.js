@@ -8,7 +8,7 @@ var Message = Backbone.Model.extend({
 
     initialize: function() {
         if (this.get('raw')) {
-            this.set({text: this.parse( irc.util.escapeHTML(this.get('raw')) )});
+            this.set({text: this.parse( _.escape(this.get('raw')) )});
         }
     },
 
