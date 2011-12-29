@@ -34,8 +34,8 @@ var OverviewView = Backbone.View.extend({
   connect: function() {
     $('.error').removeClass('error');
     var server = $('#connect-server').val();
-    var nick = $(('#connect-nick').val();
-    if (!server)) {
+    var nick = $('#connect-nick').val();
+    if (!server) {
       $('#connect-server').closest('.clearfix').addClass('error');
       $('#connect-server').addClass('error');
     }
