@@ -11,7 +11,6 @@
 var ChatApplicationRouter = Backbone.Router.extend({
   initialize: function(options) {
     this.socket = io.connect();
-    this.model = new ChatApplicationModel;
     this.view = new ChatApplicationView;
   }
 });
