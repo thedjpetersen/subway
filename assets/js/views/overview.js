@@ -33,21 +33,23 @@ var OverviewView = Backbone.View.extend({
 
   connect: function() {
     $('.error').removeClass('error');
-    if (!$('#connect-server').val()) {
+    var server = $('#connect-server').val();
+    var nick = $(('#connect-nick').val();
+    if (!server)) {
       $('#connect-server').closest('.clearfix').addClass('error');
       $('#connect-server').addClass('error');
     }
-    if (!$('#connect-nick').val()) {
+    if (!nick) {
       $('#connect-nick').closest('.clearfix').addClass('error');
       $('#connect-nick').addClass('error');
     }
-    if ($('#connect-nick').val() && $('#connect-server')) {
+    if (nick && server) {
       $('form').append(ich.load_image());
       $('#connect-button').addClass('disabled');
 
       var connectInfo = {
-        nick: $('#connect-nick').val(),
-        server: $('#connect-server').val()
+        nick: nick,
+        server: server
       };
       app.socket.emit('connect', connectInfo);
     }
