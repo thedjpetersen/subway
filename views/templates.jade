@@ -45,18 +45,18 @@ script(id="titlebar", type="text/html")
   span(id="topic") {{topic}}
 
 script(id="chat", type="text/html")
-  #chat_window
+  #chat-window
     #chat_bar
-    #chat_words
-    #chat_input_continaer
+    #chat-contents
+    #input-container
       .input
         input(id="chat_input")
         a(id="chat_button", class="btn disabled") Send
-    #users_window
-      #users_bar
-        .titlebar
-          span(class='window_title') User List
-      #users_list
+  #users_window
+    #users_bar
+      .titlebar
+        span(class='window_title') User List
+    #users_list
 
 script(id="channel", type="text/html")
   span(class="channel_name") {{channelName}}
