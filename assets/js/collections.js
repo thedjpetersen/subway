@@ -4,8 +4,8 @@ var Stream = Backbone.Collection.extend({
 });
 
 // All channels/private message chats a user has open
-var FrameList = Backbone.Collection.extend({
-    model: Frame,
+var WindowList = Backbone.Collection.extend({
+    model: ChatWindow,
 
     getByName: function(name) {
         return this.detect(function(frame) {

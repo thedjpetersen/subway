@@ -21,7 +21,7 @@ $(function() {
 
   // Global object
   window.irc = {
-    frames: new FrameList
+    chatWindows: new ChatWindow
   };
 
 
@@ -30,13 +30,13 @@ $(function() {
 
   // Registration (server joined)
   app.socket.on('registered', function(data) {
-    irc.frames.getByName('status').stream.add({sender: '', raw: data.message});
+    irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message});
   });
 
   // Message of the Day
   app.socket.on('motd', function(data) {
     data.motd.split('\n').forEach(function(line) {
-      irc.frames.getByName('status').stream.add({sender: '', raw: line});
+      irc.chatWindows.getByName('status').stream.add({sender: '', raw: line});
     });
   });
 

@@ -51,9 +51,8 @@ var Message = Backbone.Model.extend({
 
 
 // Represents any type of chat window -- a channel, private message,
-// or the status/console window. "Frame" used as a synonym for "window"
-// as "window" is the global object.
-var Frame = Backbone.Model.extend({
+// or the status/console window.
+var ChatWindow = Backbone.Model.extend({
     // expected properties:
     // - name
     defaults: {
