@@ -1,5 +1,3 @@
-/* Here are the styles for the sidebar */
-
 .sidebar > h2 {
   text-align: center;
 }
@@ -8,13 +6,13 @@
   width: 50%;
   margin:10% auto 0px auto;
   text-align: center;
-  padding: 10px;  
+  padding: 10px;
   background: whiteSmoke;
-  border: 2px solid #DDD; 
+  border: 2px solid #DDD;
 }
 
 #overview ul li{
-  display: inline-block; 
+  display: inline-block;
   padding: 10px;
   margin:0px 10px 0px 10px;
   text-align: center;
@@ -27,17 +25,17 @@
   border-radius: 5px;
 }
 
-#overview ul li img{ 
+#overview ul li img{
   height: 75px;
 }
 
 #overview li span{
-  display: block; 
+  display: block;
   font-weight: bold;
 }
 
 #overview #home_parent {
-  height: 20px; 
+  height: 20px;
   width: 100%;
 }
 
@@ -49,7 +47,7 @@
 }
 
 #overview form #loading_image{
-  position: fixed; 
+  position: fixed;
   margin-left: 10px;
 }
 
@@ -103,7 +101,7 @@
 
 /* Here are the styles for the chat window */
 
-#chat_window{
+#chat-window{
   min-height: 100%;
   width: 80%;
   border-right: 1px solid #DDD;
@@ -150,32 +148,32 @@
   color: #777;
 }
 
-#chat_words{
+#chat-contents {
   height: 85%;
   overflow: hidden;
   overflow-y: auto;
   padding: 0% 3% 0% 3%;
 }
 
-#chat_input_container{
+#input-container {
   height: 10%;
   border-top: 2px solid #DDD;
 }
 
-#chat_input_container .input{
-  padding-top: 2%;
-}
+  #input-container .input{
+    padding-top: 2%;
+  }
 
-#chat_input_container .input input{
-  width: 83%;
-  margin-right: 5%;
-  float: left;
-  margin-left: 2%;
-}
+  #input-container .input input{
+    width: 83%;
+    margin-right: 5%;
+    float: left;
+    margin-left: 2%;
+  }
 
-#chat_input_container .input a{
-  font-size: 1.3em;
-}
+  #input-container .input a{
+    font-size: 1.3em;
+  }
 
 .chat_time {
   width: 100%;
@@ -213,14 +211,14 @@
   font-weight: bold;
 }
 
-/* Here are the styles for the user window */
-#users_window{
+
+#user-window{
   min-height: 100%;
   width: 20%;
   float: left;
 }
 
-#users_list{
+#user-list{
   overflow-y: auto;
   height: 95%;
 }

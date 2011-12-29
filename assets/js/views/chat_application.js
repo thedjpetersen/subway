@@ -8,7 +8,6 @@ var ChatApplicationView = Backbone.View.extend({
   render: function() {
     $('body').html($(this.el).append(ich.chat_application()));
     var overview = new OverviewView();
-    // this.$('.content').html(overview.render());
     return this;
   }
 });
