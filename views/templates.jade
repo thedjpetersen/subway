@@ -5,13 +5,6 @@ script(id="chat_application", type="text/html")
     h2 Subway
     #channels
   .content
-    #chat-window
-      .titlebar
-      #chat-contents
-      #input-container
-    #user-window
-      .titlebar
-      #user-list
 
 script(id="load_image", type="text/html")
   img(id="loading_image", src="/assets/images/loading.gif")
@@ -51,3 +44,59 @@ script(id="titlebar", type="text/html")
   span(class="window_title") {{title}}
   span(id="topic") {{topic}}
 
+script(id="chat", type="text/html")
+  #chat_window
+    #chat_bar
+    #chat_words
+    #chat_input_continaer
+      .input
+        input(id="chat_input")
+        a(id="chat_button", class="btn disabled") Send
+    #users_window
+      #users_bar
+        .titlebar
+          span(class='window_title') User List
+      #users_list
+
+script(id="channel", type="text/html")
+  span(class="channel_name") {{serverName}}
+
+script(id="unread", type="text/html")
+  span(class="unread", title="Unread Messages") {{unread}}
+
+script(id="unread_mentions", type="text/html")
+  span(class="unread_mentions", title="Mentions in channel") {{unread_mentions}}
+
+script(id="userlist_user", type="text/html")
+  li {{username}}
+
+script(id="link", type="text/html")
+  a(target="_blank", href="{{link}}") {{link}}
+
+script(id="image_embed", type="text/html")
+  .embed
+    img(src="{{link")
+
+script(id="youtube_embed", type="text/html")
+  .embed
+    iframe(width="420, height="315", src="http://www.youtube.com/embed/{{video_id}}?rel=0", frameborder="0", allowfullscreen)
+
+script(id="action", type="text/html")
+  div
+    .chat_time
+      span(class="timeline")
+      span {{rendered_time}}
+    .chat_message
+      span
+        b * {{user}}
+        span {{content}}
+
+script(id="message", type="text/html")
+  div
+    .chat_time
+      span(class="timeline")
+      span {{rendered_time}}
+    .chat_message
+      span
+        b {{user}}: 
+        span {{content}}
