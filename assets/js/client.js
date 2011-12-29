@@ -8,35 +8,37 @@
 //= require 'collections.js'
 //= require_tree 'views'
 
+
+// Global object
+window.irc = {
+  socket: io.connect(),
+  chatWindows: new WindowList,
+  connected: false
+};
+
 var ChatApplicationRouter = Backbone.Router.extend({
   initialize: function(options) {
-    this.socket = io.connect();
     this.view = new ChatApplicationView;
   }
 });
 
+
 $(function() {
   window.app = new ChatApplicationRouter;
-
-  // Global object
-  window.irc = {
-    chatWindows: new WindowList
-  };
-
 
   // EVENTS //
 
 
   // Registration (server joined)
-  app.socket.on('registered', function(data) {
-    window.connected = true;
-    window.app.view.render();
+  irc.socket.on('registered', function(data) {
+    irc.connected = true;
+    app.view.render();
     irc.chatWindows.add({name:'status'});
     irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message});
   });
 
   // Message of the Day
-  app.socket.on('motd', function(data) {
+  irc.socket.on('motd', function(data) {
     data.motd.split('\n').forEach(function(line) {
       irc.chatWindows.getByName('status').stream.add({sender: '', raw: line});
     });

@@ -7,7 +7,7 @@ var ChatApplicationView = Backbone.View.extend({
 
   render: function() {
     $('body').html($(this.el).html(ich.chat_application()));
-    if(window.connected === undefined) {
+    if (!irc.connected) {
       var overview = new OverviewView();
     } else {
       var chatview = new ChatView();
