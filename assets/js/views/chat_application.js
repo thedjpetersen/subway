@@ -6,8 +6,10 @@ var ChatApplicationView = Backbone.View.extend({
   className: 'container-fluid',
 
   render: function() {
-    $('body').html($(this.el).append(ich.chat_application()));
-    var overview = new OverviewView();
+    $('body').html($(this.el).html(ich.chat_application()));
+    if(window.connected === undefined) {
+      var overview = new OverviewView();
+    }
     return this;
   }
 });

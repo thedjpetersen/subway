@@ -29,6 +29,8 @@ $(function() {
 
   // Registration (server joined)
   app.socket.on('registered', function(data) {
+    window.connected = true;
+    window.app.view.render();
     irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message});
   });
 
