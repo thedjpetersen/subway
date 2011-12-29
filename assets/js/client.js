@@ -20,7 +20,7 @@ $(function() {
 
   // Global object
   window.irc = {
-    chatWindows: new ChatWindow
+    chatWindows: new WindowList
   };
 
 
