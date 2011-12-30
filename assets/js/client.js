@@ -33,7 +33,7 @@ $(function() {
   irc.socket.on('registered', function(data) {
     irc.connected = true;
     app.view.render();
-    irc.chatWindows.add({name:'status'});
+    irc.chatWindows.add({name: 'status', type: 'status'});
     irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message});
   });
 

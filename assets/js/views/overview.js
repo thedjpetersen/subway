@@ -51,7 +51,7 @@ var OverviewView = Backbone.View.extend({
         nick: nick,
         server: server
       };
-      app.socket.emit('connect', connectInfo);
+      irc.socket.emit('connect', connectInfo);
     }
   }
 });

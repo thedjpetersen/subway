@@ -1,6 +1,6 @@
 var ChannelView = Backbone.View.extend({
   initialize: function(name) {
-    this.model = new ChatWindow({name:name, view:this});
+    this.model = new ChatWindow({name: name, view: this});
   },
 
   render: function() {
