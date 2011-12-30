@@ -5,33 +5,42 @@ var Stream = Backbone.Collection.extend({
 
 // All channels/private message chats a user has open
 var WindowList = Backbone.Collection.extend({
-    model: ChatWindow,
+  model: ChatWindow,
 
-    getByName: function(name) {
-        return this.detect(function(frame) {
-            return frame.get('name') == name;
-        });
-    },
+  initialize: function() {
+    var self = this;
+    this.bind('add', function(chat) {
+      self.setActive(chat);
+    });
 
-    getActive: function() {
-        return this.detect(function(frame) {
-            return frame.get('active') == true;
-        });
-    },
+  },
 
-    setActive: function(frame) {
-        this.each(function(frm) {
-            frm.set({active: false});
-        });
+  getByName: function(name) {
+      return this.detect(function(chat) {
+          return chat.get('name') === name;
+      });
+  },
 
-        frame.set({active: true});
-    },
+  getActive: function() {
+      return this.detect(function(chat) {
+          return chat.get('active') === true;
+      });
+  },
 
-    getChannels: function() {
-        return this.filter(function(frame) {
-            return frame.get('type') == 'channel';
-        });
-    }
+  setActive: function(selected) {
+    console.log(selected.get('name') + ' set as active chat!');
+    this.each(function(chat) {
+      chat.set({active: false});
+    });
+
+    selected.set({active: true});
+  },
+
+  getChannels: function() {
+    return this.filter(function(chat) {
+      return chat.get('type') === 'channel';
+    });
+  }
 
 });
 

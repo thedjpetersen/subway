@@ -112,7 +112,7 @@
   -ms-box-sizing: border-box; // for IE8
 }
 
-#chat_bar, #users_bar{
+#chat-bar, #user-bar{
   height: 5%;
   background: whiteSmoke;
   border-bottom: 1px solid #DDD;

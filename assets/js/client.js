@@ -16,23 +16,25 @@ window.irc = {
   connected: false
 };
 
-var ChatApplicationRouter = Backbone.Router.extend({
-  initialize: function(options) {
-    this.view = new ChatApplicationView;
-  }
-});
+// This isn't doing us any favors yet.
+// var ChatApplicationRouter = Backbone.Router.extend({
+//   initialize: function(options) {
+//     this.view = new ChatApplicationView;
+//   }
+// });
 
 
 $(function() {
-  window.app = new ChatApplicationRouter;
+  // window.app = new ChatApplicationRouter;
+  irc.appView = new ChatApplicationView;
+
 
   // EVENTS //
-
 
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
     irc.connected = true;
-    app.view.render();
+    irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
     irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message});
   });

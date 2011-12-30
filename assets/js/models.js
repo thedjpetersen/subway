@@ -56,8 +56,8 @@ var ChatWindow = Backbone.Model.extend({
     // expected properties:
     // - name
     defaults: {
-        'type': 'channel',
-        'active': true
+        type: 'channel',
+        active: true
     },
 
     initialize: function() {
