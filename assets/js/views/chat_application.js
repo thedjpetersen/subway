@@ -11,6 +11,7 @@ var ChatApplicationView = Backbone.View.extend({
       var overview = new OverviewView;
     } else {
       var chat = new ChatView;
+      var channelList = new ChannelListView;
     }
     return this;
   }
