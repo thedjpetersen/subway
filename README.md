@@ -28,7 +28,7 @@ Installation
 
 2. Launch the web server
 
-    $ subway
+    $ node bin/subway
 
 3. Point your browser at `http://localhost:8337/`
 
