@@ -207,7 +207,8 @@ body {
 }
 .container-fluid {
   min-height: 100%;
-  position: relative;
+  width: 100%;
+  position: absolute;
   zoom: 1;
 }
 .container-fluid:before, .container-fluid:after {
@@ -232,7 +233,9 @@ body {
 }
 .container-fluid > .content {
     min-height: 100%;
+    width: 85%;
     margin-left: 15%;
+    position: absolute;
 }
 a {
   color: #0069d6;

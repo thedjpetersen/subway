@@ -106,7 +106,7 @@
   height: 100%;
   width: 80%;
   border-right: 1px solid #DDD;
-  float: left;
+  position: absolute;
   box-sizing: border-box;
   -moz-box-sizing: border-box; // for Mozilla
   -webkit-box-sizing: border-box; // for WebKit
@@ -216,7 +216,8 @@
 #user-window{
   min-height: 100%;
   width: 20%;
-  float: left;
+  position: absolute;
+  margin-left: 80%;
 }
 
 #user-list{
