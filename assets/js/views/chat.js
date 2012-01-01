@@ -1,11 +1,15 @@
 var ChatView = Backbone.View.extend({
   initialize: function() {
-    this.render();
+    irc.chatWindows.bind('setActive', this.setActiveChannel, this);
   },
 
   render: function() {
-    $('.content').html(ich.chat());
     var activeChannel = irc.chatWindows.getActive();
+    $('.content').html(activeChannel.view.render());
     return this;
+  },
+
+  setActiveChannel: function(channel) {
+    this.render();
   }
 });

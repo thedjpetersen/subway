@@ -9,5 +9,4 @@ var MessageView = Backbone.View.extend({
     return this;
   },
 
-
 });
