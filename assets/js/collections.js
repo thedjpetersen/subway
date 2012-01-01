@@ -38,6 +38,7 @@ var WindowList = Backbone.Collection.extend({
     });
 
     selected.set({active: true});
+    selected.trigger('setActive', selected);
   },
 
   getChannels: function() {
