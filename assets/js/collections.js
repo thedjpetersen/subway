@@ -1,6 +1,10 @@
 // Collection of messages that belong to a frame
 var Stream = Backbone.Collection.extend({
-    model: Message
+    model: Message,
+
+    initialize: function(parent_ref) {
+      this.channel = parent_ref;
+    }
 });
 
 // All channels/private message chats a user has open

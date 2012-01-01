@@ -13,7 +13,8 @@ var Message = Backbone.Model.extend({
     },
 
     parse: function(text) {
-      return this._linkify(ich.message({user: this.get('nick'), content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
+      var nick = this.get('nick') || this.collection.channel.get('name');
+      return this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
     },
 
     // Set output text for status messages
@@ -92,7 +93,7 @@ var ChatWindow = Backbone.Model.extend({
 
     initialize: function() {
         console.log('chat window created');
-        this.stream = new Stream;
+        this.stream = new Stream(this);
         this.users = new UserList;
     },
 
