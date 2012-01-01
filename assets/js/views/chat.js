@@ -5,7 +5,7 @@ var ChatView = Backbone.View.extend({
 
   render: function() {
     var activeChannel = irc.chatWindows.getActive();
-    $('.content').html(activeChannel.view.render());
+    $('.content').html(activeChannel.get('view').render());
     return this;
   },
 
