@@ -4,7 +4,7 @@ var MessageView = Backbone.View.extend({
   },
 
   render: function() {
-    $(this.el).html(this.model.get('text'));
+    $(this.el).html(this.model.getHtml());
     return this;
   }
 
