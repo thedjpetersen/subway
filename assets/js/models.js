@@ -8,8 +8,12 @@ var Message = Backbone.Model.extend({
 
     initialize: function() {
         if (this.get('raw')) {
-            this.set({text: this.get('raw')});
+            this.set({text: this.parse(this.get('raw'))});
         }
+    },
+
+    parse: function(text) {
+      return this._linkify(ich.message({user: this.get('nick'), content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
     },
 
     // Set output text for status messages
@@ -73,9 +77,6 @@ var Message = Backbone.Model.extend({
         return parsed;
     },
 
-    getHtml: function() {
-      return ich.message({user: this.get('nick'), content: this.get('text'), rendered_time: this._formatDate(Date.now())}, true);
-    }
 });
 
 
