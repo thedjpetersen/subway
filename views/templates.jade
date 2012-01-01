@@ -83,21 +83,19 @@ script(id="youtube_embed", type="text/html")
     iframe(width="420, height="315", src="http://www.youtube.com/embed/{{video_id}}?rel=0", frameborder="0", allowfullscreen)
 
 script(id="action", type="text/html")
-  div
-    .chat_time
-      span(class="timeline")
-      span {{rendered_time}}
-    .chat_message
-      span
-        b * {{user}}
-        span {{content}}
+  .chat_time
+    span(class="timeline")
+    span {{rendered_time}}
+  .chat_message
+    span
+      b * {{user}}
+      span {{content}}
 
 script(id="message", type="text/html")
-  div
-    .chat_time
-      span(class="timeline")
-      span {{rendered_time}}
-    .chat_message
-      span
-        b {{user}}:
-        span {{content}}
+  .chat_time
+    span(class="timeline")
+    span {{rendered_time}}
+  .chat_message
+    span
+      b {{user}}:
+      span  {{content}}
