@@ -2,11 +2,11 @@ var ChatView = Backbone.View.extend({
   initialize: function() {
     this.el = ich.chat();
     this.render();
-    this.handleInput();
   },
 
   render: function() {
     $('.content').html(this.el);
+    this.handleInput();
     return this;
   },
 
@@ -33,7 +33,7 @@ var ChatView = Backbone.View.extend({
             //logic for handling command
             if (message.substr(0,1) === '/') {
               var command_text = message.substr(1).split(' ');
-              irc.socket.emit(command_text[0], command_text[1]);
+              irc.handleCommand(command_text);
             } else {
               //Send our message
               irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
