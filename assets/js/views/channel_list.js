@@ -12,6 +12,11 @@ var ChannelListView = Backbone.View.extend({
     chat.channelTab = ich.channel({name:chat.get('name')});
     $(this.el).append(chat.channelTab);
     this.setActiveChannel(chat);
+    chat.channelTab.click({chat: chat, clv: this}, function(ev){
+      chat = ev.data.chat;
+      irc.chatWindows.setActive(chat);
+      ev.data.clv.setActiveChannel(chat);
+    });
   },
 
   setActiveChannel: function(chat) {

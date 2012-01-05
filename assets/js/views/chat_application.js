@@ -18,7 +18,7 @@ var ChatApplicationView = Backbone.View.extend({
 
   addMessage: function(msg) {
     var view = new MessageView({model: msg});
-    this.channel.view.el.$('#chat-contents').append(view.el);
+    this.channel.view.$('#chat-contents').append(view.el);
     console.log('message added!');
     this.channel.view.$('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
   },

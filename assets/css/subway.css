@@ -1,5 +1,7 @@
 .sidebar > h2 {
   text-align: center;
+  line-height: 0.9em;
+  margin-top: 0.3em;
 }
 
 #overview{
