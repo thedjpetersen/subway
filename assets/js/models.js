@@ -78,7 +78,7 @@ var Message = Backbone.Model.extend({
         return parsed;
     },
 
-});
+})
 
 
 // Represents any type of chat window -- a channel, private message,
@@ -95,6 +95,7 @@ var ChatWindow = Backbone.Model.extend({
         console.log('chat window created');
         this.stream = new Stream(this);
         this.users = new UserList;
+        this.view = new ChatView;
     },
 
     part: function() {

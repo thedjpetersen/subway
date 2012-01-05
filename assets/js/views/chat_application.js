@@ -11,7 +11,6 @@ var ChatApplicationView = Backbone.View.extend({
     if (!irc.connected) {
       var overview = new OverviewView;
     } else {
-      var chat = new ChatView;
       var channelList = new ChannelListView;
     }
     return this;
@@ -19,9 +18,9 @@ var ChatApplicationView = Backbone.View.extend({
 
   addMessage: function(msg) {
     var view = new MessageView({model: msg});
-    $('#chat-contents').append(view.el);
+    this.channel.view.el.$('#chat-contents').append(view.el);
     console.log('message added!');
-    $('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
+    this.channel.view.$('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
   },
 
   focus: function(chat) {
@@ -30,6 +29,6 @@ var ChatApplicationView = Backbone.View.extend({
       return;
     }
     console.log('focused on channel ' + chat.get('name'));
-    chat.stream.bind('add', this.addMessage, this);
+    chat.stream.bind('add', this.addMessage);
   }
 });
