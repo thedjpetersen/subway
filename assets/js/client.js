@@ -46,6 +46,10 @@ $(function() {
     });
   });
 
+  irc.socket.on('message', function(data) {
+    irc.chatWindows.getByName(data.to).stream.add({sender: data.from, raw: data.text});
+  });
+
   irc.socket.on('join', function(data) {
       console.log('Join event received for ' + data.channel + ' - ' + data.nick);
       if (data.nick == irc.me['nick']) {

@@ -13,7 +13,7 @@ var Message = Backbone.Model.extend({
     },
 
     parse: function(text) {
-      var nick = this.get('nick') || this.collection.channel.get('name');
+      var nick = this.get('sender') || this.collection.channel.get('name');
       return this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
     },
 

@@ -20,7 +20,8 @@ var ChatApplicationView = Backbone.View.extend({
     var view = new MessageView({model: msg});
     this.channel.view.$('#chat-contents').append(view.el);
     console.log('message added!');
-    this.channel.view.$('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
+    //this.channel.view.$('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
+    this.channel.view.$('#chat-contents').scrollTo(view.el, 500);
   },
 
   focus: function(chat) {
@@ -29,6 +30,5 @@ var ChatApplicationView = Backbone.View.extend({
       return;
     }
     console.log('focused on channel ' + chat.get('name'));
-    chat.stream.bind('add', this.addMessage);
   }
 });
