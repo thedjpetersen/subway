@@ -94,7 +94,6 @@ var ChatWindow = Backbone.Model.extend({
     initialize: function() {
         console.log('chat window created');
         this.stream = new Stream(this);
-        this.users = new UserList;
         this.view = new ChatView;
     },
 
