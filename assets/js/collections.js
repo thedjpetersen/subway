@@ -2,8 +2,7 @@
 var Stream = Backbone.Collection.extend({
     model: Message,
 
-    initialize: function(parent_ref) {
-      this.channel = parent_ref;
+    initialize: function() {
       this.bind('add', irc.appView.addMessage);
     }
 });

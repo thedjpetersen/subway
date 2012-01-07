@@ -1,6 +1,5 @@
 var ChatView = Backbone.View.extend({
-  initialize: function(modelRef) {
-    this.model = modelRef;
+  initialize: function() {
     this.el = ich.chat();
     this.render();
   },
