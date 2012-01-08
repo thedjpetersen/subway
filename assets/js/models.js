@@ -93,7 +93,10 @@ var ChatWindow = Backbone.Model.extend({
 
   initialize: function() {
     console.log('chat window created');
-    this.stream = new Stream({channel: this});
+    this.stream = new Stream();
+    //Backbone's collections don't support
+    //attribute assignment in initizialization
+    this.stream.channel = this;
     this.view = new ChatView({model: this});
   },
 
