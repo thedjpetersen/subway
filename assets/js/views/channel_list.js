@@ -21,7 +21,7 @@ var ChannelListView = Backbone.View.extend({
 
   setActiveChannel: function(chat) {
     $('.active').removeClass('active');
-    if(chat.channelTab !== undefined) {
+    if (chat.channelTab !== undefined) {
       chat.channelTab.addClass('active');
     }
   }

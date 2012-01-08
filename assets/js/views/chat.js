@@ -1,15 +1,23 @@
 var ChatView = Backbone.View.extend({
   initialize: function() {
-    this.el = ich.chat();
+    this.el = $('.content');
     this.render();
+    this.model.bind('change:topic, this.updateTitle, this');
   },
 
-  updateStatus: function(newStatus) {
-    this.$('#chat-bar').html(ich.titlebar({title: this.model.get('name')}));
+  updateTitle: function(channel) {
+    console.log('title updated');
+    console.log(channel);
+    var context = {
+      title: this.model.get('name'),
+      status: this.model.get('topic')
+    };
+    this.$('#chat-bar').html(ich.titlebar(context));
   },
 
   render: function() {
-    $('.content').html(this.el);
+    $('.content').html(ich.chat());
+    this.updateTitle();
     this.handleInput();
     return this;
   },

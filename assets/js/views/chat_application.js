@@ -26,7 +26,6 @@ var ChatApplicationView = Backbone.View.extend({
 
   focus: function(chat) {
     if (!chat.get('active')) {
-      console.log(chat.get('name') + ' not set as active');
       return;
     }
     console.log('focused on channel ' + chat.get('name'));
