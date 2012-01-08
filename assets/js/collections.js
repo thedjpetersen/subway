@@ -1,10 +1,10 @@
 // Collection of messages that belong to a frame
 var Stream = Backbone.Collection.extend({
-    model: Message,
+  model: Message,
 
-    initialize: function() {
-      this.bind('add', irc.appView.addMessage);
-    }
+  initialize: function() {
+    this.bind('add', irc.appView.addMessage);
+  }
 });
 
 // All channels/private message chats a user has open
@@ -20,15 +20,15 @@ var WindowList = Backbone.Collection.extend({
   },
 
   getByName: function(name) {
-      return this.detect(function(chat) {
-          return chat.get('name') === name;
-      });
+    return this.detect(function(chat) {
+      return chat.get('name') === name;
+    });
   },
 
   getActive: function() {
-      return this.detect(function(chat) {
-          return chat.get('active') === true;
-      });
+    return this.detect(function(chat) {
+      return chat.get('active') === true;
+    });
   },
 
   setActive: function(selected) {
@@ -50,11 +50,11 @@ var WindowList = Backbone.Collection.extend({
 });
 
 var UserList = Backbone.Collection.extend({
-    model: User,
-    getByNick: function(nick) {
-        return this.detect(function(user) {
-            return user.get('nick') == nick;
-        });
-    }
+  model: User,
+  getByNick: function(nick) {
+    return this.detect(function(user) {
+      return user.get('nick') == nick;
+    });
+  }
 });
 
