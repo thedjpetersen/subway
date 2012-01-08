@@ -4,6 +4,16 @@ var Stream = Backbone.Collection.extend({
 
   initialize: function() {
     this.bind('add', irc.appView.addMessage);
+    this.bind('add', this.unread_messages);
+  },
+
+  unread_messages: function() {
+    if(!this.channel.get('active')){
+      unread_messages = this.channel.get('unread_messages')+1;
+      this.channel.set({unread_messages: unread_messages});
+      this.channel.channelTab.children('.unread').remove();
+      this.channel.channelTab.append(ich.unread({unread:unread_messages}));
+    }
   }
 });
 
@@ -37,7 +47,7 @@ var WindowList = Backbone.Collection.extend({
       chat.set({active: false});
     });
 
-    selected.set({active: true});
+    selected.set({active: true, unread_messages: 0});
     selected.view.render();
   },
 
