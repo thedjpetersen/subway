@@ -13,7 +13,7 @@ var ChatView = Backbone.View.extend({
     console.log(channel);
     var context = {
       title: this.model.get('name'),
-      status: this.model.get('topic')
+      topic: this.model.get('topic')
     };
     this.$('#chat-bar').html(ich.titlebar(context));
   },
