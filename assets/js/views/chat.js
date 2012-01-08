@@ -1,6 +1,9 @@
 var ChatView = Backbone.View.extend({
   initialize: function() {
-    this.el = $('.content');
+    //We have to do this here or
+    //messages won't stay in the element
+    //when we switch tabs
+    this.el = $('.content').html(ich.chat());
     this.render();
     this.model.bind('change:topic, this.updateTitle, this');
   },
@@ -16,7 +19,6 @@ var ChatView = Backbone.View.extend({
   },
 
   render: function() {
-    $('.content').html(ich.chat());
     this.updateTitle();
     this.handleInput();
     return this;
