@@ -18,11 +18,18 @@ var ChatApplicationView = Backbone.View.extend({
 
   addMessage: function(msg) {
     var view = new MessageView({model: msg});
-    this.channel.view.$('#chat-contents').append(view.el);
+    var targetDiv = this.channel.view.$('#chat-contents');
+    targetDiv.append(view.el);
     console.log('message added!');
-    //This is the non-scrolling way
-    //this.channel.view.$('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
-    this.channel.view.$('#chat-contents').scrollTo(view.el, 200);
+    var chatWindowHeight = (targetDiv.get(0).scrollHeight-555);
+    //If the window is large enough to be scrollable
+    if(chatWindowHeight > 0){
+    //targetDiv.scrollTop( targetDiv.scrollTop() + 100 );
+      //If the user isn't scrolling go to the bottom message
+      if ((chatWindowHeight-targetDiv.scrollTop())<200) {
+        targetDiv.scrollTo(view.el, 500);
+      }
+    }
   },
 
   focus: function(chat) {
