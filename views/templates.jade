@@ -43,8 +43,9 @@ script(id="overview_settings", type="text/html")
   p Settings
 
 script(id="titlebar", type="text/html")
-  span(class="window_title") {{title}}
-  span(id="topic") {{topic}}
+  .titlebar
+    span(class="window_title") {{title}}
+    span(id="topic") {{topic}}
 
 script(id="chat", type="text/html")
   #chat-window
