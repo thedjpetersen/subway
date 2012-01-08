@@ -20,8 +20,9 @@ var ChatApplicationView = Backbone.View.extend({
     var view = new MessageView({model: msg});
     this.channel.view.$('#chat-contents').append(view.el);
     console.log('message added!');
+    //This is the non-scrolling way
     //this.channel.view.$('#chat-contents').scrollTop( $('#chat-contents').scrollTop() + 100 );
-    this.channel.view.$('#chat-contents').scrollTo(view.el, 500);
+    this.channel.view.$('#chat-contents').scrollTo(view.el, 200);
   },
 
   focus: function(chat) {
