@@ -14,7 +14,7 @@ var Message = Backbone.Model.extend({
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
-    return this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
+    return this._mentions(this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true)));
   },
 
   // Set output text for status messages
@@ -77,6 +77,14 @@ var Message = Backbone.Model.extend({
     });
     return parsed;
   },
+
+  _mentions: function(text) {
+    var re = new RegExp('\\b' + irc.me.nick + '\\b', 'g');
+    var parsed = text.replace(re, function(nick){
+      return '<span class=\'mention\'>' + nick + '</span>';
+    });
+    return parsed;
+  }
 
 })
 
