@@ -21,8 +21,16 @@ var ChatView = Backbone.View.extend({
   render: function() {
     $('.content').html(this.el);
     this.updateTitle();
+    this.removeUnread();
     this.handleInput();
     return this;
+  },
+
+  removeUnread: function() {
+    if (this.model.channelTab !== undefined){
+      this.model.channelTab.children('.unread').remove();
+      this.model.channelTab.children('.unread_mentions').remove();
+    }
   },
 
   handleInput: function() {
