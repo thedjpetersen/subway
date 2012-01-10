@@ -5,7 +5,7 @@ var ChatView = Backbone.View.extend({
     //when we switch tabs
     this.el = ich.chat();
     this.render();
-    this.model.bind('change:topic, this.updateTitle, this');
+    this.model.bind('change:topic', this.updateTitle, this);
   },
 
   updateTitle: function(channel) {
