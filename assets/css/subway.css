@@ -171,6 +171,8 @@
 
 .message{
   border-bottom: 1px solid #DDDDDD;
+  display: table;
+  width: 100%;
 }
 
 .message_me{
@@ -178,14 +180,14 @@
 }
 
 .chat_name{
-  display: inline-block;
+  display: table-cell;
   width: 14%;
   vertical-align: top;
   padding: 1% 0% 1% 1%;
 }
 
 .chat_message{
-  display: inline-block;
+  display: table-cell;
   width: 62%;
   padding: 1%;
   border-left: 1px solid #DDDDDD;
@@ -205,7 +207,7 @@
 }
 
 .chat_time {
-  display: inline-block;
+  display: table-cell;
   width: 20%;
   vertical-align: top;
   color: #888888;
