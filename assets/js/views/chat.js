@@ -2,7 +2,7 @@ var ChatView = Backbone.View.extend({
   initialize: function() {
     // We have to do this here or messages won't stay in the element
     // when we switch tabs
-    this.tmpl = ich.chat();
+    this.el = ich.chat();
     this.render();
     this.model.bind('change:topic', this.updateTitle, this);
     this.model.stream.bind('add', this.updateUnreadCounts, this);
@@ -19,7 +19,7 @@ var ChatView = Backbone.View.extend({
   },
 
   render: function() {
-    $('.content').html(this.tmpl);
+    $('.content').html(this.el);
     this.updateTitle();
     this.removeUnread();
     this.handleInput();
