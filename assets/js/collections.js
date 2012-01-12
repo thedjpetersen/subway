@@ -4,23 +4,23 @@ var Stream = Backbone.Collection.extend({
 
   initialize: function() {
     this.bind('add', irc.appView.addMessage);
-    this.bind('add', this.unread_messages);
+    this.bind('add', this.unreadMessages);
   },
 
-  unread_messages: function(msg) {
-    if(!this.channel.get('active')){
+  unreadMessages: function(msg) {
+    if (!this.channel.get('active')) {
       //Remove the old spans
       this.channel.channelTab.children('.unread').remove();
       this.channel.channelTab.children('.unread_mentions').remove();
 
       //Increment our unread messages
-      var unread_messages = this.channel.get('unread_messages')+1;
+      var unread_messages = this.channel.get('unread_messages') + 1;
       this.channel.set({unread_messages: unread_messages});
 
       //If the message has a mention
-      if(msg.get('unread_mention')){
+      if (msg.get('unread_mention')) {
         //Set our unread mentions
-        var unread_mentions = this.channel.get('unread_mentions')+1;
+        var unread_mentions = this.channel.get('unread_mentions') + 1;
         this.channel.set({unread_mentions: unread_mentions});
 
         //Add our modified spans
@@ -29,7 +29,7 @@ var Stream = Backbone.Collection.extend({
       } else {
         var unread_mentions = this.channel.get('unread_mentions');
         this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-        if (unread_mentions > 0){
+        if (unread_mentions > 0) {
           this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
         }
       }
