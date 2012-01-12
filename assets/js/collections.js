@@ -4,11 +4,11 @@ var Stream = Backbone.Collection.extend({
 
   initialize: function() {
     this.bind('add', irc.appView.addMessage);
-  }
+  },
 
   unread: function() {
     return this.filter(function(msg) { return msg.get('unread'); });
-  }
+  },
 
   unreadMentions: function() {
     return this.filter(function(msg) { return msg.get('unreadMention'); });
