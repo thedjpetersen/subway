@@ -15,7 +15,7 @@ var Message = Backbone.Model.extend({
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
     var result = this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
-    if (nick !== irc.me.nick){
+    if (nick !== irc.me.nick) {
       result = this._mentions(result);
     }
     return result;
@@ -85,14 +85,14 @@ var Message = Backbone.Model.extend({
   _mentions: function(text) {
     var self = this;
     var re = new RegExp('\\b' + irc.me.nick + '\\b', 'g');
-    var parsed = text.replace(re, function(nick){
-      self.set({unread_mention: true});
-      return '<span class=\'mention\'>' + nick + '</span>';
+    var parsed = text.replace(re, function(nick) {
+      self.set({mention: true});
+      return '<span class="mention">' + nick + '</span>';
     });
     return parsed;
   }
 
-})
+});
 
 
 // Represents any type of chat window -- a channel, private message,
