@@ -115,7 +115,7 @@
 }
 
 #chat-bar{
-  border-right: 1px solid #555555;
+  border-right: 1px solid #666666;
 }
 
 #chat-bar, #user-bar{
@@ -143,7 +143,6 @@
   height: 85%;
   overflow: hidden;
   overflow-y: auto;
-  padding: 0% 3% 0% 3%;
   background: whiteSmoke;
   border-right: 1px solid #DDDDDD
 }
@@ -155,43 +154,42 @@
   border-right: 1px solid #DDDDDD;
 }
 
-  #input-container .input{
-    padding-top: 2%;
-  }
-
-  #input-container .input input{
-    width: 83%;
-    margin-right: 5%;
-    float: left;
-    margin-left: 2%;
-  }
-
-  #input-container .input a{
-    font-size: 1.3em;
-  }
-
-.chat_time {
-  width: 100%;
-  color: #888888;
-  text-align: right;
+#input-container .input{
+  padding-top: 2%;
 }
 
-.chat_time span{
+#input-container .input input{
+  width: 83%;
+  margin-right: 5%;
+  float: left;
+  margin-left: 2%;
+}
+
+#input-container .input a{
+  font-size: 1.3em;
+}
+
+.message{
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.message_me{
+  background: #F9F9F9;
+}
+
+.chat_name{
   display: inline-block;
-}
-
-.chat_time span.timeline {
-  border-top: 1px solid #BBBBBB;
-  display: block;
-  height: 1px;
-  width: 79%;
-  position: relative;
-  left: 0;
-  top: 1em;
+  width: 14%;
+  vertical-align: top;
+  padding: 1% 0% 1% 1%;
 }
 
 .chat_message{
-  padding: 0.3em 0em 0.3em 0em;
+  display: inline-block;
+  width: 62%;
+  padding: 1%;
+  border-left: 1px solid #DDDDDD;
+  border-right: 1px solid #DDDDDD;
 }
 
 .chat_message .embed img{
@@ -206,6 +204,14 @@
   font-weight: bold;
 }
 
+.chat_time {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+  color: #888888;
+  text-align: center;
+  padding: 1% 0% 1% 0%;
+}
 
 #user-window{
   height: 100%;
