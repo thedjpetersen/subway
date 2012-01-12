@@ -1,11 +1,11 @@
 var ChatView = Backbone.View.extend({
   initialize: function() {
-    //We have to do this here or
-    //messages won't stay in the element
-    //when we switch tabs
-    this.el = ich.chat();
+    // We have to do this here or messages won't stay in the element
+    // when we switch tabs
+    this.tmpl = ich.chat();
     this.render();
     this.model.bind('change:topic', this.updateTitle, this);
+    this.model.stream.bind('add', this.updateUnreadCounts, this);
   },
 
   updateTitle: function(channel) {
@@ -19,15 +19,19 @@ var ChatView = Backbone.View.extend({
   },
 
   render: function() {
-    $('.content').html(this.el);
+    $('.content').html(this.tmpl);
     this.updateTitle();
     this.removeUnread();
     this.handleInput();
     return this;
   },
 
+  updateUnreadCounts: function() {
+
+  },
+
   removeUnread: function() {
-    if (this.model.channelTab !== undefined){
+    if (this.model.channelTab !== undefined) {
       this.model.channelTab.children('.unread').remove();
       this.model.channelTab.children('.unread_mentions').remove();
     }
