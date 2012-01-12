@@ -108,15 +108,44 @@ var ChatWindow = Backbone.Model.extend({
   initialize: function() {
     console.log('chat window created');
     this.stream = new Stream();
+    this.stream.bind('add', this.unreadMessages);
     //Backbone's collections don't support
     //attribute assignment in initizialization
-    this.stream.channel = this;
     this.view = new ChatView({model: this});
   },
 
   part: function() {
     console.log('Leaving ' + this.get('name'));
     this.destroy();
+  },
+
+  unreadMessages: function(msg) {
+    if (!this.channel.get('active')) {
+      //Remove the old spans
+      this.channel.channelTab.children('.unread').remove();
+      this.channel.channelTab.children('.unread_mentions').remove();
+
+      //Increment our unread messages
+      var unread_messages = this.channel.get('unread_messages') + 1;
+      this.channel.set({unread_messages: unread_messages});
+
+      //If the message has a mention
+      if (msg.get('unread_mention')) {
+        //Set our unread mentions
+        var unread_mentions = this.channel.get('unread_mentions') + 1;
+        this.channel.set({unread_mentions: unread_mentions});
+
+        //Add our modified spans
+        this.channel.channelTab.append(ich.unread({unread:unread_messages}));
+        this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
+      } else {
+        var unread_mentions = this.channel.get('unread_mentions');
+        this.channel.channelTab.append(ich.unread({unread:unread_messages}));
+        if (unread_mentions > 0) {
+          this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
+        }
+      }
+    }
   }
 
 });
