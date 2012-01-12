@@ -27,6 +27,22 @@ var ChatView = Backbone.View.extend({
   },
 
   updateUnreadCounts: function() {
+    // do something here (or in channel_list.js) to re-render unread counts
+
+    //If the message has a mention
+    // if (msg.get('mention')) {
+    //   //Set our unread mentions
+
+    //   //Add our modified spans
+    //   this.channel.channelTab.append(ich.unread({unread:unread_messages}));
+    //   this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
+    // } else {
+    //   var unread_mentions = this.channel.get('unread_mentions');
+    //   this.channel.channelTab.append(ich.unread({unread:unread_messages}));
+    //   if (unread_mentions > 0) {
+    //     this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
+    //   }
+    // }
 
   },
 

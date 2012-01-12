@@ -125,27 +125,6 @@ var ChatWindow = Backbone.Model.extend({
     msg.set({unread: true});
     if (msg.get('mention'))
       msg.set({unreadMention: true});
-
-    //Remove the old spans
-    this.channel.channelTab.children('.unread').remove();
-    this.channel.channelTab.children('.unread_mentions').remove();
-
-    //If the message has a mention
-    if (msg.get('mention')) {
-      //Set our unread mentions
-      var unread_mentions = this.channel.get('unread_mentions') + 1;
-      this.channel.set({unread_mentions: unread_mentions});
-
-      //Add our modified spans
-      this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-      this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
-    } else {
-      var unread_mentions = this.channel.get('unread_mentions');
-      this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-      if (unread_mentions > 0) {
-        this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
-      }
-    }
   }
 
 });
