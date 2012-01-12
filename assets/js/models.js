@@ -135,4 +135,3 @@ var User = Backbone.Model.extend({
     opStatus: ''
   }
 });
-

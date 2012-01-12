@@ -15,6 +15,10 @@ var Stream = Backbone.Collection.extend({
   }
 });
 
+var UserList = Backbone.Collection.extend({
+  model: User,
+});
+
 // All channels/private message chats a user has open
 var WindowList = Backbone.Collection.extend({
   model: ChatWindow,

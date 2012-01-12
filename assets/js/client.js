@@ -63,6 +63,10 @@ $(function() {
       }
   });
 
+  irc.socket.on('names', function(data) {
+    console.log(data);
+  });
+
   irc.socket.on('topic', function(data) {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.set({topic: data.topic});
