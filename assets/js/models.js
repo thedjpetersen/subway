@@ -111,6 +111,7 @@ var ChatWindow = Backbone.Model.extend({
     this.stream.bind('add', this.setUnread);
     //Backbone's collections don't support
     //attribute assignment in initizialization
+    this.stream.channel = this;
     this.view = new ChatView({model: this});
   },
 
