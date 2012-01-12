@@ -9,7 +9,7 @@
   margin:10% auto 0px auto;
   text-align: center;
   padding: 10px;
-  background: whiteSmoke;
+  background: #E7E9ED;
   border: 2px solid #DDD;
 }
 
@@ -107,7 +107,6 @@
   min-height: 100%;
   height: 100%;
   width: 80%;
-  border-right: 1px solid #DDD;
   position: absolute;
   box-sizing: border-box;
   -moz-box-sizing: border-box; // for Mozilla
@@ -115,25 +114,14 @@
   -ms-box-sizing: border-box; // for IE8
 }
 
+#chat-bar{
+  border-right: 1px solid #666666;
+}
+
 #chat-bar, #user-bar{
   height: 5%;
-  background: whiteSmoke;
-  border-bottom: 1px solid #DDD;
-
-  background-image: linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
-  background-image: -o-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
-  background-image: -moz-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
-  background-image: -webkit-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
-  background-image: -ms-linear-gradient(bottom, rgb(230,230,230) 22%, rgb(241,241,241) 53%, rgb(245,245,245) 77%);
-
-  background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.22, rgb(230,230,230)),
-    color-stop(0.53, rgb(241,241,241)),
-    color-stop(0.77, rgb(245,245,245))
-  );
+  background: #434950;
+  color: #eee
 }
 
 .titlebar{
@@ -155,51 +143,53 @@
   height: 85%;
   overflow: hidden;
   overflow-y: auto;
-  padding: 0% 3% 0% 3%;
+  background: whiteSmoke;
+  border-right: 1px solid #DDDDDD
 }
 
 #input-container {
   height: 10%;
   border-top: 2px solid #DDD;
+  background: whiteSmoke;
+  border-right: 1px solid #DDDDDD;
 }
 
-  #input-container .input{
-    padding-top: 2%;
-  }
-
-  #input-container .input input{
-    width: 83%;
-    margin-right: 5%;
-    float: left;
-    margin-left: 2%;
-  }
-
-  #input-container .input a{
-    font-size: 1.3em;
-  }
-
-.chat_time {
-  width: 100%;
-  color: #888888;
-  text-align: right;
+#input-container .input{
+  padding-top: 2%;
 }
 
-.chat_time span{
+#input-container .input input{
+  width: 83%;
+  margin-right: 5%;
+  float: left;
+  margin-left: 2%;
+}
+
+#input-container .input a{
+  font-size: 1.3em;
+}
+
+.message{
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.message_me{
+  background: #F9F9F9;
+}
+
+.chat_name{
   display: inline-block;
-}
-
-.chat_time span.timeline {
-  border-top: 1px solid #BBBBBB;
-  display: block;
-  height: 1px;
-  width: 79%;
-  position: relative;
-  left: 0;
-  top: 1em;
+  width: 14%;
+  vertical-align: top;
+  padding: 1% 0% 1% 1%;
 }
 
 .chat_message{
-  padding: 0.3em 0em 0.3em 0em;
+  display: inline-block;
+  width: 62%;
+  padding: 1%;
+  border-left: 1px solid #DDDDDD;
+  border-right: 1px solid #DDDDDD;
 }
 
 .chat_message .embed img{
@@ -214,12 +204,21 @@
   font-weight: bold;
 }
 
+.chat_time {
+  display: inline-block;
+  width: 20%;
+  vertical-align: top;
+  color: #888888;
+  text-align: center;
+  padding: 1% 0% 1% 0%;
+}
 
 #user-window{
   height: 100%;
   width: 20%;
   position: absolute;
   margin-left: 80%;
+  background: #E7E9ED;
 }
 
 #user-list{

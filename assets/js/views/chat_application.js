@@ -20,6 +20,12 @@ var ChatApplicationView = Backbone.View.extend({
     var view = new MessageView({model: msg});
     var targetDiv = this.channel.view.$('#chat-contents');
     targetDiv.append(view.el);
+
+    if (msg.get('sender') === irc.me.nick) {
+      $(view.el).addClass('message_me');
+    }
+
+    console.log('message added!');
     var chatWindowHeight = (targetDiv.get(0).scrollHeight-555);
     // If the window is large enough to be scrollable
     if(chatWindowHeight > 0) {

@@ -224,7 +224,7 @@ body {
   top: 0;
   width: 15%;
   min-height:100%;
-  background-color: #f5f5f5;
+  background-color: #E7E9ED;
   border-right: 2px solid #DDD;
   box-sizing: border-box;
   -moz-box-sizing: border-box; // for Mozilla
@@ -236,6 +236,7 @@ body {
     width: 85%;
     margin-left: 15%;
     position: absolute;
+    background: whiteSmoke;
 }
 a {
   color: #0069d6;
