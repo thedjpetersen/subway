@@ -10,7 +10,6 @@ var ChatView = Backbone.View.extend({
 
   updateTitle: function(channel) {
     console.log('title updated');
-    console.log(channel);
     var context = {
       title: this.model.get('name'),
       topic: this.model.get('topic')
@@ -26,30 +25,24 @@ var ChatView = Backbone.View.extend({
     return this;
   },
 
-  updateUnreadCounts: function() {
-    // do something here (or in channel_list.js) to re-render unread counts
+  updateUnreadCounts: function(msg) {
+    console.log('unread count updated')
 
-    //If the message has a mention
-    // if (msg.get('mention')) {
-    //   //Set our unread mentions
+    var unread = this.model.get('unread');
+    var unreadMentions = this.model.get('unreadMentions');
 
-    //   //Add our modified spans
-    //   this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-    //   this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
-    // } else {
-    //   var unread_mentions = this.channel.get('unread_mentions');
-    //   this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-    //   if (unread_mentions > 0) {
-    //     this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
-    //   }
-    // }
+    this.model.channelTab.children('.unread, .unread_mentions').remove();
 
+    if (unread > 0)
+      this.model.channelTab.append(ich.unread({unread: unread}));
+    if (unreadMentions > 0)
+      this.model.channelTab.append(ich.unread_mentions({unread_mentions: unreadMentions}));
   },
 
   removeUnread: function() {
     if (this.model.channelTab !== undefined) {
-      this.model.channelTab.children('.unread').remove();
-      this.model.channelTab.children('.unread_mentions').remove();
+      this.model.channelTab.children('.unread, .unread_mentions').remove();
+      this.model.set({unread: 0, unreadMentions: 0});
     }
   },
 

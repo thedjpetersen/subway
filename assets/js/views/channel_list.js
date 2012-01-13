@@ -12,7 +12,9 @@ var ChannelListView = Backbone.View.extend({
     chat.channelTab = ich.channel({name:chat.get('name')});
     $(this.el).append(chat.channelTab);
     this.setActiveChannel(chat);
-    chat.channelTab.click({chat: chat, clv: this}, function(ev){
+    // TODO: simplify / rewrite this
+    // separate view for each tab would probably simplify things
+    chat.channelTab.click({chat: chat, clv: this}, function(ev) {
       chat = ev.data.chat;
       irc.chatWindows.setActive(chat);
       ev.data.clv.setActiveChannel(chat);
@@ -25,4 +27,5 @@ var ChannelListView = Backbone.View.extend({
       chat.channelTab.addClass('active');
     }
   }
+
 });
