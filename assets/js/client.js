@@ -51,16 +51,16 @@ $(function() {
   });
 
   irc.socket.on('join', function(data) {
-      console.log('Join event received for ' + data.channel + ' - ' + data.nick);
-      if (data.nick === irc.me.nick) {
-          irc.chatWindows.add({name: data.channel});
-      } else {
-          var channel = irc.chatWindows.getByName(data.channel);
-          channel.participants.add({nick: data.nick});
-          var joinMessage = new Message({type: 'join', nick: data.nick});
-          joinMessage.setText();
-          channel.stream.add(joinMessage);
-      }
+    console.log('Join event received for ' + data.channel + ' - ' + data.nick);
+    if (data.nick === irc.me.nick) {
+      irc.chatWindows.add({name: data.channel});
+    } else {
+      var channel = irc.chatWindows.getByName(data.channel);
+      channel.participants.add({nick: data.nick});
+      var joinMessage = new Message({type: 'join', nick: data.nick});
+      joinMessage.setText();
+      channel.stream.add(joinMessage);
+    }
   });
 
   irc.socket.on('part', function(data) {
