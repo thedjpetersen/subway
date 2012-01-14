@@ -5,7 +5,6 @@ var ChatView = Backbone.View.extend({
     this.el = ich.chat();
     this.render();
     this.model.bind('change:topic', this.updateTitle, this);
-    this.model.stream.bind('add', this.updateUnreadCounts, this);
   },
 
   updateTitle: function(channel) {
@@ -20,30 +19,8 @@ var ChatView = Backbone.View.extend({
   render: function() {
     $('.content').html(this.el);
     this.updateTitle();
-    this.removeUnread();
     this.handleInput();
     return this;
-  },
-
-  updateUnreadCounts: function(msg) {
-    console.log('unread count updated')
-
-    var unread = this.model.get('unread');
-    var unreadMentions = this.model.get('unreadMentions');
-
-    this.model.channelTab.children('.unread, .unread_mentions').remove();
-
-    if (unread > 0)
-      this.model.channelTab.append(ich.unread({unread: unread}));
-    if (unreadMentions > 0)
-      this.model.channelTab.append(ich.unread_mentions({unread_mentions: unreadMentions}));
-  },
-
-  removeUnread: function() {
-    if (this.model.channelTab !== undefined) {
-      this.model.channelTab.children('.unread, .unread_mentions').remove();
-      this.model.set({unread: 0, unreadMentions: 0});
-    }
   },
 
   handleInput: function() {
