@@ -3,6 +3,8 @@ var UserView = Backbone.View.extend({
     this.user = user;
   },
 
+  className: 'userlist_user',
+
   render: function() {
     $(this.el).html(ich.userlist_user(this.user.model.attributes));
     return this;

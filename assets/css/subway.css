@@ -227,3 +227,8 @@
   overflow-y: auto;
   height: 95%;
 }
+
+.userlist_user{
+  padding: 2% 0% 2% 5%;
+  border-bottom: 1px solid #CCCCCC;
+}

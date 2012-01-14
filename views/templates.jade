@@ -72,7 +72,11 @@ script(id="unread_mentions", type="text/html")
   span(class="unread_mentions", title="Mentions in channel") {{unread_mentions}}
 
 script(id="userlist_user", type="text/html")
-  li {{role}}{{nick}}
+  div(class="userlist_user_activity")
+    img
+  div(class="userlist_user_info")
+    div {{role}}{{nick}}
+    div {{active}} active
 
 script(id="link", type="text/html")
   a(target="_blank", href="{{link}}") {{link}}
