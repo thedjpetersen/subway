@@ -8,7 +8,7 @@ var ChannelListView = Backbone.View.extend({
 
   addChannel: function(chat) {
     console.log('channel added to list');
-    var view = new ChannelTabView({model: chat})
+    var view = new ChannelTabView({model: chat});
     $(this.el).append(view.render().el);
     irc.chatWindows.setActive(chat);
     view.setActive();

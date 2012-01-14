@@ -5,6 +5,7 @@ var ChatView = Backbone.View.extend({
     this.el = ich.chat();
     this.render();
     this.model.bind('change:topic', this.updateTitle, this);
+    this.model.stream.bind('add', this.addMessage, this);
   },
 
   updateTitle: function(channel) {
@@ -82,5 +83,25 @@ var ChatView = Backbone.View.extend({
         }
       }
     });
-  }
+  },
+
+  addMessage: function(msg) {
+    var view = new MessageView({model: msg});
+    $('#chat-contents').append(view.el);
+
+    if (msg.get('sender') === irc.me.nick) {
+      $(view.el).addClass('message-me');
+    }
+
+    // Scroll down to show new message
+    var chatWindowHeight = ($('#chat-contents')[0].scrollHeight - 555);
+    // If the window is large enough to be scrollable
+    if (chatWindowHeight > 0) {
+      // If the user isn't scrolling go to the bottom message
+      if ((chatWindowHeight - $('#chat-contents').scrollTop()) < 200) {
+        $('#chat-contents').scrollTo(view.el, 500);
+      }
+    }
+  },
+
 });
