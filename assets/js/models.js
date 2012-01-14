@@ -14,6 +14,8 @@ var Message = Backbone.Model.extend({
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
+    // TODO: add explicit HTML escape before sending to ich.message.
+    // Want to add <br> to motd.
     var result = this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
     if (nick !== irc.me.nick) {
       result = this._mentions(result);
