@@ -64,8 +64,15 @@ $(function() {
   });
 
   irc.socket.on('part', function(data) {
-
-
+    var channel = irc.chatWindows.getByName(data.channel);
+    if (data.nick === irc.me.nick) {
+      channel.part();
+    } else {
+      channel.participants.getByNick(data.nick).destroy();
+      var partMessage = new Message({type: 'part', nick: data.nick});
+      partMessage.setText();
+      channel.stream.add(partMessage);
+    }
   });
 
   irc.socket.on('topic', function(data) {
