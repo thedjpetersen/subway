@@ -5,12 +5,11 @@ var ChatView = Backbone.View.extend({
     this.el = ich.chat();
     this.render();
     this.model.bind('change:topic', this.updateTitle, this);
-    this.model.stream.bind('add', this.updateUnreadCounts, this);
+    this.model.stream.bind('add', this.addMessage, this);
   },
 
   updateTitle: function(channel) {
     console.log('title updated');
-    console.log(channel);
     var context = {
       title: this.model.get('name'),
       topic: this.model.get('topic')
@@ -21,36 +20,8 @@ var ChatView = Backbone.View.extend({
   render: function() {
     $('.content').html(this.el);
     this.updateTitle();
-    this.removeUnread();
     this.handleInput();
     return this;
-  },
-
-  updateUnreadCounts: function() {
-    // do something here (or in channel_list.js) to re-render unread counts
-
-    //If the message has a mention
-    // if (msg.get('mention')) {
-    //   //Set our unread mentions
-
-    //   //Add our modified spans
-    //   this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-    //   this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
-    // } else {
-    //   var unread_mentions = this.channel.get('unread_mentions');
-    //   this.channel.channelTab.append(ich.unread({unread:unread_messages}));
-    //   if (unread_mentions > 0) {
-    //     this.channel.channelTab.append(ich.unread_mentions({unread_mentions: unread_mentions}));
-    //   }
-    // }
-
-  },
-
-  removeUnread: function() {
-    if (this.model.channelTab !== undefined) {
-      this.model.channelTab.children('.unread').remove();
-      this.model.channelTab.children('.unread_mentions').remove();
-    }
   },
 
   handleInput: function() {
@@ -76,9 +47,9 @@ var ChatView = Backbone.View.extend({
           if (event.keyCode == 13) {
             var message = $(this).val();
             // Handle IRC commands
-            if (message.substr(0,1) === '/') {
-              var command_text = message.substr(1).split(' ');
-              irc.handleCommand(command_text);
+            if (message.substr(0, 1) === '/') {
+              var commandText = message.substr(1);
+              irc.handleCommand(commandText);
             } else {
               // Send the message
               irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
@@ -112,5 +83,26 @@ var ChatView = Backbone.View.extend({
         }
       }
     });
-  }
+  },
+
+  addMessage: function(msg) {
+    var $chatWindow = this.$('#chat-contents');
+    var view = new MessageView({model: msg});
+    $chatWindow.append(view.el);
+
+    if (msg.get('sender') === irc.me.nick) {
+      $(view.el).addClass('message-me');
+    }
+
+    // Scroll down to show new message
+    var chatWindowHeight = ($chatWindow[0].scrollHeight - 555);
+    // If the window is large enough to be scrollable
+    if (chatWindowHeight > 0) {
+      // If the user isn't scrolling go to the bottom message
+      if ((chatWindowHeight - $chatWindow.scrollTop()) < 200) {
+        $('#chat-contents').scrollTo(view.el, 500);
+      }
+    }
+  },
+
 });

@@ -160,7 +160,7 @@
 
 #input-container .input input{
   width: 83%;
-  margin-right: 5%;
+  margin-right: 2%;
   float: left;
   margin-left: 2%;
 }
@@ -175,7 +175,7 @@
   width: 100%;
 }
 
-.message_me{
+.message-me {
   background: #F9F9F9;
 }
 

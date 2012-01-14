@@ -14,6 +14,8 @@ var Message = Backbone.Model.extend({
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
+    // TODO: add explicit HTML escape before sending to ich.message.
+    // Want to add <br> to motd.
     var result = this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
     if (nick !== irc.me.nick) {
       result = this._mentions(result);
@@ -102,13 +104,15 @@ var ChatWindow = Backbone.Model.extend({
   // - name
   defaults: {
     type: 'channel',
-    active: true
+    active: true,
+    unread: 0,
+    unreadMentions: 0
   },
 
   initialize: function() {
     console.log('chat window created');
     this.stream = new Stream();
-    this.stream.bind('add', this.setUnread);
+    this.stream.bind('add', this.setUnread, this);
     //Backbone's collections don't support
     //attribute assignment in initizialization
     this.stream.channel = this;
@@ -122,10 +126,11 @@ var ChatWindow = Backbone.Model.extend({
 
   setUnread: function(msg) {
     if (this.get('active')) return;
-    //Increment our unread messages
-    msg.set({unread: true});
+    // Increment our unread messages
+    this.set({unread: this.get('unread') + 1});
     if (msg.get('mention'))
-      msg.set({unreadMention: true});
+      this.set({unreadMentions: this.get('unreadMentions') + 1});
+    console.log(this.get('unread'));
   }
 
 });
