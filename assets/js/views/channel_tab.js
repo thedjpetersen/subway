@@ -7,6 +7,7 @@ var ChannelTabView = Backbone.View.extend({
 
   initialize: function() {
     this.model.stream.bind('add', this.updateUnreadCounts, this);
+    this.model.bind('destroy', this.close, this);
   },
 
   render: function() {
@@ -41,5 +42,18 @@ var ChannelTabView = Backbone.View.extend({
     $(this.el).children('.unread, .unread_mentions').remove();
     this.model.set({unread: 0, unreadMentions: 0});
   },
+
+  close: function() {
+    // Focus on next frame if this one has the focus
+    if ($(this.el).hasClass('active')) {
+      // Go to previous frame unless it's status
+      if ($(this.el).prev().text().trim() !== 'status') {
+        $(this.el).prev().click();
+      } else {
+        $(this.el).next().click();
+      }
+    }
+    this.remove();
+  }
 
 });
