@@ -17,6 +17,10 @@ var Stream = Backbone.Collection.extend({
 
 var UserList = Backbone.Collection.extend({
   model: User,
+
+  initialize: function() {
+    this.view = new UserListView;
+  }
 });
 
 // All channels/private message chats a user has open
@@ -63,6 +67,12 @@ var WindowList = Backbone.Collection.extend({
 
 var UserList = Backbone.Collection.extend({
   model: User,
+
+  initialize: function(channel) {
+    this.channel = channel;
+    this.view = new UserListView({collection:this});
+  },
+
   getByNick: function(nick) {
     return this.detect(function(user) {
       return user.get('nick') == nick;

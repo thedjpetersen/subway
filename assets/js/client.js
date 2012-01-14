@@ -64,7 +64,11 @@ $(function() {
   });
 
   irc.socket.on('names', function(data) {
-    console.log(data);
+    var channel = irc.chatWindows.getByName(data.channel);
+    channel.userList = new UserList(channel);
+    $.each(data.nicks, function(nick, role){
+      channel.userList.add(new User({nick: nick, role: role, idle:0}))
+    });
   });
 
   irc.socket.on('topic', function(data) {

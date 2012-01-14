@@ -131,6 +131,9 @@ var ChatWindow = Backbone.Model.extend({
 });
 
 var User = Backbone.Model.extend({
+  initialize: function(){
+  },
+
   defaults: {
     opStatus: ''
   }
