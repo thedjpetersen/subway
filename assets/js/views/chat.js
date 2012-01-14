@@ -47,9 +47,9 @@ var ChatView = Backbone.View.extend({
           if (event.keyCode == 13) {
             var message = $(this).val();
             // Handle IRC commands
-            if (message.substr(0,1) === '/') {
-              var command_text = message.substr(1).split(' ');
-              irc.handleCommand(command_text);
+            if (message.substr(0, 1) === '/') {
+              var commandText = message.substr(1);
+              irc.handleCommand(commandText);
             } else {
               // Send the message
               irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});

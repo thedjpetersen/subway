@@ -64,6 +64,7 @@ $(function() {
   });
 
   irc.socket.on('part', function(data) {
+    console.log('Part event received for ' + data.channel + ' - ' + data.nick);
     var channel = irc.chatWindows.getByName(data.channel);
     if (data.nick === irc.me.nick) {
       channel.part();
@@ -81,14 +82,15 @@ $(function() {
   });
 
   irc.handleCommand = function(commandText) {
-    switch(commandText[0]) {
-      case 'join':
-        irc.socket.emit('join', commandText[1]);
-        break;
-      case 'part':
-        irc.socket.emit('part', commandText[1]);
-        break;
-    }
+    irc.socket.emit('command', commandText);
+    // switch(commandText[0]) {
+    //   case 'join':
+    //     irc.socket.emit('join', commandText[1]);
+    //     break;
+    //   case 'part':
+    //     irc.socket.emit('part', commandText[1]);
+    //     break;
+    // }
   }
 
 })
