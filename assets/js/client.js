@@ -52,7 +52,7 @@ $(function() {
 
   irc.socket.on('join', function(data) {
       console.log('Join event received for ' + data.channel + ' - ' + data.nick);
-      if (data.nick == irc.me['nick']) {
+      if (data.nick === irc.me.nick) {
           irc.chatWindows.add({name: data.channel});
       } else {
           var channel = irc.chatWindows.getByName(data.channel);
@@ -63,15 +63,23 @@ $(function() {
       }
   });
 
+  irc.socket.on('part', function(data) {
+
+
+  });
+
   irc.socket.on('topic', function(data) {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.set({topic: data.topic});
   });
 
   irc.handleCommand = function(commandText) {
-    switch(commandText[0]){
+    switch(commandText[0]) {
       case 'join':
         irc.socket.emit('join', commandText[1]);
+        break;
+      case 'part':
+        irc.socket.emit('part', commandText[1]);
         break;
     }
   }
