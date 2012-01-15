@@ -229,6 +229,30 @@
 }
 
 .userlist_user{
-  padding: 2% 0% 2% 5%;
   border-bottom: 1px solid #CCCCCC;
+  display: table;
+  width: 100%;
+}
+
+.userlist_user_activity{
+  width: 13%;
+  display: table-cell;
+  padding: 2%;
+  background: #EFEFEF;
+  text-align: center;
+  border-right: 1px solid #DDDDDD;
+}
+
+.userlist_user_info{
+  display: table-cell;
+  width: 87%;
+  padding: 3% 0% 3% 5%;
+}
+
+.userlist_user_name{
+  font-weight: bold;
+}
+
+.userlist_user_active{
+  color: #666666;
 }
