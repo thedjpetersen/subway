@@ -88,9 +88,16 @@ var ChatView = Backbone.View.extend({
   addMessage: function(msg) {
     var $chatWindow = this.$('#chat-contents');
     var view = new MessageView({model: msg});
+    var sender = msg.get('sender');
+    if (sender !== ''){
+      var user = this.model.userList.getByNick(sender);
+      user.set({idle: 0});
+      user.view.addToIdle();
+    }
+
     $chatWindow.append(view.el);
 
-    if (msg.get('sender') === irc.me.nick) {
+    if (sender === irc.me.nick) {
       $(view.el).addClass('message-me');
     }
 

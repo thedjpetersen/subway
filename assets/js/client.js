@@ -80,7 +80,7 @@ $(function() {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.userList = new UserList(channel);
     $.each(data.nicks, function(nick, role){
-      channel.userList.add(new User({nick: nick, role: role, idle:0, user_status: 'active'}))
+      channel.userList.add(new User({nick: nick, role: role, idle:0, user_status: 'active', activity: 'Joined'}))
     });
   });
 
