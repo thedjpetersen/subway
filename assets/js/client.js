@@ -56,7 +56,7 @@ $(function() {
       irc.chatWindows.add({name: data.channel});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
-      channel.participants.add({nick: data.nick});
+      channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'active', activity: 'Joined'});
       var joinMessage = new Message({type: 'join', nick: data.nick});
       joinMessage.setText();
       channel.stream.add(joinMessage);
@@ -69,11 +69,21 @@ $(function() {
     if (data.nick === irc.me.nick) {
       channel.part();
     } else {
-      channel.participants.getByNick(data.nick).destroy();
+      var user = channel.userList.getByNick(data.nick);
+      user.view.remove();
+      user.destroy();
       var partMessage = new Message({type: 'part', nick: data.nick});
       partMessage.setText();
       channel.stream.add(partMessage);
     }
+  });
+
+  irc.socket.on('names', function(data) {
+    var channel = irc.chatWindows.getByName(data.channel);
+    channel.userList = new UserList(channel);
+    $.each(data.nicks, function(nick, role){
+      channel.userList.add(new User({nick: nick, role: role, idle:0, user_status: 'active', activity: 'Joined'}))
+    });
   });
 
   irc.socket.on('topic', function(data) {

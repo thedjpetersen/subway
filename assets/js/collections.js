@@ -55,10 +55,24 @@ var WindowList = Backbone.Collection.extend({
 
 var UserList = Backbone.Collection.extend({
   model: User,
+
+  initialize: function(channel) {
+    this.channel = channel;
+    this.view = new UserListView({collection:this});
+  },
+
   getByNick: function(nick) {
     return this.detect(function(user) {
       return user.get('nick') == nick;
     });
+  },
+
+  getUsers: function() {
+    var users = [];
+    for (var i=0; i<this.models.length; i++){
+      users.push(this.models[i].get('nick'));
+    }
+    return users;
   }
 });
 
