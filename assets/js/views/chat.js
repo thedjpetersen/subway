@@ -57,21 +57,21 @@ var ChatView = Backbone.View.extend({
             $(this).val('');
             $('#chat_button').addClass('disabled');
           } else if (event.keyCode == 9) {
-            console.log(event);
+            var channel = irc.chatWindows.getActive();
             // Tab completion of user names
-            var sentence = $(this).val().split(' ');
+            var sentence = $('#chat_input').val().split(' ');
             var partialMatch = sentence.pop();
             // TODO: Make this work (copy-paste from old code; it doesn't work)
             // All the below code is busted until this is resolved.
-            // channel = app.model.chatApp.channels.findChannel(app.activeChannel);
-            var users = channel.attributes.users;
-            for (user in users) {
+            var users = channel.userList.getUsers();
+            for (var i=0; i<users.length; i++) {
+              var user = users[i] || '';
               if (partialMatch.length > 0 && user.search(partialMatch) === 0) {
                 sentence.push(user);
                 if (sentence.length === 1) {
-                  $(this).val(sentence.join(' ') +  ":");
+                  $('#chat_input').val(sentence.join(' ') +  ":");
                 } else {
-                  $(this).val(sentence.join(' '));
+                  $('#chat_input').val(sentence.join(' '));
                 }
               }
             }

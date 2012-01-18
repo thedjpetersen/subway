@@ -11,14 +11,6 @@ var Stream = Backbone.Collection.extend({
   }
 });
 
-var UserList = Backbone.Collection.extend({
-  model: User,
-
-  initialize: function() {
-    this.view = new UserListView;
-  }
-});
-
 // All channels/private message chats a user has open
 var WindowList = Backbone.Collection.extend({
   model: ChatWindow,
@@ -73,6 +65,14 @@ var UserList = Backbone.Collection.extend({
     return this.detect(function(user) {
       return user.get('nick') == nick;
     });
+  },
+
+  getUsers: function() {
+    var users = [];
+    for (var i=0; i<this.models.length; i++){
+      users.push(this.models[i].get('nick'));
+    }
+    return users;
   }
 });
 
