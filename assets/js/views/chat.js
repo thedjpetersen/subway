@@ -20,7 +20,7 @@ var ChatView = Backbone.View.extend({
 
   render: function() {
     $('.content').html(this.el);
-    $('#chat-contents').scrollTop($('#chat-contents').height());
+    $('#chat-contents').scrollTop($('#chat-contents').get(0).scrollHeight-$('#chat-contents').height());
     this.updateTitle();
     this.handleInput();
     return this;
