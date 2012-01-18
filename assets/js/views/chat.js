@@ -10,15 +10,17 @@ var ChatView = Backbone.View.extend({
 
   updateTitle: function(channel) {
     console.log('title updated');
+    var topic = this.model.get('topic') || '';
     var context = {
       title: this.model.get('name'),
-      topic: this.model.get('topic').substr(0,100)
+      topic: topic.substr(0,100)
     };
     this.$('#chat-bar').html(ich.titlebar(context));
   },
 
   render: function() {
     $('.content').html(this.el);
+    $('#chat-contents').scrollTop($('#chat-contents').height());
     this.updateTitle();
     this.handleInput();
     return this;
