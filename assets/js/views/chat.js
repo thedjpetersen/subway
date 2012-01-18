@@ -12,7 +12,7 @@ var ChatView = Backbone.View.extend({
     console.log('title updated');
     var context = {
       title: this.model.get('name'),
-      topic: this.model.get('topic')
+      topic: this.model.get('topic').substr(0,100)
     };
     this.$('#chat-bar').html(ich.titlebar(context));
   },
