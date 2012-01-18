@@ -28,13 +28,13 @@ var Message = Backbone.Model.extend({
     var text = '';
     switch (this.get('type')) {
       case 'join':
-      text = this.get('nick') + ' joined the channel';
+      text = '<img src=\'/assets/images/join.png\' /><b>' + this.get('nick') + '</b> joined the channel';
       break;
       case 'part':
-      text = this.get('nick') + ' left the channel';
+      text = '<img src=\'/assets/images/part.png\' /><b>' + this.get('nick') + '</b> left the channel';
       break;
       case 'nick':
-      text = this.get('oldNick') + ' is now known as ' + this.get('newNick');
+      text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
       break;
     }
     this.set({text: text});

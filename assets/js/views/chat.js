@@ -89,7 +89,8 @@ var ChatView = Backbone.View.extend({
     var $chatWindow = this.$('#chat-contents');
     var view = new MessageView({model: msg});
     var sender = msg.get('sender');
-    if (sender !== ''){
+    var type = msg.get('type');
+    if (sender !== '' && type === 'message'){
       var user = this.model.userList.getByNick(sender);
       user.set({idle: 0});
       user.view.addToIdle();
@@ -99,6 +100,10 @@ var ChatView = Backbone.View.extend({
 
     if (sender === irc.me.nick) {
       $(view.el).addClass('message-me');
+    }
+
+    if(type === 'join' || type === 'part'){
+      $(view.el).addClass('joinpart');
     }
 
     // Scroll down to show new message

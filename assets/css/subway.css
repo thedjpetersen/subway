@@ -179,6 +179,15 @@
   background: #F9F9F9;
 }
 
+.joinpart{
+  padding: 1% 0% 1% 1%;
+}
+
+.joinpart img{
+  padding-right: 1%;
+  vertical-align: text-bottom;
+}
+
 .chat_name{
   display: table-cell;
   width: 14%;
