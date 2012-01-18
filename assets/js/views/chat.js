@@ -100,7 +100,7 @@ var ChatView = Backbone.View.extend({
     if (chatWindowHeight > 0) {
       // If the user isn't scrolling go to the bottom message
       if ((chatWindowHeight - $chatWindow.scrollTop()) < 200) {
-        $('#chat-contents').scrollTo(view.el, 500);
+        $('#chat-contents').scrollTo(view.el, 200);
       }
     }
   },
