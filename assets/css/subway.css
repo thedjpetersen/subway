@@ -179,6 +179,15 @@
   background: #F9F9F9;
 }
 
+.joinpart{
+  padding: 1% 0% 1% 1%;
+}
+
+.joinpart img{
+  padding-right: 1%;
+  vertical-align: text-bottom;
+}
+
 .chat_name{
   display: table-cell;
   width: 14%;
@@ -226,4 +235,33 @@
 #user-list{
   overflow-y: auto;
   height: 95%;
+}
+
+.userlist_user{
+  border-bottom: 1px solid #CCCCCC;
+  display: table;
+  width: 100%;
+}
+
+.userlist_user_activity{
+  width: 13%;
+  display: table-cell;
+  padding: 2%;
+  background: #EFEFEF;
+  text-align: center;
+  border-right: 1px solid #DDDDDD;
+}
+
+.userlist_user_info{
+  display: table-cell;
+  width: 87%;
+  padding: 3% 0% 3% 5%;
+}
+
+.userlist_user_name{
+  font-weight: bold;
+}
+
+.userlist_user_active{
+  color: #666666;
 }
