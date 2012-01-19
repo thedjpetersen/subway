@@ -183,9 +183,21 @@
   padding: 1% 0% 1% 1%;
 }
 
-.joinpart img{
+.join_img, .part_img{
+  width: 16px;
+  height: 16px;
   padding-right: 1%;
+  display: inline-block;
+  background-repeat: no-repeat;
   vertical-align: text-bottom;
+}
+
+.join_img{
+  background-image:url('/assets/images/join.png');
+}
+
+.part_img{
+  background-image:url('/assets/images/part.png');
 }
 
 .chat_name{
