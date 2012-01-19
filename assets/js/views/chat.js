@@ -50,7 +50,7 @@ var ChatView = Backbone.View.extend({
             var message = $(this).val();
             // Handle IRC commands
             if (message.substr(0, 1) === '/') {
-              var commandText = message.substr(1);
+              var commandText = message.split(' ');
               irc.handleCommand(commandText);
             } else {
               // Send the message

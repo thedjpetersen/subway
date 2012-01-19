@@ -93,14 +93,16 @@ $(function() {
 
   irc.handleCommand = function(commandText) {
     switch(commandText[0]) {
-      case 'join':
+      case '/join':
         irc.socket.emit('join', commandText[1]);
         break;
-      case 'part':
+      case '/part':
         if(commandText[1]){
-          irc.socket.emit('join', commandText[1]);
+          irc.socket.emit('part', commandText[1]);
+          irc.appView.channelList.channelTabs[0].setActive();
         } else {
           irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
+          irc.appView.channelList.channelTabs[0].setActive();
         }
         break;
       default:

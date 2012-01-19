@@ -11,7 +11,7 @@ var ChatApplicationView = Backbone.View.extend({
     if (!irc.connected) {
       var overview = new OverviewView;
     } else {
-      var channelList = new ChannelListView;
+      this.channelList = new ChannelListView;
     }
     return this;
   },

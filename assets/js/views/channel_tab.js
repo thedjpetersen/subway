@@ -18,8 +18,7 @@ var ChannelTabView = Backbone.View.extend({
 
   setActive: function() {
     irc.chatWindows.setActive(this.model);
-    $(this.el).addClass('active')
-      .siblings().removeClass('active');
+    $(this.el).addClass('active').siblings().removeClass('active');
     this.removeUnread();
   },
 
