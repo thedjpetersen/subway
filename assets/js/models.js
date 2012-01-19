@@ -81,6 +81,16 @@ var Message = Backbone.Model.extend({
       }
       return '<a href="' + href + '" target="_blank">' + url + '</a>';
     });
+    if (parsed !== text){
+      if (parsed.search('http://www.youtube.com') > -1) {
+        var video_id = parsed.split('v=\"')[1];
+        var targetPosition = video_id.indexOf('\" tar');
+        if(targetPosition !== -1) {
+          video_id = video_id.substring(0, targetPosition);
+        }
+        parsed = parsed.split('</div><div class=\"chat_time\">').join(ich.youtube_embed({video_id:video_id}, true) + '</div><div class=\"chat_time\">');
+      }
+    }
     return parsed;
   },
 
