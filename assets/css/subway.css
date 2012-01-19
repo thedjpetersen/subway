@@ -264,6 +264,21 @@
   border-right: 1px solid #DDDDDD;
 }
 
+.userlist_user_active, .userlist_user_idle{
+  height: 10px;
+  width: 10px;
+  display: block;
+  background-repeat: no-repeat;
+}
+
+.userlist_user_active{
+  background-image: url('/assets/images/active.png');
+}
+
+.userlist_user_idle{
+  background-image: url('/assets/images/idle.png');
+}
+
 .userlist_user_info{
   display: table-cell;
   width: 87%;
@@ -274,6 +289,6 @@
   font-weight: bold;
 }
 
-.userlist_user_active{
+.userlist_user_time{
   color: #666666;
 }

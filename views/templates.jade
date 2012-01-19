@@ -73,9 +73,10 @@ script(id="unread_mentions", type="text/html")
 script(id="userlist_user", type="text/html")
   div(class="userlist_user_activity")
     img(src="/assets/images/{{user_status}}.png")
+    span(class="userlist_user_{{user_stats}}")
   div(class="userlist_user_info")
     div(class="userlist_user_name") {{role}}{{nick}}
-    div(class="userlist_user_active") {{activity}}
+    div(class="userlist_user_time") {{activity}}
 
 script(id="link", type="text/html")
   a(target="_blank", href="{{link}}") {{link}}
