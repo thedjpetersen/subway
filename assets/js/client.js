@@ -92,15 +92,20 @@ $(function() {
   });
 
   irc.handleCommand = function(commandText) {
-    irc.socket.emit('command', commandText);
-    // switch(commandText[0]) {
-    //   case 'join':
-    //     irc.socket.emit('join', commandText[1]);
-    //     break;
-    //   case 'part':
-    //     irc.socket.emit('part', commandText[1]);
-    //     break;
-    // }
+    switch(commandText[0]) {
+      case 'join':
+        irc.socket.emit('join', commandText[1]);
+        break;
+      case 'part':
+        if(commandText[1]){
+          irc.socket.emit('join', commandText[1]);
+        } else {
+          irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
+        }
+        break;
+      default:
+        irc.socket.emit('command', commandText);
+    }
   }
 
 })
