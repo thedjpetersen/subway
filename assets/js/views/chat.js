@@ -23,6 +23,7 @@ var ChatView = Backbone.View.extend({
     $('#chat-contents').scrollTop($('#chat-contents').get(0).scrollHeight-$('#chat-contents').height());
     this.updateTitle();
     this.handleInput();
+    $('#chat_input').focus();
     return this;
   },
 
