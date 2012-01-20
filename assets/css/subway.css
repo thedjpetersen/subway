@@ -227,9 +227,15 @@
   font-weight: bold;
 }
 
+.chat_action {
+  display: table-cell;
+  width: 80%;
+  padding: 1% 0% 1% 2%;
+  border-right: 1px solid #DDDDDD;
+}
+
 .chat_time {
   display: table-cell;
-  width: 20%;
   vertical-align: top;
   color: #888888;
   text-align: center;

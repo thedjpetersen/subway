@@ -105,6 +105,9 @@ $(function() {
           irc.appView.channelList.channelTabs[0].setActive();
         }
         break;
+      case '/me':
+        irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:'\u0001ACTION ' + commandText.splice(1).join(" ")});
+        break;
       default:
         irc.socket.emit('command', commandText);
     }
