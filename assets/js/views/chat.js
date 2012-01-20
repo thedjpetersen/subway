@@ -20,14 +20,17 @@ var ChatView = Backbone.View.extend({
 
   render: function() {
     $('.content').html(this.el);
-    $('#chat-contents').scrollTop($('#chat-contents').get(0).scrollHeight-$('#chat-contents').height());
+    $('#chat-contents').scrollTop(
+      $('#chat-contents')[0].scrollHeight - $('#chat-contents').height()
+    );
     this.updateTitle();
     this.handleInput();
+    $('#chat-input').focus();
     return this;
   },
 
   handleInput: function() {
-    $('#chat_input').bind({
+    $('#chat-input').bind({
       // Enable button if there's any input
       change: function() {
         if ($(this).val().length) {
@@ -61,7 +64,7 @@ var ChatView = Backbone.View.extend({
           } else if (event.keyCode == 9) {
             var channel = irc.chatWindows.getActive();
             // Tab completion of user names
-            var sentence = $('#chat_input').val().split(' ');
+            var sentence = $('#chat-input').val().split(' ');
             var partialMatch = sentence.pop();
             // TODO: Make this work (copy-paste from old code; it doesn't work)
             // All the below code is busted until this is resolved.
@@ -71,9 +74,9 @@ var ChatView = Backbone.View.extend({
               if (partialMatch.length > 0 && user.search(partialMatch) === 0) {
                 sentence.push(user);
                 if (sentence.length === 1) {
-                  $('#chat_input').val(sentence.join(' ') +  ":");
+                  $('#chat-input').val(sentence.join(' ') +  ":");
                 } else {
-                  $('#chat_input').val(sentence.join(' '));
+                  $('#chat-input').val(sentence.join(' '));
                 }
               }
             }
