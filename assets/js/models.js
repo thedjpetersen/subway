@@ -83,7 +83,7 @@ var Message = Backbone.Model.extend({
     });
     if (parsed !== text){
       if (parsed.search('http://www.youtube.com') > -1) {
-        var video_id = parsed.split('v=\"')[1];
+        var video_id = parsed.split('v=')[1];
         var targetPosition = video_id.indexOf('\" tar');
         if(targetPosition !== -1) {
           video_id = video_id.substring(0, targetPosition);
