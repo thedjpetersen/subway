@@ -91,6 +91,14 @@ $(function() {
     channel.set({topic: data.topic});
   });
 
+  irc.socket.on('error', function(data) {
+    console.log(data.messsage);
+  });
+
+  irc.socket.on('netError', function(data) {
+    console.log(data);
+  });
+
   irc.handleCommand = function(commandText) {
     switch(commandText[0]) {
       case '/join':

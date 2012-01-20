@@ -15,7 +15,7 @@
     "express": "",
     "jade": "",
     "connect-assets": "",
-    "irc": "",
+    "irc": "git://github.com/martynsmith/node-irc.git",
     "socket.io": ""
   }
 }
