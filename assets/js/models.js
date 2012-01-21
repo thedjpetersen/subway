@@ -16,7 +16,15 @@ var Message = Backbone.Model.extend({
     var nick = this.get('sender') || this.collection.channel.get('name');
     // TODO: add explicit HTML escape before sending to ich.message.
     // Want to add <br> to motd.
-    var result = this._linkify(ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true));
+    var output;
+
+    if(text.substr(1,6) === 'ACTION') {
+      output = ich.action({user: nick, content: this.get('raw').substr(8), rendered_time: this._formatDate(Date.now())}, true);
+    } else {
+      output = ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true);
+    }
+
+    var result = this._linkify(output);
     if (nick !== irc.me.nick) {
       result = this._mentions(result);
     }
@@ -72,6 +80,7 @@ var Message = Backbone.Model.extend({
   // Find and link URLs
   _linkify: function(text) {
     // see http://daringfireball.net/2010/07/improved_regex_for_matching_urls
+    var links = [];
     var re = /\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/gi;
     var parsed = text.replace(re, function(url) {
       // turn into a link
@@ -79,8 +88,29 @@ var Message = Backbone.Model.extend({
       if (url.indexOf('http') !== 0) {
         href = 'http://' + url;
       }
+      links.push(href);
       return '<a href="' + href + '" target="_blank">' + url + '</a>';
     });
+    if (links.length>0){
+      //Look for embeddable media in all the links
+      for (var i=0; i<links.length; i++){
+        var href = links[i];
+        //Add embedded youtube video
+        if (href.search('http://www.youtube.com') > -1) {
+          var video_id = href.split('v=')[1];
+          var targetPosition = video_id.indexOf('&');
+          if(targetPosition !== -1) {
+            video_id = video_id.substring(0, targetPosition);
+          }
+          parsed = parsed.split('</div><div class=\"chat_time\">').join(ich.youtube_embed({video_id:video_id}, true) + '</div><div class=\"chat_time\">');
+        }
+
+        //Add embedded images
+        if (jQuery.inArray(href.substr(-3), ['jpg', 'gif', 'png']) > -1){
+          parsed = parsed.split('</div><div class=\"chat_time\">').join(ich.image_embed({link:href}, true) + '</div><div class=\"chat_time\">');
+        }
+      }
+    }
     return parsed;
   },
 
