@@ -47,7 +47,22 @@ $(function() {
   });
 
   irc.socket.on('message', function(data) {
-    irc.chatWindows.getByName(data.to).stream.add({sender: data.from, raw: data.text});
+    var chatWindow = irc.chatWindows.getByName(data.to);
+    var type = 'message';
+    if (data.to.substr(0) !== '#'){
+      //We do this in the case of a private message
+      type = 'pm';
+    }
+    chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
+  });
+
+  irc.socket.on('pm', function(data) {
+    var chatWindow = irc.chatWindows.getByName(data.nick);
+    if (chatWindow === undefined){
+      irc.chatWindows.add({name: data.nick});
+      chatWindow = irc.chatWindows.getByName(data.nick);
+    }
+    chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
   });
 
   irc.socket.on('join', function(data) {
