@@ -209,7 +209,7 @@
 
 .chat_message{
   display: table-cell;
-  width: 62%;
+  width: 66%;
   padding: 1%;
   border-left: 1px solid #DDDDDD;
   border-right: 1px solid #DDDDDD;
@@ -240,6 +240,7 @@
   color: #888888;
   text-align: center;
   padding: 1% 0% 1% 0%;
+  width: 20%;
 }
 
 #user-window{
