@@ -32,6 +32,7 @@ $(function() {
 
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
+    irc.socket.emit('getNick', {});
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
@@ -41,6 +42,10 @@ $(function() {
   irc.socket.on('notice', function(data) {
     //TODO: make this work
     //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});
+  });
+
+  irc.socket.on('nick', function(data) {
+    irc.me.nick = data.nick;
   });
 
   // Message of the Day
