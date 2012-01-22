@@ -18,10 +18,16 @@ var Message = Backbone.Model.extend({
     // Want to add <br> to motd.
     var output;
 
+    //This handles whether to output a message or an action
     if(text.substr(1,6) === 'ACTION') {
       output = ich.action({user: nick, content: this.get('raw').substr(8), rendered_time: this._formatDate(Date.now())}, true);
     } else {
       output = ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true);
+      //This renders the motd the way it looks
+      if(this.get('type') === 'motd'){
+        output = output.replace('<span>', '<span><pre>');
+        output = output.replace('</span>', '</pre></span>');
+      }
     }
 
     var result = this._linkify(output);
@@ -36,14 +42,14 @@ var Message = Backbone.Model.extend({
     var text = '';
     switch (this.get('type')) {
       case 'join':
-      text = '<span class="join_img"></span><b>' + this.get('nick') + '</b> joined the channel';
-      break;
+        text = '<span class="join_img"></span><b>' + this.get('nick') + '</b> joined the channel';
+        break;
       case 'part':
-      text = '<span class="part_img"></span><b>' + this.get('nick') + '</b> left the channel';
-      break;
+        text = '<span class="part_img"></span><b>' + this.get('nick') + '</b> left the channel';
+        break;
       case 'nick':
-      text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
-      break;
+        text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
+        break;
     }
     this.set({text: text});
   },
@@ -78,6 +84,8 @@ var Message = Backbone.Model.extend({
   },
 
   // Find and link URLs
+  // TODO: put youtube and image embedding code
+  // into own function
   _linkify: function(text) {
     // see http://daringfireball.net/2010/07/improved_regex_for_matching_urls
     var links = [];

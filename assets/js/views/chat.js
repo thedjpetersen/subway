@@ -95,7 +95,10 @@ var ChatView = Backbone.View.extend({
     var view = new MessageView({model: msg});
     var sender = msg.get('sender');
     var type = msg.get('type');
-    if (sender !== '' && type === 'message'){
+
+    var nicksToIgnore = ['', 'notice', 'status'];
+
+    if (nicksToIgnore.indexOf(sender) === -1 && type === 'message'){
       var user = this.model.userList.getByNick(sender);
       user.set({idle: 0});
       user.view.addToIdle();

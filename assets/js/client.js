@@ -28,7 +28,6 @@ $(function() {
   // window.app = new ChatApplicationRouter;
   irc.appView = new ChatApplicationView;
 
-
   // EVENTS //
 
   // Registration (server joined)
@@ -36,14 +35,18 @@ $(function() {
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
-    irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message});
+    irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message, type: 'status'});
+  });
+
+  irc.socket.on('notice', function(data) {
+    //TODO: make this work
+    //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});
   });
 
   // Message of the Day
   irc.socket.on('motd', function(data) {
-    data.motd.split('\n').forEach(function(line) {
-      irc.chatWindows.getByName('status').stream.add({sender: '', raw: line});
-    });
+    var message = new Message({sender: 'status', raw: data.motd, type: 'motd' });
+    irc.chatWindows.getByName('status').stream.add(message);
   });
 
   irc.socket.on('message', function(data) {
