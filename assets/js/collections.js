@@ -68,10 +68,9 @@ var UserList = Backbone.Collection.extend({
   },
 
   getUsers: function() {
-    var users = [];
-    for (var i=0; i<this.models.length; i++){
-      users.push(this.models[i].get('nick'));
-    }
+    var users = this.map(function(user) {
+      return user.get('nick');
+    });
     return users;
   }
 });
