@@ -11,23 +11,27 @@ var UserView = Backbone.View.extend({
     return this;
   },
 
-  addToIdle: function(){
-    var idle_time = this.user.model.get('idle') + 1;
-    if (idle_time > 60) {
+  addToIdle: function() {
+    var idleTime = this.user.model.get('idle') + 1;
+    if (idleTime > 60) {
       this.user.model.set({activity: 'idle', user_status: 'idle'});
     } else {
-      this.user.model.set({activity: 'Last active ' + idle_time + ' minutes ago', idle: idle_time});
+      this.user.model.set({
+        activity: 'Last active ' + idleTime + ' minutes ago',
+        idle: idleTime
+      });
     }
     this.render();
   },
 
-  setStatus: function(){
-    //One minute delays
+  setStatus: function() {
+    // One-minute delays
     var self = this;
-    var interval = 60000;
-    window.setInterval(function() { self.addToIdle() }, interval);
+    var interval = 60 * 1000;
+    setInterval(function() { self.addToIdle() }, interval);
   }
 });
+
 
 var UserListView = Backbone.View.extend({
   initialize: function() {
