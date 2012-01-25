@@ -121,7 +121,7 @@
 #chat-bar, #user-bar{
   height: 5%;
   background: #434950;
-  color: #eee
+  color: #eee;
   overflow: hidden;
 }
 
