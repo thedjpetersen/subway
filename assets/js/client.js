@@ -79,6 +79,9 @@ $(function() {
       irc.chatWindows.add({name: data.channel});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
+      if(channel === undefined) {
+        irc.chatWindows.add({name: data.channel});
+      }
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'active', activity: 'Joined'});
       var joinMessage = new Message({type: 'join', nick: data.nick});
       joinMessage.setText();
