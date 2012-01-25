@@ -122,6 +122,7 @@
   height: 5%;
   background: #434950;
   color: #eee
+  overflow: hidden;
 }
 
 .titlebar{
