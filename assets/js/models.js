@@ -50,6 +50,9 @@ var Message = Backbone.Model.extend({
       case 'nick':
         text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
         break;
+      case 'topic':
+        text = '<span class="topic_img"></span><b>' + this.get('nick') + '</b> has changed the topic to <i>' + this.get('topic') + '</i>';
+        break;
     }
     this.set({text: text});
   },

@@ -180,11 +180,11 @@
   background: #F9F9F9;
 }
 
-.joinpart{
+.message_notification{
   padding: 1% 0% 1% 1%;
 }
 
-.join_img, .part_img{
+.join_img, .part_img, .topic_img{
   width: 16px;
   height: 16px;
   padding-right: 1%;
@@ -199,6 +199,10 @@
 
 .part_img{
   background-image:url('/assets/images/part.png');
+}
+
+.topic_img{
+  background-image:url('/assets/images/topic.png');
 }
 
 .chat_name{

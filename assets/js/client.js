@@ -113,9 +113,11 @@ $(function() {
   });
 
   irc.socket.on('topic', function(data) {
-    console.log(data);
     var channel = irc.chatWindows.getByName(data.channel);
     channel.set({topic: data.topic});
+    var topicMessage = new Message({type: 'topic', nick: data.nick, topic: data.topic});
+    topicMessage.setText();
+    channel.stream.add(topicMessage);
   });
 
   irc.socket.on('error', function(data) {
