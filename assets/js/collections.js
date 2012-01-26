@@ -49,6 +49,12 @@ var WindowList = Backbone.Collection.extend({
     return this.filter(function(chat) {
       return chat.get('type') === 'channel';
     });
+  },
+
+  getTotalUnreadMentions: function() {
+    return this.reduce(function(prev, chat) {
+      return prev + chat.get('unreadMentions');
+    }, 0);
   }
 
 });
