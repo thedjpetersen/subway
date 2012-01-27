@@ -28,6 +28,9 @@ var ChatApplicationView = Backbone.View.extend({
   // Show number of unread mentions in title
   showUnread: function() {
     var unreads = irc.chatWindows.getTotalUnreadMentions();
-    document.title = '(' + unreads + ') ' + this.originalTitle;
+    if (unreads > 0)
+      document.title = '(' + unreads + ') ' + this.originalTitle;
+    else
+      document.title = this.originalTitle;
   }
 });
