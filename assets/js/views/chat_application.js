@@ -5,6 +5,7 @@ var ChatApplicationView = Backbone.View.extend({
   initialize: function() {
     this.render();
     irc.chatWindows.bind('change:active', this.focus, this);
+    irc.chatWindows.bind('change:unread', this.showUnread, this);
     irc.chatWindows.bind('change:unreadMentions', this.showUnread, this);
   },
 
@@ -27,7 +28,7 @@ var ChatApplicationView = Backbone.View.extend({
 
   // Show number of unread mentions in title
   showUnread: function() {
-    var unreads = irc.chatWindows.getTotalUnreadMentions();
+    var unreads = irc.chatWindows.unreadCount();
     if (unreads > 0)
       document.title = '(' + unreads + ') ' + this.originalTitle;
     else
