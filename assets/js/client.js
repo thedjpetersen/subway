@@ -50,24 +50,23 @@ $(function() {
 
   // Message of the Day
   irc.socket.on('motd', function(data) {
-    var message = new Message({sender: 'status', raw: data.motd, type: 'motd' });
+    var message = new Message({sender: 'status', raw: data.motd, type: 'motd'});
     irc.chatWindows.getByName('status').stream.add(message);
   });
 
   irc.socket.on('message', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.to);
     var type = 'message';
-    if (data.to.substr(0) !== '#'){
-      //We do this in the case of a private message
-      type = 'pm';
+    // Only handle channel messages here; PMs handled separately
+    if (data.to.substr(0, 1) === '#') {
+      chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
     }
-    chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
   });
 
   irc.socket.on('pm', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.nick);
-    if (chatWindow === undefined){
-      irc.chatWindows.add({name: data.nick});
+    if (typeof chatWindow === 'undefined') {
+      irc.chatWindows.add({name: data.nick, type: 'pm'});
       chatWindow = irc.chatWindows.getByName(data.nick);
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});

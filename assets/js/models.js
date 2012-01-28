@@ -168,7 +168,6 @@ var ChatWindow = Backbone.Model.extend({
     this.set({unread: this.get('unread') + 1});
     if (msg.get('mention'))
       this.set({unreadMentions: this.get('unreadMentions') + 1});
-    console.log(this.get('unread'));
   }
 
 });
