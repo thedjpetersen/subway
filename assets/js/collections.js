@@ -45,10 +45,27 @@ var WindowList = Backbone.Collection.extend({
     selected.view.render();
   },
 
-  getChannels: function() {
+  // Restrict to a certain type of chat window
+  byType: function(type) {
     return this.filter(function(chat) {
-      return chat.get('type') === 'channel';
+      return chat.get('type') === type;
     });
+  },
+
+  // Unread private messages and mentions
+  unreadCount: function() {
+    var channels = this.byType('channel');
+    var pms = this.byType('pm');
+
+    var count = 0;
+    count = channels.reduce(function(prev, chat) {
+      return prev + chat.get('unreadMentions');
+    }, 0);
+    count += pms.reduce(function(prev, chat) {
+      return prev + chat.get('unread');
+    }, 0);
+
+    return count;
   }
 
 });
