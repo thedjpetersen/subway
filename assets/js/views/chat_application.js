@@ -3,10 +3,11 @@ var ChatApplicationView = Backbone.View.extend({
   originalTitle: document.title,
 
   initialize: function() {
+    irc.chatWindows.bind('change:active', this.focus, this)
+      .bind('change:unread', this.showUnread, this)
+      .bind('change:unreadMentions', this.showUnread, this)
+      .bind('forMe', this.playSound, this);
     this.render();
-    irc.chatWindows.bind('change:active', this.focus, this);
-    irc.chatWindows.bind('change:unread', this.showUnread, this);
-    irc.chatWindows.bind('change:unreadMentions', this.showUnread, this);
   },
 
   render: function() {
@@ -33,5 +34,14 @@ var ChatApplicationView = Backbone.View.extend({
       document.title = '(' + unreads + ') ' + this.originalTitle;
     else
       document.title = this.originalTitle;
+  },
+
+  playSound: function(type) {
+    if (type === 'newPm')
+      console.log('Play sound for new private chat');
+    else if (type === 'message')
+      console.log('Play sound for new mention/pm');
+    else
+      console.log('unexpected type in playSound');
   }
 });
