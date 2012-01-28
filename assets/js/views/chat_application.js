@@ -7,6 +7,13 @@ var ChatApplicationView = Backbone.View.extend({
       .bind('change:unread', this.showUnread, this)
       .bind('change:unreadMentions', this.showUnread, this)
       .bind('forMe', this.playSound, this);
+    // Preload sound files
+    if (this._supportedFormat) {
+      this.sounds = {
+        newPm: this._loadSound('new-pm'),
+        message: this._loadSound('msg')
+      };
+    }
     this.render();
   },
 
@@ -37,11 +44,23 @@ var ChatApplicationView = Backbone.View.extend({
   },
 
   playSound: function(type) {
-    if (type === 'newPm')
-      console.log('Play sound for new private chat');
-    else if (type === 'message')
-      console.log('Play sound for new mention/pm');
-    else
-      console.log('unexpected type in playSound');
+    this.sounds && this.sounds[type].play();
+  },
+
+  _loadSound: function(name) {
+    var a = new Audio();
+    a.src = '/assets/sounds/' + name + '.' + this._supportedFormat();
+    console.log(a.src);
+    return a;
+  },
+
+  // Detect supported HTML5 audio format
+  _supportedFormat: function() {
+    var a = document.createElement('audio');
+    if (!a.canPlayType) return false;
+    else if (!!(a.canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, '')))
+      return 'ogg'
+    else if (!!(a.canPlayType('audio/mpeg;').replace(/no/, '')))
+      return 'mp3'
   }
 });
