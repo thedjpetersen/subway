@@ -3,7 +3,7 @@ var Message = Backbone.Model.extend({
     // expected properties:
     // - sender
     // - raw
-    'type': 'message'
+    type: 'message'
   },
 
   initialize: function() {
@@ -14,76 +14,11 @@ var Message = Backbone.Model.extend({
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
-    // TODO: add explicit HTML escape before sending to ich.message.
-    // Want to add <br> to motd.
-    var output;
-
-    //This handles whether to output a message or an action
-    if(text.substr(1,6) === 'ACTION') {
-      output = ich.action({user: nick, content: this.get('raw').substr(8), rendered_time: this._formatDate(Date.now())}, true);
-    } else {
-      output = ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true);
-      //This renders the motd the way it looks
-      if(this.get('type') === 'motd'){
-        output = output.replace('<span>', '<span><pre>');
-        output = output.replace('</span>', '</pre></span>');
-      }
-    }
-
-    var result = this._linkify(output);
+    var result = this._linkify(text);
     if (nick !== irc.me.nick) {
       result = this._mentions(result);
     }
     return result;
-  },
-
-  // Set output text for status messages
-  setText: function() {
-    var text = '';
-    switch (this.get('type')) {
-      case 'join':
-        text = '<span class="join_img"></span><b>' + this.get('nick') + '</b> joined the channel';
-        break;
-      case 'part':
-        text = '<span class="part_img"></span><b>' + this.get('nick') + '</b> left the channel';
-        break;
-      case 'nick':
-        text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
-        break;
-      case 'topic':
-        text = '<span class="topic_img"></span><b>' + this.get('nick') + '</b> has changed the topic to <i>' + this.get('topic') + '</i>';
-        break;
-    }
-    this.set({text: text});
-  },
-
-  _formatDate: function (date) {
-    var d = new Date(date);
-    var hh = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var dd = "AM";
-    var h = hh;
-    if (h >= 12) {
-      h = hh-12;
-      dd = "PM";
-    }
-    if (h == 0) {
-      h = 12;
-    }
-    m = m<10?"0"+m:m;
-
-    s = s<10?"0"+s:s;
-
-    /* if you want 2 digit hours:
-    h = h<10?"0"+h:h; */
-
-    var replacement = h+":"+m;
-    /* if you want to add seconds
-    repalcement += ":"+s;  */
-    replacement += " "+dd;
-
-    return d.toDateString() + ', ' + replacement;
   },
 
   // Find and link URLs
@@ -167,10 +102,16 @@ var ChatWindow = Backbone.Model.extend({
 
   setUnread: function(msg) {
     if (this.get('active')) return;
-    // Increment our unread messages
+    var signal = false;
+    // Increment unread messages
     this.set({unread: this.get('unread') + 1});
-    if (msg.get('mention'))
+    if (this.get('type') === 'pm') signal = true;
+    if (msg.get('mention')) {
       this.set({unreadMentions: this.get('unreadMentions') + 1});
+      signal = true;
+    }
+    // All PMs & mentions
+    if (signal) this.trigger('forMe', 'message');
   }
 
 });

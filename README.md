@@ -1,21 +1,16 @@
 Subway
 ======
 
-*(Note: this is aspirational. Not implemented yet!)*
+Subway is an IRC client/server combination.
+The server supports multiple simultaneous users. The client is a modern
+JavaScript-heavy web interface. Client/server communication is done with
+websockets (or best available fallback) via socket.io.
 
-Subway is an IRC client/server combination. The server works for multiple simultaneous users, with optional persistent connections and logging. The client is a modern JavaScript-heavy web interface. Server/client communication is done with websockets (or best available fallback) via socket.io.
-
-Subway utilizes [node.js](http://nodejs.org/) and 
+Subway is built with [node.js](http://nodejs.org/) and
 Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc) on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
-
-Status
-------
-
-Nothing works yet. Functionality to come shortly. If you'd like to contribute, 
-there is plenty to do. Tickets for needed functionality also to come shortly.
 
 Installation
 ------------
@@ -32,6 +27,7 @@ Installation
 
 3. Point your browser at `http://localhost:8337/`
 
+
 Development
 -----------
 
@@ -46,13 +42,14 @@ Replace step 1 above with this:
 this should install dependencies, and link the git checkout to your global
 node_modules directory.
 
+
 History
 -------
 
-Subway is a combination of two projects that started independently 
+Subway is a combination of two projects that started independently
 with a similar technology stack and similar aims:
 
-- [subway-web](https://github.com/thedjpetersen/subway-web) / 
+- [subway-web](https://github.com/thedjpetersen/subway-web) /
   [subway-server](https://github.com/thedjpetersen/subway-server)
   by David Petersen
 - [web-irc](https://github.com/akavlie/web-irc) by Aaron Kavlie
@@ -63,8 +60,22 @@ Its goals are twofold:
    from any web browser
 
 
+Credits
+-------
+
+Major Subway contributors include:
+
+- [David Petersen](https://github.com/thedjpetersen), developer
+- [Aaron Kavlie](https://github.com/akavlie), developer
+- [Jamie Soar](http://www.jamiesoarmusic.co.uk/), notification sounds
+
+
 License
 -------
+
+Excepting third-party assets (licensed as specified in their respective files
+or directories), this project is covered by the MIT License:
+
 
 The MIT License (MIT)
 Copyright (c) 2011 David Petersen

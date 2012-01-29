@@ -36,7 +36,6 @@ $(function() {
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
-    irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message, type: 'status'});
   });
 
   irc.socket.on('notice', function(data) {
@@ -83,7 +82,6 @@ $(function() {
       }
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'active', activity: 'Joined'});
       var joinMessage = new Message({type: 'join', nick: data.nick});
-      joinMessage.setText();
       channel.stream.add(joinMessage);
     }
   });
@@ -98,7 +96,6 @@ $(function() {
       user.view.remove();
       user.destroy();
       var partMessage = new Message({type: 'part', nick: data.nick});
-      partMessage.setText();
       channel.stream.add(partMessage);
     }
   });
