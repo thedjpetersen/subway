@@ -13,7 +13,7 @@ var ChatView = Backbone.View.extend({
     var topic = this.model.get('topic') || '';
     var context = {
       title: this.model.get('name'),
-      topic: topic.substr(0,100)
+      topic: topic
     };
     this.$('#chat-bar').html(ich.titlebar(context));
   },
@@ -106,16 +106,16 @@ var ChatView = Backbone.View.extend({
 
     $chatWindow.append(view.el);
 
-    if (sender === irc.me.nick) {
+    if (sender === irc.me.nick && type !== 'join') {
       $(view.el).addClass('message-me');
     }
 
-    if(type === 'join' || type === 'part'){
-      $(view.el).addClass('joinpart');
+    if(['join', 'part', 'topic'].indexOf(type) !== -1){
+      $(view.el).addClass('message_notification');
     }
 
     // Scroll down to show new message
-    var chatWindowHeight = ($chatWindow[0].scrollHeight - 555);
+    var chatWindowHeight = ($chatWindow[0].scrollHeight - $chatWindow.height());
     // If the window is large enough to be scrollable
     if (chatWindowHeight > 0) {
       // If the user isn't scrolling go to the bottom message

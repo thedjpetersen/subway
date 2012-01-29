@@ -77,6 +77,9 @@ $(function() {
       irc.chatWindows.add({name: data.channel});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
+      if(channel === undefined) {
+        irc.chatWindows.add({name: data.channel});
+      }
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'active', activity: 'Joined'});
       var joinMessage = new Message({type: 'join', nick: data.nick});
       channel.stream.add(joinMessage);
@@ -108,6 +111,9 @@ $(function() {
   irc.socket.on('topic', function(data) {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.set({topic: data.topic});
+    var topicMessage = new Message({type: 'topic', nick: data.nick, topic: data.topic});
+    topicMessage.setText();
+    channel.stream.add(topicMessage);
   });
 
   irc.socket.on('error', function(data) {

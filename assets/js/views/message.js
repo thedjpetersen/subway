@@ -49,6 +49,9 @@ var MessageView = Backbone.View.extend({
           newNick: this.model.get('newNick')
         });
         break;
+      case 'topic':
+        text = '<span class="topic_img"></span><b>' + this.get('nick') + '</b> has changed the topic to <i>' + this.get('topic') + '</i>';
+        break;
     }
     return html;
   },
