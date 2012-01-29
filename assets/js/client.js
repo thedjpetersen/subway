@@ -36,7 +36,6 @@ $(function() {
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
-    irc.chatWindows.getByName('status').stream.add({sender: '', raw: data.message, type: 'status'});
   });
 
   irc.socket.on('notice', function(data) {
