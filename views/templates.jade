@@ -87,13 +87,14 @@ script(id="image_embed", type="text/html")
 
 script(id="youtube_embed", type="text/html")
   .embed
-    iframe(width="420", height="315", src="http://www.youtube.com/embed/{{video_id}}?rel=0", frameborder="0", allowfullscreen)
+    iframe(width="420", height="315", frameborder="0", allowfullscreen,
+      src="http://www.youtube.com/embed/{{video_id}}?rel=0")
 
 script(id="action", type="text/html")
   .chat_action
     b * {{user}}&nbsp;
     span {{content}}
-  .chat_time
+  .chat-time
     span {{renderedTime}}
 
 script(id="message", type="text/html")
@@ -103,3 +104,10 @@ script(id="message", type="text/html")
     span {{content}}
   .chat-time
     span {{renderedTime}}
+
+script(id="join_part", type="text/html")
+  span(class="{{type}}_img")
+  span <b>{{nick}}</b> {{action}} the channel
+
+script(id="nick", type="text/html")
+  span <b>{{oldNick}}</b> is now known as {{newNick}}

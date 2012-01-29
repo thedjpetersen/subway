@@ -36,13 +36,18 @@ var MessageView = Backbone.View.extend({
     var html = '';
     switch (type) {
       case 'join':
-        html = '<span class="join_img"></span><b>' + this.model.get('nick') + '</b> joined the channel';
-        break;
       case 'part':
-        html = '<span class="part_img"></span><b>' + this.model.get('nick') + '</b> left the channel';
+        html = ich.join_part({
+          type: type,
+          nick: this.model.get('nick'),
+          action: type === 'join' ? 'joined' : 'left'
+        });
         break;
       case 'nick':
-        html = '<b>' + this.model.get('oldNick') + '</b> is now known as ' + this.model.get('newNick');
+        html = ich.nick({
+          oldNick: this.model.get('oldNick'),
+          newNick: this.model.get('newNick')
+        });
         break;
     }
     return html;
