@@ -1,0 +1,12 @@
+The following sound files were taken from the "Visions I" Adium Sound Set:
+
+- msg.ogg
+- msg.mp3
+- new-pm.ogg
+- new-pm.mp3
+
+This sound set was created by Jamie Soar, and is covered by the
+Creative Commons BY-ND 3.0 license (http://creativecommons.org/licenses/by-nd/3.0/)
+
+The original sound set can be found here:
+http://www.adiumxtras.com/index.php?a=xtras&xtra_id=7612

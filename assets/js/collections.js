@@ -16,11 +16,10 @@ var WindowList = Backbone.Collection.extend({
   model: ChatWindow,
 
   initialize: function() {
-    var self = this;
+    this.bind('add', this.setActive, this);
     this.bind('add', function(chat) {
-      self.setActive(chat);
-    });
-
+      if (chat.get('type') === 'pm') this.trigger('forMe', 'newPm');
+    })
   },
 
   getByName: function(name) {
