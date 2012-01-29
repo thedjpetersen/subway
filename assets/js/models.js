@@ -14,17 +14,23 @@ var Message = Backbone.Model.extend({
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
-    // TODO: add explicit HTML escape before sending to ich.message.
-    // Want to add <br> to motd.
     var output;
 
-    //This handles whether to output a message or an action
-    if(text.substr(1,6) === 'ACTION') {
-      output = ich.action({user: nick, content: this.get('raw').substr(8), rendered_time: this._formatDate(Date.now())}, true);
+    // This handles whether to output a message or an action
+    if (text.substr(1, 6) === 'ACTION') {
+      output = ich.action({
+        user: nick,
+        content: this.get('raw').substr(8),
+        renderedTime: this._formatDate(Date.now())
+      }, true);
     } else {
-      output = ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true);
-      //This renders the motd the way it looks
-      if(this.get('type') === 'motd'){
+      output = ich.message({
+        user: nick,
+        content: this.get('raw'),
+        renderedTime: this._formatDate(Date.now())
+      }, true);
+      // Change rendering for motd
+      if (this.get('type') === 'motd') {
         output = output.replace('<span>', '<span><pre>');
         output = output.replace('</span>', '</pre></span>');
       }
