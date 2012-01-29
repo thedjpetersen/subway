@@ -1,21 +1,16 @@
 Subway
 ======
 
-*(Note: this is aspirational. Not implemented yet!)*
+Subway is an IRC client/server combination.
+The server supports multiple simultaneous users. The client is a modern
+JavaScript-heavy web interface. Client/server communication is done with
+websockets (or best available fallback) via socket.io.
 
-Subway is an IRC client/server combination. The server works for multiple simultaneous users, with optional persistent connections and logging. The client is a modern JavaScript-heavy web interface. Server/client communication is done with websockets (or best available fallback) via socket.io.
-
-Subway utilizes [node.js](http://nodejs.org/) and
+Subway is built with [node.js](http://nodejs.org/) and
 Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc) on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
-
-Status
-------
-
-Nothing works yet. Functionality to come shortly. If you'd like to contribute,
-there is plenty to do. Tickets for needed functionality also to come shortly.
 
 Installation
 ------------
@@ -32,6 +27,7 @@ Installation
 
 3. Point your browser at `http://localhost:8337/`
 
+
 Development
 -----------
 
@@ -45,6 +41,7 @@ Replace step 1 above with this:
 
 this should install dependencies, and link the git checkout to your global
 node_modules directory.
+
 
 History
 -------
