@@ -169,7 +169,7 @@
   font-size: 1.3em;
 }
 
-.message{
+.message-box {
   border-bottom: 1px solid #DDDDDD;
   display: table;
   width: 100%;
@@ -179,7 +179,7 @@
   background: #F9F9F9;
 }
 
-.joinpart{
+.joinpart {
   padding: 1% 0% 1% 1%;
 }
 

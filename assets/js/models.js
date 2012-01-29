@@ -3,7 +3,7 @@ var Message = Backbone.Model.extend({
     // expected properties:
     // - sender
     // - raw
-    'type': 'message'
+    type: 'message'
   },
 
   initialize: function() {
@@ -14,25 +14,7 @@ var Message = Backbone.Model.extend({
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
-    var output;
-
-    // This handles whether to output a message or an action
-    if (text.substr(1, 6) === 'ACTION') {
-      output = ich.action({
-        user: nick,
-        content: this.get('raw').substr(8),
-        renderedTime: this._formatDate(Date.now())
-      }, true);
-    } else {
-      output = ich.message({
-        user: nick,
-        type: this.get('type'),
-        content: this.get('raw'),
-        renderedTime: this._formatDate(Date.now())
-      }, true);
-    }
-
-    var result = this._linkify(output);
+    var result = this._linkify(text);
     if (nick !== irc.me.nick) {
       result = this._mentions(result);
     }
@@ -54,35 +36,6 @@ var Message = Backbone.Model.extend({
         break;
     }
     this.set({text: text});
-  },
-
-  _formatDate: function (date) {
-    var d = new Date(date);
-    var hh = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var dd = "AM";
-    var h = hh;
-    if (h >= 12) {
-      h = hh-12;
-      dd = "PM";
-    }
-    if (h == 0) {
-      h = 12;
-    }
-    m = m<10?"0"+m:m;
-
-    s = s<10?"0"+s:s;
-
-    /* if you want 2 digit hours:
-    h = h<10?"0"+h:h; */
-
-    var replacement = h+":"+m;
-    /* if you want to add seconds
-    repalcement += ":"+s;  */
-    replacement += " "+dd;
-
-    return d.toDateString() + ', ' + replacement;
   },
 
   // Find and link URLs
