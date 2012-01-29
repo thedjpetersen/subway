@@ -63,6 +63,15 @@ Its goals are twofold:
    from any web browser
 
 
+Credits
+-------
+
+Major Subway contributors include:
+
+- [David Petersen](https://github.com/thedjpetersen), developer
+- [Aaron Kavlie](https://github.com/akavlie), developer
+- [Jamie Soar](http://www.jamiesoarmusic.co.uk/), notification sounds
+
 
 License
 -------
