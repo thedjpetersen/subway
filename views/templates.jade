@@ -97,9 +97,9 @@ script(id="action", type="text/html")
     span {{renderedTime}}
 
 script(id="message", type="text/html")
-  .chat_name
+  .chat-name
     b {{user}}
-  .chat_message
+  div(class="chat-message {{type}}")
     span {{content}}
-  .chat_time
+  .chat-time
     span {{renderedTime}}

@@ -26,14 +26,10 @@ var Message = Backbone.Model.extend({
     } else {
       output = ich.message({
         user: nick,
+        type: this.get('type'),
         content: this.get('raw'),
         renderedTime: this._formatDate(Date.now())
       }, true);
-      // Change rendering for motd
-      if (this.get('type') === 'motd') {
-        output = output.replace('<span>', '<span><pre>');
-        output = output.replace('</span>', '</pre></span>');
-      }
     }
 
     var result = this._linkify(output);
