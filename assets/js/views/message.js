@@ -9,8 +9,10 @@ var MessageView = Backbone.View.extend({
     var nick = this.model.get('sender') || this.model.collection.channel.get('name');
     var html;
 
+    if (_.include(['join', 'part', 'nick'], this.model.get('type')))
+      html = this.setText(this.model.get('type'));
     // This handles whether to output a message or an action
-    if (this.model.get('text').substr(1, 6) === 'ACTION') {
+    else if (this.model.get('text').substr(1, 6) === 'ACTION') {
       html = ich.action({
         user: nick,
         content: this.model.get('text').substr(8),
@@ -27,6 +29,23 @@ var MessageView = Backbone.View.extend({
 
     $(this.el).html(html);
     return this;
+  },
+
+  // Set output text for status messages
+  setText: function(type) {
+    var html = '';
+    switch (type) {
+      case 'join':
+        html = '<span class="join_img"></span><b>' + this.model.get('nick') + '</b> joined the channel';
+        break;
+      case 'part':
+        html = '<span class="part_img"></span><b>' + this.model.get('nick') + '</b> left the channel';
+        break;
+      case 'nick':
+        html = '<b>' + this.model.get('oldNick') + '</b> is now known as ' + this.model.get('newNick');
+        break;
+    }
+    return html;
   },
 
   _formatDate: function(date) {

@@ -21,23 +21,6 @@ var Message = Backbone.Model.extend({
     return result;
   },
 
-  // Set output text for status messages
-  setText: function() {
-    var text = '';
-    switch (this.get('type')) {
-      case 'join':
-        text = '<span class="join_img"></span><b>' + this.get('nick') + '</b> joined the channel';
-        break;
-      case 'part':
-        text = '<span class="part_img"></span><b>' + this.get('nick') + '</b> left the channel';
-        break;
-      case 'nick':
-        text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
-        break;
-    }
-    this.set({text: text});
-  },
-
   // Find and link URLs
   // TODO: put youtube and image embedding code
   // into own function
