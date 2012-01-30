@@ -80,7 +80,7 @@ $(function() {
       if(channel === undefined) {
         irc.chatWindows.add({name: data.channel});
       }
-      channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'active', activity: 'Joined'});
+      channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'idle', activity: ''});
       var joinMessage = new Message({type: 'join', nick: data.nick});
       channel.stream.add(joinMessage);
     }
@@ -104,7 +104,7 @@ $(function() {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.userList = new UserList(channel);
     $.each(data.nicks, function(nick, role){
-      channel.userList.add(new User({nick: nick, role: role, idle:0, user_status: 'active', activity: 'Joined'}))
+      channel.userList.add(new User({nick: nick, role: role, idle:61, user_status: 'idle', activity: ''}))
     });
   });
 
