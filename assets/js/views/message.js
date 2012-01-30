@@ -18,6 +18,7 @@ var MessageView = Backbone.View.extend({
         content: this.model.get('text').substr(8),
         renderedTime: this._formatDate(Date.now())
       }, true);
+      html = this.model.parse(html);
     } else {
       html = ich.message({
         user: nick,
@@ -25,9 +26,9 @@ var MessageView = Backbone.View.extend({
         content: this.model.get('text'),
         renderedTime: this._formatDate(Date.now())
       }, true);
+      html = this.model.parse(html);
     }
 
-    html = this.model.parse(html);
 
     $(this.el).html(html);
     return this;
