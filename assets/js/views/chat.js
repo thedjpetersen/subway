@@ -100,8 +100,10 @@ var ChatView = Backbone.View.extend({
 
     if (nicksToIgnore.indexOf(sender) === -1 && type === 'message'){
       var user = this.model.userList.getByNick(sender);
+      var element = $(user.view.el);
       user.set({idle: 0});
       user.view.addToIdle();
+      element.prependTo(element.parent());
     }
 
     $chatWindow.append(view.el);
