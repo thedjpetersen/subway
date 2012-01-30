@@ -8,7 +8,7 @@ var Message = Backbone.Model.extend({
 
   initialize: function() {
     if (this.get('raw')) {
-      this.set({text: this.parse(this.get('raw'))});
+      this.set({text: this.get('raw')});
     }
   },
 
@@ -37,6 +37,7 @@ var Message = Backbone.Model.extend({
       links.push(href);
       return '<a href="' + href + '" target="_blank">' + url + '</a>';
     });
+    console.log(links);
     if (links.length>0){
       //Look for embeddable media in all the links
       for (var i=0; i<links.length; i++){
