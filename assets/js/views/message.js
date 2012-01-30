@@ -9,7 +9,7 @@ var MessageView = Backbone.View.extend({
     var nick = this.model.get('sender') || this.model.collection.channel.get('name');
     var html;
 
-    if (_.include(['join', 'part', 'nick'], this.model.get('type')))
+    if (_.include(['join', 'part', 'nick', 'topic'], this.model.get('type')))
       html = this.setText(this.model.get('type'));
     // This handles whether to output a message or an action
     else if (this.model.get('text').substr(1, 6) === 'ACTION') {
