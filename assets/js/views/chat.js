@@ -108,7 +108,7 @@ var ChatView = Backbone.View.extend({
 
     $chatWindow.append(view.el);
 
-    if (sender === irc.me.nick && type !== 'join') {
+    if (sender === irc.me.nick && ['join', 'part'].indexOf(type) === -1) {
       $(view.el).addClass('message-me');
     }
 
