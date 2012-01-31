@@ -10,6 +10,11 @@ var Message = Backbone.Model.extend({
     if (this.get('raw')) {
       this.set({text: this.get('raw')});
     }
+
+    //Temporary solution to make unread mentions work again
+    if (this.get('raw').search('\\b' + irc.me.nick + '\\b') !== -1){
+      this.set({mention: true});
+    }
   },
 
   parse: function(text) {
@@ -37,7 +42,6 @@ var Message = Backbone.Model.extend({
       links.push(href);
       return '<a href="' + href + '" target="_blank">' + url + '</a>';
     });
-    console.log(links);
     if (links.length>0){
       //Look for embeddable media in all the links
       for (var i=0; i<links.length; i++){
@@ -62,10 +66,8 @@ var Message = Backbone.Model.extend({
   },
 
   _mentions: function(text) {
-    var self = this;
     var re = new RegExp('\\b' + irc.me.nick + '\\b', 'g');
     var parsed = text.replace(re, function(nick) {
-      self.set({mention: true});
       return '<span class="mention">' + nick + '</span>';
     });
     return parsed;
