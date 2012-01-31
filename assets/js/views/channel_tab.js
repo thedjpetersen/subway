@@ -23,18 +23,18 @@ var ChannelTabView = Backbone.View.extend({
   },
 
   updateUnreadCounts: function(msg) {
-    console.log('unread count updated')
-
     var unread = this.model.get('unread');
     var unreadMentions = this.model.get('unreadMentions');
 
     // TODO: do something more sensible here than remove/readd elements
     $(this.el).children('.unread, .unread_mentions').remove();
 
-    if (unread > 0)
+    if (unread > 0) {
       $(this.el).append(ich.unread({unread: unread}));
-    if (unreadMentions > 0)
+    }
+    if (unreadMentions > 0) {
       $(this.el).append(ich.unread_mentions({unread_mentions: unreadMentions}));
+    }
   },
 
   removeUnread: function() {

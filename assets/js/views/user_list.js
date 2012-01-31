@@ -1,7 +1,6 @@
 var UserView = Backbone.View.extend({
   initialize: function(user) {
     this.user = user;
-    this.setStatus();
   },
 
   className: 'userlist_user',
@@ -14,12 +13,17 @@ var UserView = Backbone.View.extend({
   addToIdle: function() {
     var idleTime = this.user.model.get('idle') + 1;
     if (idleTime > 60) {
-      this.user.model.set({activity: 'idle', user_status: 'idle'});
+      this.user.model.set({activity: '', user_status: 'idle'});
+      clearInterval(this.intervalTimer);
     } else {
       this.user.model.set({
-        activity: 'Last active ' + idleTime + ' minutes ago',
-        idle: idleTime
+        activity: '(' + idleTime + 'm)',
+        idle: idleTime,
+        user_status: 'active'
       });
+      if(this.intervalTimer === undefined) {
+        this.setStatus();
+      }
     }
     this.render();
   },
@@ -28,7 +32,7 @@ var UserView = Backbone.View.extend({
     // One-minute delays
     var self = this;
     var interval = 60 * 1000;
-    setInterval(function() { self.addToIdle() }, interval);
+    this.intervalTimer = setInterval(function() { self.addToIdle() }, interval);
   }
 });
 

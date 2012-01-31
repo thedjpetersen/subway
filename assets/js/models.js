@@ -3,84 +3,27 @@ var Message = Backbone.Model.extend({
     // expected properties:
     // - sender
     // - raw
-    'type': 'message'
+    type: 'message'
   },
 
   initialize: function() {
     if (this.get('raw')) {
-      this.set({text: this.parse(this.get('raw'))});
+      this.set({text: this.get('raw')});
+    }
+
+    //Temporary solution to make unread mentions work again
+    if (this.get('raw').search('\\b' + irc.me.nick + '\\b') !== -1){
+      this.set({mention: true});
     }
   },
 
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
-    // TODO: add explicit HTML escape before sending to ich.message.
-    // Want to add <br> to motd.
-    var output;
-
-    //This handles whether to output a message or an action
-    if(text.substr(1,6) === 'ACTION') {
-      output = ich.action({user: nick, content: this.get('raw').substr(8), rendered_time: this._formatDate(Date.now())}, true);
-    } else {
-      output = ich.message({user: nick, content: this.get('raw'), rendered_time: this._formatDate(Date.now())}, true);
-      //This renders the motd the way it looks
-      if(this.get('type') === 'motd'){
-        output = output.replace('<span>', '<span><pre>');
-        output = output.replace('</span>', '</pre></span>');
-      }
-    }
-
-    var result = this._linkify(output);
+    var result = this._linkify(text);
     if (nick !== irc.me.nick) {
       result = this._mentions(result);
     }
     return result;
-  },
-
-  // Set output text for status messages
-  setText: function() {
-    var text = '';
-    switch (this.get('type')) {
-      case 'join':
-        text = '<span class="join_img"></span><b>' + this.get('nick') + '</b> joined the channel';
-        break;
-      case 'part':
-        text = '<span class="part_img"></span><b>' + this.get('nick') + '</b> left the channel';
-        break;
-      case 'nick':
-        text = '<b>' + this.get('oldNick') + '</b> is now known as ' + this.get('newNick');
-        break;
-    }
-    this.set({text: text});
-  },
-
-  _formatDate: function (date) {
-    var d = new Date(date);
-    var hh = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var dd = "AM";
-    var h = hh;
-    if (h >= 12) {
-      h = hh-12;
-      dd = "PM";
-    }
-    if (h == 0) {
-      h = 12;
-    }
-    m = m<10?"0"+m:m;
-
-    s = s<10?"0"+s:s;
-
-    /* if you want 2 digit hours:
-    h = h<10?"0"+h:h; */
-
-    var replacement = h+":"+m;
-    /* if you want to add seconds
-    repalcement += ":"+s;  */
-    replacement += " "+dd;
-
-    return d.toDateString() + ', ' + replacement;
   },
 
   // Find and link URLs
@@ -110,12 +53,12 @@ var Message = Backbone.Model.extend({
           if(targetPosition !== -1) {
             video_id = video_id.substring(0, targetPosition);
           }
-          parsed = parsed.split('</div><div class=\"chat_time\">').join(ich.youtube_embed({video_id:video_id}, true) + '</div><div class=\"chat_time\">');
+          parsed = parsed.split('</div><div class=\"chat-time\">').join(ich.youtube_embed({video_id:video_id}, true) + '</div><div class=\"chat-time\">');
         }
 
         //Add embedded images
         if (jQuery.inArray(href.substr(-3), ['jpg', 'gif', 'png']) > -1){
-          parsed = parsed.split('</div><div class=\"chat_time\">').join(ich.image_embed({link:href}, true) + '</div><div class=\"chat_time\">');
+          parsed = parsed.split('</div><div class=\"chat-time\">').join(ich.image_embed({link:href}, true) + '</div><div class=\"chat-time\">');
         }
       }
     }
@@ -123,10 +66,8 @@ var Message = Backbone.Model.extend({
   },
 
   _mentions: function(text) {
-    var self = this;
     var re = new RegExp('\\b' + irc.me.nick + '\\b', 'g');
     var parsed = text.replace(re, function(nick) {
-      self.set({mention: true});
       return '<span class="mention">' + nick + '</span>';
     });
     return parsed;

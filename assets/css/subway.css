@@ -121,7 +121,8 @@
 #chat-bar, #user-bar{
   height: 5%;
   background: #434950;
-  color: #eee
+  color: #eee;
+  overflow: hidden;
 }
 
 .titlebar{
@@ -169,7 +170,7 @@
   font-size: 1.3em;
 }
 
-.message{
+.message-box {
   border-bottom: 1px solid #DDDDDD;
   display: table;
   width: 100%;
@@ -179,11 +180,11 @@
   background: #F9F9F9;
 }
 
-.joinpart{
+.message_notification{
   padding: 1% 0% 1% 1%;
 }
 
-.join_img, .part_img{
+.join_img, .part_img, .topic_img{
   width: 16px;
   height: 16px;
   padding-right: 1%;
@@ -200,14 +201,18 @@
   background-image:url('/assets/images/part.png');
 }
 
-.chat_name{
+.topic_img{
+  background-image:url('/assets/images/topic.png');
+}
+
+.chat-name {
   display: table-cell;
   width: 14%;
   vertical-align: top;
   padding: 1% 0% 1% 1%;
 }
 
-.chat_message{
+.chat-message {
   display: table-cell;
   width: 66%;
   padding: 1%;
@@ -215,7 +220,11 @@
   border-right: 1px solid #DDDDDD;
 }
 
-.chat_message .embed img{
+.chat-message.motd {
+  white-space: pre;
+}
+
+.chat-message .embed img{
   display: block;
   max-width: 100%;
   max-height: 60%;
@@ -234,7 +243,7 @@
   border-right: 1px solid #DDDDDD;
 }
 
-.chat_time {
+.chat-time {
   display: table-cell;
   vertical-align: top;
   color: #888888;
@@ -243,7 +252,7 @@
   width: 20%;
 }
 
-#user-window{
+#user-window {
   height: 100%;
   width: 20%;
   position: absolute;
@@ -251,12 +260,12 @@
   background: #E7E9ED;
 }
 
-#user-list{
+#user-list {
   overflow-y: auto;
   height: 95%;
 }
 
-.userlist_user{
+.userlist_user {
   border-bottom: 1px solid #CCCCCC;
   display: table;
   width: 100%;
@@ -297,5 +306,6 @@
 }
 
 .userlist_user_time{
+  margin-left: 5px;
   color: #666666;
 }
