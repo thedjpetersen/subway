@@ -66,18 +66,33 @@ var ChatView = Backbone.View.extend({
             // Tab completion of user names
             var sentence = $('#chat-input').val().split(' ');
             var partialMatch = sentence.pop();
-            // TODO: Make this work (copy-paste from old code; it doesn't work)
-            // All the below code is busted until this is resolved.
             var users = channel.userList.getUsers();
-            for (var i=0; i<users.length; i++) {
+            var userIndex=0;
+            //Persist the match
+            if(window.partialMatch === undefined) {
+              window.partialMatch = partialMatch;
+            } else if(partialMatch.search(window.partialMatch) !== 0){
+              window.partialMatch = partialMatch;
+            } else {
+              if (sentence.length === 0) {
+                userIndex = users.indexOf(partialMatch.substr(0, partialMatch.length-1));
+              } else {
+                userIndex = users.indexOf(partialMatch);
+              }
+            }
+            for (var i=userIndex; i<users.length; i++) {
               var user = users[i] || '';
-              if (partialMatch.length > 0 && user.search(partialMatch) === 0) {
+              if (window.partialMatch.length > 0 && user.search(window.partialMatch, "i") === 0) {
+                if(user === partialMatch || user === partialMatch.substr(0, partialMatch.length-1)){
+                  continue;
+                }
                 sentence.push(user);
                 if (sentence.length === 1) {
                   $('#chat-input').val(sentence.join(' ') +  ":");
                 } else {
                   $('#chat-input').val(sentence.join(' '));
                 }
+                break;
               }
             }
           } else {
