@@ -59,6 +59,15 @@ $(function() {
     // Only handle channel messages here; PMs handled separately
     if (data.to.substr(0, 1) === '#') {
       chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
+    } else if(data.to !== irc.me.nick) {
+      // Don't take this out!
+      // the server doesn't emit a pm event
+      // from a message from the user
+      if (chatWindow === undefined) {
+        irc.chatWindows.add({name: data.to, type: 'pm'});
+        chatWindow = irc.chatWindows.getByName(data.to);
+      }
+      chatWindow.stream.add({sender: data.from, raw: data.text, type: 'pm'});
     }
   });
 
@@ -139,6 +148,9 @@ $(function() {
         break;
       case '/me':
         irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:'\u0001ACTION ' + commandText.splice(1).join(" ")});
+        break;
+      case '/msg':
+        irc.socket.emit('say', {target: commandText[1], message: commandText.splice(2).join(" ")});
         break;
       default:
         irc.socket.emit('command', commandText);
