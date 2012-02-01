@@ -9,7 +9,6 @@ var ChatView = Backbone.View.extend({
   },
 
   updateTitle: function(channel) {
-    console.log('title updated');
     var topic = this.model.get('topic') || '';
     var context = {
       title: this.model.get('name'),
@@ -62,6 +61,8 @@ var ChatView = Backbone.View.extend({
             $(this).val('');
             $('#chat_button').addClass('disabled');
           } else if (event.keyCode == 9) {
+            var searchRe;
+            var match = false;
             // Get Active Window
             var channel = irc.chatWindows.getActive();
             // Get users input
@@ -72,13 +73,14 @@ var ChatView = Backbone.View.extend({
             var users = channel.userList.getUsers();
             // Set default index for loop
             var userIndex=0;
-            var searchRe = new RegExp(window.partialMatch, "i");
             //Persist the match
             //Store the partialMatch to persist next time the user hits tab
+            searchRe = new RegExp(window.partialMatch, "i");
             if(window.partialMatch === undefined) {
               window.partialMatch = partialMatch;
             } else if(partialMatch.search(searchRe) !== 0){
               window.partialMatch = partialMatch;
+              searchRe = new RegExp(window.partialMatch, "i");
             } else {
               if (sentence.length === 0) {
                 userIndex = users.indexOf(partialMatch.substr(0, partialMatch.length-1));
@@ -97,6 +99,7 @@ var ChatView = Backbone.View.extend({
                 }
                 //If we find a match we return our match to our input
                 sentence.push(user);
+                match = true;
                 //We decide whether or not to add colon
                 if (sentence.length === 1) {
                   $('#chat-input').val(sentence.join(' ') +  ":");
@@ -105,6 +108,9 @@ var ChatView = Backbone.View.extend({
                 }
                 //We break from our loop
                 break;
+              } else if(i === users.length-1 && match === false) {
+                sentence.push('');
+                $('#chat-input').val(sentence.join(' '));
               }
             }
         } else {
