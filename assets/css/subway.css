@@ -57,10 +57,31 @@
   margin-top: 25px;
 }
 
-#channels > .channel{
+#channels > .channel {
   padding: 5% 10% 5% 20%;
   color: #333333;
   border-bottom: 1px solid #CCCCCC;
+}
+
+#channels > .channel .close-button {
+  color: #333;
+  font: bold 20px Arial;
+  text-shadow: 0 1px 0 whiteSmoke;
+  line-height: 19px;
+  float: right;
+  opacity: 0.3;
+  width: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#channels > .channel.active .close-button {
+  color: white;
+  text-shadow: 0 1px 0 black;
+}
+
+#channels > .channel .close-button:hover {
+  opacity: 0.8;
 }
 
 #channels > .channel:not(.active):hover{

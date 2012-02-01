@@ -63,6 +63,9 @@ script(id="chat", type="text/html")
 
 script(id="channel", type="text/html")
   span(class="channel-name") {{name}}
+  {{#notStatus}}
+  .close-button ×
+  {{/notStatus}}
 
 script(id="unread", type="text/html")
   span(class="unread", title="Unread Messages") {{unread}}
