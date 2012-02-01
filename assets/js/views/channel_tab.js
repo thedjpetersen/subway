@@ -2,16 +2,23 @@ var ChannelTabView = Backbone.View.extend({
   className: 'channel',
 
   events: {
-    'click': 'setActive'
+    'click': 'setActive',
+    'click .close-button': 'close'
   },
 
   initialize: function() {
     this.model.stream.bind('add', this.updateUnreadCounts, this);
-    this.model.bind('destroy', this.close, this);
+    this.model.bind('destroy', this.switchAndRemove, this);
   },
 
   render: function() {
-    var tmpl = ich.channel({name: this.model.get('name')});
+    var self = this;
+    var tmpl = ich.channel({
+      name: this.model.get('name'),
+      notStatus: function() {
+        return self.model.get('type') !== 'status';
+      }
+    });
     $(this.el).html(tmpl);
     return this;
   },
@@ -42,17 +49,27 @@ var ChannelTabView = Backbone.View.extend({
     this.model.set({unread: 0, unreadMentions: 0});
   },
 
-  close: function() {
+  close: function(e) {
+    e.stopPropagation();
+    if (this.model.get('type') === 'channel')
+      irc.socket.emit('part', this.model.get('name'));
+    else
+      this.model.destroy();
+  },
+
+  switchAndRemove: function() {
+    var $nextTab;
     // Focus on next frame if this one has the focus
     if ($(this.el).hasClass('active')) {
       // Go to previous frame unless it's status
-      if ($(this.el).prev().text().trim() !== 'status') {
-        $(this.el).prev().click();
+      if ($(this.el).prev().text().trim() !== 'status' || !$(this.el).next().length) {
+        $nextTab = $(this.el).prev();
       } else {
-        $(this.el).next().click();
+        $nextTab = $(this.el).next();
       }
     }
     this.remove();
+    $nextTab.click();
   }
 
 });

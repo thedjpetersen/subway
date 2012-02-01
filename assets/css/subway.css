@@ -64,13 +64,20 @@
 }
 
 #channels > .channel .close-button {
-  color: white;
+  color: #333;
   font: bold 20px Arial;
-  text-shadow: 0 1px 0 black;
+  text-shadow: 0 1px 0 whiteSmoke;
   line-height: 19px;
   float: right;
   opacity: 0.3;
+  width: 24px;
+  text-align: center;
   cursor: pointer;
+}
+
+#channels > .channel.active .close-button {
+  color: white;
+  text-shadow: 0 1px 0 black;
 }
 
 #channels > .channel .close-button:hover {
