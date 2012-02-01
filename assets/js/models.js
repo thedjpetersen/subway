@@ -12,7 +12,7 @@ var Message = Backbone.Model.extend({
     }
 
     //Temporary solution to make unread mentions work again
-    if (this.get('raw').search('\\b' + irc.me.nick + '\\b') !== -1){
+    if (this.get('type') === 'message' && this.get('raw').search('\\b' + irc.me.nick + '\\b') !== -1){
       this.set({mention: true});
     }
   },
