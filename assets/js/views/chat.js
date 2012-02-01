@@ -62,16 +62,22 @@ var ChatView = Backbone.View.extend({
             $(this).val('');
             $('#chat_button').addClass('disabled');
           } else if (event.keyCode == 9) {
+            // Get Active Window
             var channel = irc.chatWindows.getActive();
-            // Tab completion of user names
+            // Get users input
             var sentence = $('#chat-input').val().split(' ');
+            // Get the last word in the sentence
             var partialMatch = sentence.pop();
+            // Get list of users
             var users = channel.userList.getUsers();
+            // Set default index for loop
             var userIndex=0;
+            var searchRe = new RegExp(window.partialMatch, "i");
             //Persist the match
+            //Store the partialMatch to persist next time the user hits tab
             if(window.partialMatch === undefined) {
               window.partialMatch = partialMatch;
-            } else if(partialMatch.search(window.partialMatch) !== 0){
+            } else if(partialMatch.search(searchRe) !== 0){
               window.partialMatch = partialMatch;
             } else {
               if (sentence.length === 0) {
@@ -80,22 +86,28 @@ var ChatView = Backbone.View.extend({
                 userIndex = users.indexOf(partialMatch);
               }
             }
+            //Cycle through userlist from last user or beginning
             for (var i=userIndex; i<users.length; i++) {
               var user = users[i] || '';
-              if (window.partialMatch.length > 0 && user.search(window.partialMatch, "i") === 0) {
+              //Search for match
+              if (window.partialMatch.length > 0 && user.search(searchRe) === 0) {
+                //If no match found we continue searching
                 if(user === partialMatch || user === partialMatch.substr(0, partialMatch.length-1)){
                   continue;
                 }
+                //If we find a match we return our match to our input
                 sentence.push(user);
+                //We decide whether or not to add colon
                 if (sentence.length === 1) {
                   $('#chat-input').val(sentence.join(' ') +  ":");
                 } else {
                   $('#chat-input').val(sentence.join(' '));
                 }
+                //We break from our loop
                 break;
               }
             }
-          } else {
+        } else {
             $('#chat_button').removeClass('disabled');
           }
         } else {
