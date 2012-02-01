@@ -62,10 +62,10 @@ var ChannelTabView = Backbone.View.extend({
     // Focus on next frame if this one has the focus
     if ($(this.el).hasClass('active')) {
       // Go to previous frame unless it's status
-      if ($(this.el).prev().text().trim() !== 'status' || !$(this.el).next().length) {
-        $nextTab = $(this.el).prev();
-      } else {
+      if ($(this.el).next().length) {
         $nextTab = $(this.el).next();
+      } else {
+        $nextTab = $(this.el).prev();
       }
     }
     this.remove();
