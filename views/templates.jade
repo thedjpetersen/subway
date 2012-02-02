@@ -49,14 +49,14 @@ script(id="titlebar", type="text/html")
 
 script(id="chat", type="text/html")
   #chat-window
-    #chat-bar
-    #chat-contents
-    #input-container
+    #chat-bar.bar
+    #chat-contents.bar
+    #input-container.bar
       .input
         input(id="chat-input")
         a(id="chat_button", class="btn disabled") Send
   #user-window
-    #user-bar
+    #user-bar.bar
       .titlebar
         span(class='window_title') User List
     #user-list
