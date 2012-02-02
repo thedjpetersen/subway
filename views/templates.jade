@@ -110,7 +110,7 @@ script(id="message", type="text/html")
 
 script(id="join_part", type="text/html")
   span(class="{{type}}_img")
-  span <b>{{nick}}</b> {{action}} the channel
+  span <b>{{nick}}</b> {{action}} the channel {{reason}} {{message}}
 
 script(id="nick", type="text/html")
   span <b>{{oldNick}}</b> is now known as {{newNick}}
