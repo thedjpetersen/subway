@@ -43,7 +43,7 @@ $(function() {
     //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});
   });
 
-  irc.socket.on('nick', function(data) {
+  irc.socket.on('getNick', function(data) {
     irc.me.nick = data.nick;
   });
 
@@ -106,6 +106,20 @@ $(function() {
       user.destroy();
       var partMessage = new Message({type: 'part', nick: data.nick});
       channel.stream.add(partMessage);
+    }
+  });
+
+  irc.socket.on('quit', function(data) {
+    var channel, user, quitMessage;
+    for(var i=0; i<data.channels.length; i++){
+      channel = irc.chatWindows.getByName(data.channels[i]);
+      if(channel !== undefined) {
+        user = channel.userList.getByNick(data.nick);
+        user.view.remove();
+        user.destroy();
+        quitMessage = new Message({type: 'quit', nick: data.nick, reason: data.reason, message: data.message});
+        channel.stream.add(quitMessage);
+      }
     }
   });
 
