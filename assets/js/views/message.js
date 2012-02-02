@@ -9,7 +9,7 @@ var MessageView = Backbone.View.extend({
     var nick = this.model.get('sender') || this.model.collection.channel.get('name');
     var html;
 
-    if (_.include(['join', 'part', 'nick', 'topic'], this.model.get('type')))
+    if (_.include(['join', 'part', 'nick', 'topic', 'quit'], this.model.get('type')))
       html = this.setText(this.model.get('type'));
     // This handles whether to output a message or an action
     else if (this.model.get('text').substr(1, 6) === 'ACTION') {
@@ -46,6 +46,15 @@ var MessageView = Backbone.View.extend({
           action: type === 'join' ? 'joined' : 'left'
         });
         break;
+      case 'quit':
+        html = ich.join_part({
+          type: 'part',
+          nick: this.model.get('nick'),
+          action: 'left',
+          reason: '(' + this.model.get('reason') + ')',
+          message: '(' + this.model.get('message') + ')'
+        });
+        break
       case 'nick':
         html = ich.nick({
           oldNick: this.model.get('oldNick'),
