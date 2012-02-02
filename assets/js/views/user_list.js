@@ -39,7 +39,7 @@ var UserView = Backbone.View.extend({
 
 var UserListView = Backbone.View.extend({
   initialize: function() {
-    this.el = this.collection.channel.view.$('#user-list');
+    this.setElement(this.collection.channel.view.$('#user-list'));
     this.collection.bind('add', this.add, this);
   },
 
