@@ -73,6 +73,11 @@
   width: 24px;
   text-align: center;
   cursor: pointer;
+  display: none;
+}
+
+#channels > .channel:hover .close-button {
+  display: block;
 }
 
 #channels > .channel.active .close-button {
