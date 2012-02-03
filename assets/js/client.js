@@ -161,10 +161,18 @@ $(function() {
         }
         break;
       case '/me':
-        irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:'\u0001ACTION ' + commandText.splice(1).join(" ")});
+        irc.socket.emit('say', {
+          target: irc.chatWindows.getActive().get('name'),
+          message:'\u0001ACTION ' + commandText.splice(1).join(" ")
+        });
         break;
+      case '/query':
+      case '/privmsg':
       case '/msg':
-        irc.socket.emit('say', {target: commandText[1], message: commandText.splice(2).join(" ")});
+        irc.socket.emit('say', {
+          target: commandText[1],
+          message: commandText.splice(2).join(" ")
+        });
         break;
       default:
         irc.socket.emit('command', commandText);
