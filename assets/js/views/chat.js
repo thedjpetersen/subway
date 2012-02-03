@@ -47,6 +47,7 @@ var ChatView = Backbone.View.extend({
       },
 
       keyup: function(event) {
+        var self = this;
         if ($(this).val().length) {
           if (event.keyCode == 13) {
             var message = $(this).val();
@@ -63,24 +64,17 @@ var ChatView = Backbone.View.extend({
           } else if (event.keyCode == 9) {
             var searchRe;
             var match = false;
-            // Get Active Window
             var channel = irc.chatWindows.getActive();
-            // Get users input
             var sentence = $('#chat-input').val().split(' ');
-            // Get the last word in the sentence
             var partialMatch = sentence.pop();
-            // Get list of users
             var users = channel.userList.getUsers();
-            // Set default index for loop
             var userIndex=0;
-            //Persist the match
-            //Store the partialMatch to persist next time the user hits tab
-            searchRe = new RegExp(window.partialMatch, "i");
-            if(window.partialMatch === undefined) {
-              window.partialMatch = partialMatch;
+            searchRe = new RegExp(self.partialMatch, "i");
+            if(self.partialMatch === undefined) {
+              self.partialMatch = partialMatch;
             } else if(partialMatch.search(searchRe) !== 0){
-              window.partialMatch = partialMatch;
-              searchRe = new RegExp(window.partialMatch, "i");
+              self.partialMatch = partialMatch;
+              searchRe = new RegExp(self.partialMatch, "i");
             } else {
               if (sentence.length === 0) {
                 userIndex = users.indexOf(partialMatch.substr(0, partialMatch.length-1));
@@ -92,7 +86,7 @@ var ChatView = Backbone.View.extend({
             for (var i=userIndex; i<users.length; i++) {
               var user = users[i] || '';
               //Search for match
-              if (window.partialMatch.length > 0 && user.search(searchRe) === 0) {
+              if (self.partialMatch.length > 0 && user.search(searchRe) === 0) {
                 //If no match found we continue searching
                 if(user === partialMatch || user === partialMatch.substr(0, partialMatch.length-1)){
                   continue;
