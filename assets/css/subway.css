@@ -2,6 +2,40 @@
 ---------------------------------------------------------------------*/
 html { overflow: hidden; }
 
+.container-fluid {
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  zoom: 1;
+}
+.container-fluid:before, .container-fluid:after {
+  display: table;
+  content: "";
+  zoom: 1;
+}
+.container-fluid:after {
+  clear: both;
+}
+.container-fluid > .sidebar {
+  position: fixed;
+  top: 0;
+  width: 15%;
+  min-height:100%;
+  background-color: #E7E9ED;
+  border-right: 2px solid #DDD;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box; // for Mozilla
+  -webkit-box-sizing: border-box; // for WebKit
+  -ms-box-sizing: border-box; // for IE8
+}
+.container-fluid > .content {
+    min-height: 100%;
+    width: 85%;
+    margin-left: 15%;
+    position: absolute;
+    background: whiteSmoke;
+}
+
 /* Shared classes
 ---------------------------------------------------------------------*/
 
@@ -188,6 +222,7 @@ html { overflow: hidden; }
   top: 34px;
   bottom: 57px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: whiteSmoke;
   border-right: 1px solid #DDDDDD
 }
@@ -261,9 +296,14 @@ html { overflow: hidden; }
 .chat-message {
   display: table-cell;
   width: 66%;
+  max-width: 200px;
   padding: 1%;
   border-left: 1px solid #DDDDDD;
   border-right: 1px solid #DDDDDD;
+}
+
+.chat-message span{
+  word-wrap: break-word;
 }
 
 .chat-message.motd {
