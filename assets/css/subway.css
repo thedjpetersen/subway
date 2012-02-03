@@ -178,8 +178,9 @@ html { overflow: hidden; }
   margin-right: 2%;
 }
 
-#titlebar #topic{
-  color: #777;
+.titlebar #topic{
+  color: #CCCCCC;
+  white-space: nowrap;
 }
 
 #chat-contents {
