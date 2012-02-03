@@ -222,6 +222,7 @@ html { overflow: hidden; }
   top: 34px;
   bottom: 57px;
   overflow-y: auto;
+  overflow-x: hidden;
   background: whiteSmoke;
   border-right: 1px solid #DDDDDD
 }
