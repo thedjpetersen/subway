@@ -296,9 +296,14 @@ html { overflow: hidden; }
 .chat-message {
   display: table-cell;
   width: 66%;
+  max-width: 200px;
   padding: 1%;
   border-left: 1px solid #DDDDDD;
   border-right: 1px solid #DDDDDD;
+}
+
+.chat-message span{
+  word-wrap: break-word;
 }
 
 .chat-message.motd {
