@@ -58,12 +58,13 @@
 }
 
 #channels > .channel {
-  padding: 5% 10% 5% 20%;
+  padding: 5% 5% 5% 20%;
   color: #333333;
   border-bottom: 1px solid #CCCCCC;
 }
 
 #channels > .channel .close-button {
+  display: block;
   color: #333;
   font: bold 20px Arial;
   text-shadow: 0 1px 0 whiteSmoke;
@@ -73,11 +74,12 @@
   width: 24px;
   text-align: center;
   cursor: pointer;
-  display: none;
+  margin-left: 5px;
+  visibility: hidden;
 }
 
 #channels > .channel:hover .close-button {
-  display: block;
+  visibility: visible;
 }
 
 #channels > .channel.active .close-button {
