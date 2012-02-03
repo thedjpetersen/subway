@@ -17,19 +17,19 @@ html { overflow: hidden; }
   margin-top: 0.3em;
 }
 
-#overview{
-  width: 50%;
-  margin:10% auto 0px auto;
+#overview {
+  width: 400px;
+  margin: 10% auto;
   text-align: center;
   padding: 10px;
   background: #E7E9ED;
   border: 2px solid #DDD;
 }
 
-#overview ul li{
+#overview ul li {
   display: inline-block;
   padding: 10px;
-  margin:0px 10px 0px 10px;
+  margin: 0px 10px;
   text-align: center;
   width: 130px;
 }
