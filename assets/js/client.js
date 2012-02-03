@@ -147,12 +147,14 @@ $(function() {
   });
 
   irc.handleCommand = function(commandText) {
-    switch(commandText[0]) {
+    switch (commandText[0]) {
       case '/join':
         irc.socket.emit('join', commandText[1]);
         break;
+      case '/wc':
+      case '/close':
       case '/part':
-        if(commandText[1]){
+        if (commandText[1]) {
           irc.socket.emit('part', commandText[1]);
           irc.appView.channelList.channelTabs[0].setActive();
         } else {
