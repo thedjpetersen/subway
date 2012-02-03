@@ -48,18 +48,19 @@ script(id="titlebar", type="text/html")
     span(id="topic") {{topic}}
 
 script(id="chat", type="text/html")
-  #chat-window
-    #chat-bar.bar
-    #chat-contents.bar
-    #input-container.bar
-      .input
-        input(id="chat-input")
-        a(id="chat_button", class="btn disabled") Send
-  #user-window
-    #user-bar.bar
-      .titlebar
-        span(class='window_title') User List
-    #user-list.bar
+  #main-window
+    #chat-window
+      #chat-bar.bar
+      #chat-contents.bar
+      #input-container.bar
+        .input
+          input(id="chat-input")
+          a(id="chat_button", class="btn disabled") Send
+    #user-window
+      #user-bar.bar
+        .titlebar
+          span(class='window_title') User List
+      #user-list.bar
 
 script(id="channel", type="text/html")
   span(class="channel-name") {{name}}
