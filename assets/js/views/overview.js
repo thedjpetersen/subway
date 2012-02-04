@@ -27,9 +27,8 @@ var OverviewView = Backbone.View.extend({
   },
 
   connectOnEnter: function(event) {
-    event.preventDefault();
     if (event.keyCode !== 13) return;
-    this.connect();
+    this.connect(event);
   },
 
   connect: function(event) {

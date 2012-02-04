@@ -61,10 +61,8 @@ $(function() {
     if (data.to.substr(0, 1) === '#') {
       chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
     } else if(data.to !== irc.me.nick) {
-      // Don't take this out!
-      // the server doesn't emit a pm event
-      // from a message from the user
-      if (chatWindow === undefined) {
+      // Handle PMs intiated by me
+      if (typeof chatWindow === 'undefined') {
         irc.chatWindows.add({name: data.to, type: 'pm'});
         chatWindow = irc.chatWindows.getByName(data.to);
       }
@@ -75,7 +73,8 @@ $(function() {
   irc.socket.on('pm', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.nick);
     if (typeof chatWindow === 'undefined') {
-      irc.chatWindows.add({name: data.nick, type: 'pm'});
+      irc.chatWindows.add({name: data.nick, type: 'pm'})
+        .trigger('forMe', 'newPm');
       chatWindow = irc.chatWindows.getByName(data.nick);
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
@@ -87,7 +86,7 @@ $(function() {
       irc.chatWindows.add({name: data.channel});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
-      if(channel === undefined) {
+      if (typeof channel === 'undefined') {
         irc.chatWindows.add({name: data.channel});
       }
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'idle', activity: ''});
