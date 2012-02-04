@@ -103,6 +103,30 @@ html { overflow: hidden; }
   margin-left: 10px;
 }
 
+#user_box {
+  text-align: center;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+#user_box span{
+  border: 1px solid #CCCCCC;
+  padding: 10px 50px;
+  border-radius: 3px;
+  background: #e7e9ed; /* Old browsers */
+  background: -moz-linear-gradient(top, #e7e9ed 0%, #d5dbe8 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e7e9ed), color-stop(100%,#d5dbe8)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* IE10+ */
+  background: linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7e9ed', endColorstr='#d5dbe8',GradientType=0 ); /* IE6-9 */
+}
+
+#user_box span i{
+  margin-right: 5px;
+}
+
 #channels{
   margin-top: 25px;
 }
