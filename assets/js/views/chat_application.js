@@ -3,8 +3,7 @@ var ChatApplicationView = Backbone.View.extend({
   originalTitle: document.title,
 
   initialize: function() {
-    irc.chatWindows.bind('change:active', this.focus, this)
-      .bind('change:unread', this.showUnread, this)
+    irc.chatWindows.bind('change:unread', this.showUnread, this)
       .bind('change:unreadMentions', this.showUnread, this)
       .bind('forMe', this.playSound, this);
     // Preload sound files
@@ -25,12 +24,6 @@ var ChatApplicationView = Backbone.View.extend({
       this.channelList = new ChannelListView;
     }
     return this;
-  },
-
-  focus: function(chat) {
-    if (!chat.get('active')) {
-      return;
-    }
   },
 
   // Show number of unread mentions in title
