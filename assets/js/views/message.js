@@ -52,7 +52,8 @@ var MessageView = Backbone.View.extend({
           nick: this.model.get('nick'),
           action: 'left',
           reason: '(' + this.model.get('reason') + ')',
-          message: '(' + this.model.get('message') + ')'
+          //Message resolving to undefined will include again later
+          //message: '(' + this.model.get('message') + ')'
         });
         break
       case 'nick':
