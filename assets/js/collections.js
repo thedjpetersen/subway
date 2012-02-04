@@ -40,7 +40,7 @@ var WindowList = Backbone.Collection.extend({
       chat.set({active: false});
     });
 
-    selected.set({active: true, unread_messages: 0, unread_mentions: 0});
+    selected.set({active: true});
     selected.view.render();
   },
 
