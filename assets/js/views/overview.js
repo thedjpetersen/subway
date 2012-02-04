@@ -27,12 +27,13 @@ var OverviewView = Backbone.View.extend({
   },
 
   connectOnEnter: function(event) {
-      if (event.keyCode !== 13) return;
-      this.connect();
+    event.preventDefault();
+    if (event.keyCode !== 13) return;
+    this.connect();
   },
 
-  connect: function(e) {
-    e.preventDefault();
+  connect: function(event) {
+    event.preventDefault();
     $('.error').removeClass('error');
     var server = $('#connect-server').val();
     var nick = $('#connect-nick').val();
