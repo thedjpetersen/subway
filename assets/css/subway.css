@@ -103,13 +103,13 @@ html { overflow: hidden; }
   margin-left: 10px;
 }
 
-#user_box {
+#user-box {
   text-align: center;
   margin-top: 35px;
   margin-bottom: 35px;
 }
 
-#user_box span{
+#user-box span{
   border: 1px solid #CCCCCC;
   padding: 10px 50px;
   border-radius: 3px;
@@ -123,7 +123,7 @@ html { overflow: hidden; }
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7e9ed', endColorstr='#d5dbe8',GradientType=0 ); /* IE6-9 */
 }
 
-#user_box span i{
+#user-box span i{
   margin-right: 5px;
 }
 
