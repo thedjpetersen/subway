@@ -150,29 +150,32 @@ html { overflow: hidden; }
   font-weight: bold;
 }
 
-.channel > .unread, .channel > .unread_mentions {
-  padding: 2px 6px 2px 6px;
+.channel .unread,
+.channel .unread-mentions {
+  padding: 2px 6px;
+  margin-top: -2px;
   color: whiteSmoke;
   font-weight: bold;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   float: right;
+  display: none;
 }
 
-.unread{
+.channel .unread {
   background: #980000;
 }
 
-.unread_mentions{
+.channel .unread-mentions {
   background: #0B2666;
   margin-right: 0.3em;
 }
 
-#logo{
+#logo {
   text-align: center;
 }
 
-#logo > img{
+#logo > img {
   margin-top: 10%;
 }
 

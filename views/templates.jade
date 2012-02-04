@@ -66,13 +66,9 @@ script(id="channel", type="text/html")
   span(class="channel-name") {{name}}
   {{#notStatus}}
   .close-button ×
-  {{/notStatus}}
-
-script(id="unread", type="text/html")
   span(class="unread", title="Unread Messages") {{unread}}
-
-script(id="unread_mentions", type="text/html")
-  span(class="unread_mentions", title="Mentions in channel") {{unread_mentions}}
+  span(class="unread-mentions", title="Mentions in channel") {{unread_mentions}}
+  {{/notStatus}}
 
 script(id="userlist_user", type="text/html")
   div(class="userlist_user_activity")
