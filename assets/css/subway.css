@@ -54,11 +54,14 @@ html { overflow: hidden; }
 #overview {
   width: 400px;
   margin: 10% auto;
-  text-align: center;
   padding: 10px;
   background: #E7E9ED;
   border: 2px solid #DDD;
 }
+
+#overview label { width: 70px; }
+#overview .controls { margin-left: 90px; }
+#overview button { margin-left: 90px; }
 
 #overview ul li {
   display: inline-block;
@@ -68,23 +71,23 @@ html { overflow: hidden; }
   width: 130px;
 }
 
-#overview ul li:hover{
+#overview ul li:hover {
   background: #A7DBD8;
   cursor: pointer;
   border-radius: 5px;
 }
 
-#overview ul li img{
+#overview ul li img {
   height: 75px;
 }
 
-#overview li span{
+#overview li span {
   display: block;
   font-weight: bold;
 }
 
 #overview #home_parent {
-  height: 20px;
+  height: 40px;
   width: 100%;
 }
 

@@ -14,16 +14,16 @@ script(id="load_image", type="text/html")
 script(id="overview_connection", type="text/html")
   #home_parent
     a.overview_button#home Home
-  form
-    .clearfix
-      label Server
-      .input
-        input#connect-server
-    .clearfix
-      label Nick
-      .input
-        input#connect-nick
-    a(id="connect-button", class="btn btn-primary") Connect
+  form.form-horizontal
+    .control-group
+      label(for="connect-server") Server
+      .controls
+        input#connect-server(type="text")
+    .control-group
+      label(for="connect-nick") Nick
+      .controls
+        input#connect-nick(type="text")
+    button(id="connect-button", class="btn btn-primary") Connect
 
 script(id="overview_home", type="text/html")
   ul
