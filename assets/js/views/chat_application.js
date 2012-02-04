@@ -31,7 +31,6 @@ var ChatApplicationView = Backbone.View.extend({
     if (!chat.get('active')) {
       return;
     }
-    console.log('focused on channel ' + chat.get('name'));
   },
 
   // Show number of unread mentions in title

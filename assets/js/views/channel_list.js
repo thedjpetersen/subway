@@ -10,7 +10,6 @@ var ChannelListView = Backbone.View.extend({
     var view = new ChannelTabView({model: chatWindow});
     this.channelTabs.push(view);
     $(this.el).append(view.render().el);
-    irc.chatWindows.setActive(chatWindow);
     view.setActive();
   }
 });
