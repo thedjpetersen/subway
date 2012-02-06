@@ -5,6 +5,7 @@ script(id="chat_application", type="text/html")
     h2 Subway
       br
       small IRC client
+    #user-box
     #channels
   .content
 
@@ -69,6 +70,14 @@ script(id="channel", type="text/html")
   span(class="unread", title="Unread Messages") {{unread}}
   span(class="unread-mentions", title="Mentions in channel") {{unread_mentions}}
   {{/notStatus}}
+
+script(id="user_box", type="text/html")
+  div 
+    i(class="icon-user icon-white")
+    {{nick}}
+  div 
+    i(class="icon-asterisk icon-white")
+    {{server}}
 
 script(id="userlist_user", type="text/html")
   div(class="userlist_user_activity")
