@@ -104,26 +104,28 @@ html { overflow: hidden; }
 }
 
 #user-box {
-  text-align: center;
   margin-top: 35px;
   margin-bottom: 35px;
+  background: #434950;
 }
 
-#user-box span{
-  border: 1px solid #CCCCCC;
-  padding: 10px 50px;
-  border-radius: 3px;
-  background: #e7e9ed; /* Old browsers */
-  background: -moz-linear-gradient(top, #e7e9ed 0%, #d5dbe8 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e7e9ed), color-stop(100%,#d5dbe8)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* IE10+ */
-  background: linear-gradient(top, #e7e9ed 0%,#d5dbe8 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7e9ed', endColorstr='#d5dbe8',GradientType=0 ); /* IE6-9 */
+#user-box div{
+  padding: 10px 25px;
+  background: #434950;
+  color: #EEEEEE;
+  font-weight: bold;
+  border-top: 1px solid #666666;
 }
 
-#user-box span i{
+#user-box div:first-child{
+  border-left: 5px solid #8A9B0F;
+}
+
+#user-box div:last-child{
+  border-left: 5px solid #FA6900;
+}
+
+#user-box div i{
   margin-right: 5px;
 }
 

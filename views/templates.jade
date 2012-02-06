@@ -72,9 +72,12 @@ script(id="channel", type="text/html")
   {{/notStatus}}
 
 script(id="user_box", type="text/html")
-  span 
-    i(class="icon-user")
-    {{username}}
+  div 
+    i(class="icon-user icon-white")
+    {{nick}}
+  div 
+    i(class="icon-asterisk icon-white")
+    {{server}}
 
 script(id="userlist_user", type="text/html")
   div(class="userlist_user_activity")
