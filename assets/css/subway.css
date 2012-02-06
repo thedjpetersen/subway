@@ -105,7 +105,6 @@ html { overflow: hidden; }
 
 #user-box {
   margin-top: 35px;
-  margin-bottom: 35px;
   background: #434950;
 }
 
@@ -127,10 +126,6 @@ html { overflow: hidden; }
 
 #user-box div i{
   margin-right: 5px;
-}
-
-#channels{
-  margin-top: 25px;
 }
 
 #channels > .channel {
