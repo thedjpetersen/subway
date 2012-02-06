@@ -46,6 +46,7 @@ $(function() {
 
   irc.socket.on('getNick', function(data) {
     irc.me.nick = data.nick;
+    $('#user-box').html(ich.user_box(irc.me));
   });
 
   // Message of the Day

@@ -103,8 +103,29 @@ html { overflow: hidden; }
   margin-left: 10px;
 }
 
-#channels{
-  margin-top: 25px;
+#user-box {
+  margin-top: 35px;
+  background: #434950;
+}
+
+#user-box div{
+  padding: 10px 25px;
+  background: #434950;
+  color: #EEEEEE;
+  font-weight: bold;
+  border-top: 1px solid #666666;
+}
+
+#user-box div:first-child{
+  border-left: 5px solid #8A9B0F;
+}
+
+#user-box div:last-child{
+  border-left: 5px solid #FA6900;
+}
+
+#user-box div i{
+  margin-right: 5px;
 }
 
 #channels > .channel {
