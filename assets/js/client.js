@@ -178,6 +178,7 @@ $(function() {
         });
         break;
       default:
+        commandText[0] = commandText[0].substr(1).toUpperCase();
         irc.socket.emit('command', commandText);
     }
   }
