@@ -37,6 +37,9 @@ $(function() {
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
+
+    // Will reflect modified nick, if chosen nick was taken already
+    irc.me.set('nick', data.message.args[0]);
   });
 
   irc.socket.on('notice', function(data) {
@@ -125,6 +128,13 @@ $(function() {
     $.each(data.nicks, function(nick, role){
       channel.userList.add(new User({nick: nick, role: role, idle:61, user_status: 'idle', activity: ''}))
     });
+  });
+
+  irc.socket.on('nick', function(data) {
+    if (data.oldNick === irc.me.get('nick'))
+      irc.me.set('nick', data.newNick);
+
+    // TODO: If not me, change name in user list and send channel message
   });
 
   irc.socket.on('topic', function(data) {
