@@ -44,11 +44,6 @@ $(function() {
     //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});
   });
 
-  irc.socket.on('getNick', function(data) {
-    irc.me.nick = data.nick;
-    $('#user-box').html(ich.user_box(irc.me));
-  });
-
   // Message of the Day
   irc.socket.on('motd', function(data) {
     var message = new Message({sender: 'status', raw: data.motd, type: 'motd'});
