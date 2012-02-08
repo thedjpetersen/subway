@@ -7,6 +7,7 @@ var ChatApplicationView = Backbone.View.extend({
       .bind('change:unreadMentions', this.showUnread, this)
       .bind('forMe', this.playSound, this);
 
+
     // Preload sound files
     if (this._supportedFormat) {
       this.sounds = {
@@ -37,10 +38,13 @@ var ChatApplicationView = Backbone.View.extend({
       var overview = new OverviewView;
     } else {
       this.channelList = new ChannelListView;
+      // irc.me.on('change:nick', this.renderUserBox, this);
+      this.renderUserBox();
     }
     return this;
   },
 
+<<<<<<< HEAD
   // Net connection error
   showError: function(text) {
     $('#loading_image').remove();
@@ -49,6 +53,10 @@ var ChatApplicationView = Backbone.View.extend({
       type: 'alert-error',
       content: text
     }).alert());
+=======
+  renderUserBox: function() {
+    $('#user-box').html(ich.user_box(irc.me.toJSON()));
+>>>>>>> 7dcd5476c7e836b33ca020cbebb0fc84eea40129
   },
 
   // Show number of unread mentions in title

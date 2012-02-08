@@ -37,16 +37,14 @@ $(function() {
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
+
+    // Will reflect modified nick, if chosen nick was taken already
+    irc.me.set('nick', data.message.args[0]);
   });
 
   irc.socket.on('notice', function(data) {
     //TODO: make this work
     //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});
-  });
-
-  irc.socket.on('getNick', function(data) {
-    irc.me.nick = data.nick;
-    $('#user-box').html(ich.user_box(irc.me));
   });
 
   // Message of the Day
@@ -61,7 +59,7 @@ $(function() {
     // Only handle channel messages here; PMs handled separately
     if (data.to.substr(0, 1) === '#') {
       chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
-    } else if(data.to !== irc.me.nick) {
+    } else if(data.to !== irc.me.get('nick')) {
       // Handle PMs intiated by me
       if (typeof chatWindow === 'undefined') {
         irc.chatWindows.add({name: data.to, type: 'pm'});
@@ -83,7 +81,7 @@ $(function() {
 
   irc.socket.on('join', function(data) {
     console.log('Join event received for ' + data.channel + ' - ' + data.nick);
-    if (data.nick === irc.me.nick) {
+    if (data.nick === irc.me.get('nick')) {
       irc.chatWindows.add({name: data.channel});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
@@ -99,7 +97,7 @@ $(function() {
   irc.socket.on('part', function(data) {
     console.log('Part event received for ' + data.channel + ' - ' + data.nick);
     var channel = irc.chatWindows.getByName(data.channel);
-    if (data.nick === irc.me.nick) {
+    if (data.nick === irc.me.get('nick')) {
       channel.part();
     } else {
       var user = channel.userList.getByNick(data.nick);
@@ -130,6 +128,13 @@ $(function() {
     $.each(data.nicks, function(nick, role){
       channel.userList.add(new User({nick: nick, role: role, idle:61, user_status: 'idle', activity: ''}))
     });
+  });
+
+  irc.socket.on('nick', function(data) {
+    if (data.oldNick === irc.me.get('nick'))
+      irc.me.set('nick', data.newNick);
+
+    // TODO: If not me, change name in user list and send channel message
   });
 
   irc.socket.on('topic', function(data) {
@@ -178,6 +183,7 @@ $(function() {
         });
         break;
       default:
+        commandText[0] = commandText[0].substr(1).toUpperCase();
         irc.socket.emit('command', commandText);
     }
   }
