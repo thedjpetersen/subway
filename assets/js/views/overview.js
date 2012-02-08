@@ -6,7 +6,6 @@ var OverviewView = Backbone.View.extend({
   events: {
     'click #connect-button': 'connect',
     'keypress': 'connectOnEnter'
-
   },
 
   el: '.content',

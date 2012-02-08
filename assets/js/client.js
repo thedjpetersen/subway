@@ -144,7 +144,7 @@ $(function() {
   });
 
   irc.socket.on('netError', function(data) {
-    console.log(data);
+    irc.appView.showError('Invalid server');
   });
 
   irc.handleCommand = function(commandText) {

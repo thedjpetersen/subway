@@ -41,6 +41,16 @@ var ChatApplicationView = Backbone.View.extend({
     return this;
   },
 
+  // Net connection error
+  showError: function(text) {
+    $('#loading_image').remove();
+    $('#connect-button').removeClass('disabled');
+    $('#home_parent').after(ich.alert({
+      type: 'alert-error',
+      content: text
+    }).alert());
+  },
+
   // Show number of unread mentions in title
   showUnread: function() {
     var unreads = irc.chatWindows.unreadCount();
