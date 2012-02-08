@@ -6,6 +6,7 @@ var ChatApplicationView = Backbone.View.extend({
     irc.chatWindows.bind('change:unread', this.showUnread, this)
       .bind('change:unreadMentions', this.showUnread, this)
       .bind('forMe', this.playSound, this);
+
     // Preload sound files
     if (this._supportedFormat) {
       this.sounds = {
@@ -13,6 +14,20 @@ var ChatApplicationView = Backbone.View.extend({
         message: this._loadSound('msg')
       };
     }
+
+    // Detect window focus so new message alerts come in
+    // when window is not focused, even on current tab
+    var blurTimer, activeChat;
+    $(window).blur(function() {
+      blurTimer = setTimeout(function() {
+        activeChat = irc.chatWindows.getActive();
+        activeChat && activeChat.set('active', false);
+      }, 1000);
+    }).focus(function() {
+      clearTimeout(blurTimer);
+      activeChat && activeChat.set('active', true);
+    });
+
     this.render();
   },
 
@@ -42,7 +57,6 @@ var ChatApplicationView = Backbone.View.extend({
   _loadSound: function(name) {
     var a = new Audio();
     a.src = '/assets/sounds/' + name + '.' + this._supportedFormat();
-    console.log(a.src);
     return a;
   },
 

@@ -8,7 +8,8 @@ var ChannelTabView = Backbone.View.extend({
 
   initialize: function() {
     this.model.stream.bind('add', this.updateUnreadCounts, this);
-    this.model.bind('destroy', this.switchAndRemove, this);
+    this.model.bind('destroy', this.switchAndRemove, this)
+      .bind('change:active', this.removeUnread, this);
   },
 
   render: function() {
@@ -44,6 +45,7 @@ var ChannelTabView = Backbone.View.extend({
   },
 
   removeUnread: function() {
+    if (this.model.get('active') === false) return;
     this.$el.children('.unread, .unread-mentions').hide();
     this.model.set({unread: 0, unreadMentions: 0});
   },
