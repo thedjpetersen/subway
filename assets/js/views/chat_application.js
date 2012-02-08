@@ -44,7 +44,6 @@ var ChatApplicationView = Backbone.View.extend({
     return this;
   },
 
-<<<<<<< HEAD
   // Net connection error
   showError: function(text) {
     $('#loading_image').remove();
@@ -53,10 +52,10 @@ var ChatApplicationView = Backbone.View.extend({
       type: 'alert-error',
       content: text
     }).alert());
-=======
+  },
+
   renderUserBox: function() {
     $('#user-box').html(ich.user_box(irc.me.toJSON()));
->>>>>>> 7dcd5476c7e836b33ca020cbebb0fc84eea40129
   },
 
   // Show number of unread mentions in title
