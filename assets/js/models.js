@@ -12,7 +12,7 @@ var Message = Backbone.Model.extend({
     }
 
     //Temporary solution to make unread mentions work again
-    if (this.get('type') === 'message' && this.get('raw').search('\\b' + irc.me.nick + '\\b') !== -1){
+    if (this.get('type') === 'message' && this.get('raw').search('\\b' + irc.me.get('nick') + '\\b') !== -1){
       this.set({mention: true});
     }
   },
@@ -20,7 +20,7 @@ var Message = Backbone.Model.extend({
   parse: function(text) {
     var nick = this.get('sender') || this.collection.channel.get('name');
     var result = this._linkify(text);
-    if (nick !== irc.me.nick) {
+    if (nick !== irc.me.get('nick')) {
       result = this._mentions(result);
     }
     return result;
@@ -66,7 +66,7 @@ var Message = Backbone.Model.extend({
   },
 
   _mentions: function(text) {
-    var re = new RegExp('\\b' + irc.me.nick + '\\b', 'g');
+    var re = new RegExp('\\b' + irc.me.get('nick') + '\\b', 'g');
     var parsed = text.replace(re, function(nick) {
       return '<span class="mention">' + nick + '</span>';
     });
@@ -122,7 +122,7 @@ var ChatWindow = Backbone.Model.extend({
 });
 
 var User = Backbone.Model.extend({
-  initialize: function(){
+  initialize: function() {
   },
 
   defaults: {

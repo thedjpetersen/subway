@@ -56,7 +56,7 @@ $(function() {
     // Only handle channel messages here; PMs handled separately
     if (data.to.substr(0, 1) === '#') {
       chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
-    } else if(data.to !== irc.me.nick) {
+    } else if(data.to !== irc.me.get('nick')) {
       // Handle PMs intiated by me
       if (typeof chatWindow === 'undefined') {
         irc.chatWindows.add({name: data.to, type: 'pm'});
@@ -78,7 +78,7 @@ $(function() {
 
   irc.socket.on('join', function(data) {
     console.log('Join event received for ' + data.channel + ' - ' + data.nick);
-    if (data.nick === irc.me.nick) {
+    if (data.nick === irc.me.get('nick')) {
       irc.chatWindows.add({name: data.channel});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
@@ -94,7 +94,7 @@ $(function() {
   irc.socket.on('part', function(data) {
     console.log('Part event received for ' + data.channel + ' - ' + data.nick);
     var channel = irc.chatWindows.getByName(data.channel);
-    if (data.nick === irc.me.nick) {
+    if (data.nick === irc.me.get('nick')) {
       channel.part();
     } else {
       var user = channel.userList.getByNick(data.nick);
