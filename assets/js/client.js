@@ -164,9 +164,9 @@ $(function() {
         }
         break;
       case '/me':
-        irc.socket.emit('say', {
+        irc.socket.emit('action', {
           target: irc.chatWindows.getActive().get('name'),
-          message:'\u0001ACTION ' + commandText.splice(1).join(" ")
+          message: commandText.splice(1).join(" ")
         });
         break;
       case '/query':
