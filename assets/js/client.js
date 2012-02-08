@@ -124,6 +124,12 @@ $(function() {
     }
   });
 
+  irc.socket.on('netError', function(data){
+    $('#loading_image').remove();
+    $('#connect-button').removeClass('disabled');
+    $('#home_parent').after(ich.alert({type:'alert-error', content:'Invalid server'}).alert())
+  });
+
   irc.socket.on('names', function(data) {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.userList = new UserList(channel);
