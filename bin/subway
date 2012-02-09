@@ -1,4 +1,0 @@
-#!/usr/bin/env node
-
-var subway = require('../lib/subway').subway;
-subway.start();
