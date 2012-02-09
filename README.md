@@ -11,6 +11,7 @@ Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc) on the backen
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
+**[Try Subway on Nodester](http://subway.nodester.com)**
 
 Installation
 ------------

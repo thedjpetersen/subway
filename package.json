@@ -9,7 +9,7 @@
     "subway": "./bin/subway"
   },
   "engines": {
-    "node": ">=0.6.1"
+    "node": ">=0.4.9"
   },
   "dependencies": {
     "express": "",
