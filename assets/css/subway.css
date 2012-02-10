@@ -285,7 +285,7 @@ html { overflow: hidden; }
 }
 
 .message-me {
-  background: #F9F9F9;
+  background: #EBF0FA;
 }
 
 .message_notification{
@@ -340,7 +340,7 @@ html { overflow: hidden; }
 .chat-message .embed img{
   display: block;
   max-width: 100%;
-  max-height: 60%;
+  max-height: 200px;
   padding: 10px;
 }
 
