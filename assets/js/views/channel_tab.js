@@ -70,7 +70,9 @@ var ChannelTabView = Backbone.View.extend({
       }
     }
     this.remove();
-    $nextTab.click();
+    if (typeof($nexTab.click) == 'function'){
+      $nextTab.click();
+    }
   }
 
 });
