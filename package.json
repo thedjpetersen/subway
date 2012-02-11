@@ -16,6 +16,8 @@
     "jade": "",
     "connect-assets": "",
     "irc": "git://github.com/martynsmith/node-irc.git",
-    "socket.io": ""
+    "socket.io": "",
+    "mongoose": "",
+    "bcrypt": ""
   }
 }
