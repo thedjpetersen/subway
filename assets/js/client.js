@@ -42,6 +42,11 @@ $(function() {
     irc.me.set('nick', data.message.args[0]);
   });
 
+  irc.socket.on('login_success', function(data) {
+    irc.chatWindows.add({name: 'status', type: 'status'});
+    irc.appView.render();
+  });
+
   irc.socket.on('notice', function(data) {
     //TODO: make this work
     //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});

@@ -5,6 +5,8 @@ var OverviewView = Backbone.View.extend({
 
   events: {
     'click #connect-button': 'connect',
+    'click #login-button': 'login_register',
+    'click #register-button': 'login_register',
     'keypress': 'connectOnEnter'
   },
 
@@ -27,7 +29,15 @@ var OverviewView = Backbone.View.extend({
 
   connectOnEnter: function(event) {
     if (event.keyCode !== 13) return;
-    this.connect(event);
+    if($('#connect-button').length){
+      this.connect(event);
+    }
+    if($('#login-button').length){
+      this.login_register(event);
+    }
+    if($('#register-button').length){
+      this.login_register(event);
+    }
   },
 
   connect: function(event) {
@@ -55,5 +65,31 @@ var OverviewView = Backbone.View.extend({
       irc.me.on('change:nick', irc.appView.renderUserBox);
       irc.socket.emit('connect', connectInfo);
     }
+  },
+
+  login_register: function(event) {
+    var action = event.target.innerText.toLowerCase();
+    event.preventDefault();
+    $('.error').removeClass('error');
+    var username = $('#' + action + '-username').val();
+    var password = $('#' + action + '-password').val();
+    if (!username) {
+      $('#' + action + '-username').closest('.clearfix').addClass('error');
+      $('#' + action + '-username').addClass('error');
+    }
+    if (!password) {
+      $('#' + action + '-password').closest('.clearfix').addClass('error');
+      $('#login-password').addClass('error');
+    }
+    if(username && password){
+      $('form').append(ich.load_image());
+      $('#' + action + '-button').addClass('disabled');
+    }
+
+    irc.socket.emit(action, {
+      username: username,
+      password: password
+    });
   }
+
 });
