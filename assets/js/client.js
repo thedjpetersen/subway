@@ -62,6 +62,14 @@ $(function() {
     irc.connected = true;
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
+    $.each(data.channels, function(key, value){
+      irc.chatWindows.add({name: value['serverName']});
+      var channel = irc.chatWindows.getByName(value['serverName']);
+      channel.userList = new UserList(channel);
+      $.each(value.users, function(user, role) {
+        channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
+      });
+    });
   });
 
   irc.socket.on('notice', function(data) {
@@ -109,6 +117,7 @@ $(function() {
       var channel = irc.chatWindows.getByName(data.channel);
       if (typeof channel === 'undefined') {
         irc.chatWindows.add({name: data.channel});
+        channel = irc.chatWindows.getByName(data.channel);
       }
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'idle', activity: ''});
       var joinMessage = new Message({type: 'join', nick: data.nick});
