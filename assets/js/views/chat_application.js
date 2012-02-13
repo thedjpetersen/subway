@@ -23,7 +23,7 @@ var ChatApplicationView = Backbone.View.extend({
       blurTimer = setTimeout(function() {
         activeChat = irc.chatWindows.getActive();
         activeChat && activeChat.set('active', false);
-      }, 1000);
+      }, 60000);
     }).focus(function() {
       clearTimeout(blurTimer);
       activeChat && activeChat.set('active', true);
