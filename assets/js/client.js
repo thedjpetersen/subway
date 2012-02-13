@@ -183,6 +183,10 @@ $(function() {
     irc.appView.showError('Invalid server');
   });
 
+  irc.socket.on('login_error', function(data) {
+    irc.appView.showError(data['message']);
+  });
+
   irc.handleCommand = function(commandText) {
     switch (commandText[0]) {
       case '/join':
