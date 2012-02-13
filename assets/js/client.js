@@ -43,8 +43,25 @@ $(function() {
   });
 
   irc.socket.on('login_success', function(data) {
-    irc.chatWindows.add({name: 'status', type: 'status'});
+    if(data.exists){
+      irc.socket.emit('connect', {});
+    } else {
+      $('#overview').html(ich.overview_connection());
+    }
+  });
+
+  irc.socket.on('register_success', function(data) {
+    /*
     irc.appView.render();
+    irc.chatWindows.add({name: 'status', type: 'status'});
+    */
+  });
+
+  irc.socket.on('restore_connection', function(data) {
+    irc.me = new User({nick: data.nick, server: data.server});
+    irc.connected = true;
+    irc.appView.render();
+    irc.chatWindows.add({name: 'status', type: 'status'});
   });
 
   irc.socket.on('notice', function(data) {
