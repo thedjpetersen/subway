@@ -10,6 +10,7 @@ var ChannelTabView = Backbone.View.extend({
     this.model.stream.bind('add', this.updateUnreadCounts, this);
     this.model.bind('destroy', this.switchAndRemove, this)
       .bind('change:active', this.removeUnread, this);
+    this.model.bind('clearUnread', this.removeUnread, this);
   },
 
   render: function() {
