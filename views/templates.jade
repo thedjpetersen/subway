@@ -42,7 +42,7 @@ script(id="overview_connection", type="text/html")
       label(for="connect-nick") Nick
       .controls
         input#connect-nick(type="text")
-    button(id="connect-button", class="btn btn-primary") Connect
+    button(id="connect-button", class="btn btn-primary", type="button") Connect
 
 script(id="overview_settings", type="text/html")
   #home_parent
@@ -61,7 +61,7 @@ script(id="overview_login", type="text/html")
       label(for="login-password") Password
       .controls
         input#login-password(type="password")
-    button(id="login-button", class="btn btn-primary") Login
+    button(id="login-button", class="btn btn-primary", type="submit") Login
 
 script(id="overview_register", type="text/html")
   #home_parent
@@ -75,7 +75,7 @@ script(id="overview_register", type="text/html")
       label(for="register-password") Password
       .controls
         input#register-password(type="password")
-    button(id="register-button", class="btn btn-primary") Register
+    button(id="register-button", class="btn btn-primary", type="button") Register
 
 script(id="titlebar", type="text/html")
   .titlebar
