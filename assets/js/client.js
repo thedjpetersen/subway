@@ -51,10 +51,7 @@ $(function() {
   });
 
   irc.socket.on('register_success', function(data) {
-    /*
-    irc.appView.render();
-    irc.chatWindows.add({name: 'status', type: 'status'});
-    */
+    $('#overview').html(ich.overview_connection());
   });
 
   irc.socket.on('restore_connection', function(data) {
