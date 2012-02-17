@@ -112,6 +112,7 @@ $(function() {
     console.log('Join event received for ' + data.channel + ' - ' + data.nick);
     if (data.nick === irc.me.get('nick')) {
       irc.chatWindows.add({name: data.channel});
+      irc.socket.emit('getOldMessages',{channelName: data.channel, skip:-100, amount: 100});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
       if (typeof channel === 'undefined') {
