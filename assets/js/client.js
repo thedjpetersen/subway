@@ -67,6 +67,7 @@ $(function() {
       $.each(value.users, function(user, role) {
         channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
       });
+      irc.socket.emit('getOldMessages',{channelName: value['serverName'], skip:-100, amount: 100});
     });
   });
 
