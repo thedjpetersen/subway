@@ -5,6 +5,7 @@
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
 //= require 'libs/bootstrap.min.js'
+//= require 'utils.js'
 //= require 'models.js'
 //= require 'collections.js'
 //= require_tree 'views'
@@ -183,6 +184,30 @@ $(function() {
   irc.socket.on('login_error', function(data) {
     irc.appView.showError(data['message']);
   });
+
+  irc.socket.on('oldMessages', function(data){
+    var output = '';
+    channel = irc.chatWindows.getByName(data.name);
+    $.each(data.messages, function(index, message){
+      var type = '';
+
+      if($('#' + message._id).length) {
+        return true; //continue to next iteration
+      }
+
+      if(message.user == irc.me.get('nick')){
+        type = 'message-me';
+      }
+      var message_html = ich.message({
+        user: message.user,
+        content: message.message,
+        renderedTime: utils.formatDate(message.date)
+      }, true);
+      message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
+      output += message_html;
+    });
+    channel.view.$('#chat-contents').prepend(output);
+  })
 
   irc.handleCommand = function(commandText) {
     switch (commandText[0]) {

@@ -16,7 +16,7 @@ var MessageView = Backbone.View.extend({
       html = ich.action({
         user: nick,
         content: this.model.get('text').substr(8),
-        renderedTime: this._formatDate(Date.now())
+        renderedTime: utils.formatDate(Date.now())
       }, true);
       html = this.model.parse(html);
     } else {
@@ -24,7 +24,7 @@ var MessageView = Backbone.View.extend({
         user: nick,
         type: this.model.get('type'),
         content: this.model.get('text'),
-        renderedTime: this._formatDate(Date.now())
+        renderedTime: utils.formatDate(Date.now())
       }, true);
       html = this.model.parse(html);
     }
@@ -69,26 +69,5 @@ var MessageView = Backbone.View.extend({
     return html;
   },
 
-  _formatDate: function(date) {
-    var d = new Date(date);
-    var hh = d.getHours();
-    var m = d.getMinutes();
-    var s = d.getSeconds();
-    var dd = "AM";
-    var h = hh;
-    if (h >= 12) {
-      h = hh - 12;
-      dd = "PM";
-    }
-    if (h == 0) {
-      h = 12;
-    }
-
-    m = m < 10 ? "0" + m:m;
-    s = s < 10 ? "0" + s:s;
-
-    var replacement = h + ":" + m + " " + dd;
-    return d.toDateString() + ', ' + replacement;
-  }
 
 });
