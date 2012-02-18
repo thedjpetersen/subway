@@ -197,14 +197,19 @@ $(function() {
         return true; //continue to next iteration
       }
 
-      if(message.user == irc.me.get('nick')){
-        type = 'message-me';
-      }
       var message_html = ich.message({
         user: message.user,
         content: message.message,
         renderedTime: utils.formatDate(message.date)
       }, true);
+
+      if(message.user == irc.me.get('nick')){
+        type = 'message-me';
+      } else {
+        message_html = utils.mentions(message_html);
+      }
+
+      message_html = utils.linkify(message_html);
       message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
       output += message_html;
     });

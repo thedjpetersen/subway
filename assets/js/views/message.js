@@ -29,7 +29,6 @@ var MessageView = Backbone.View.extend({
       html = this.model.parse(html);
     }
 
-
     $(this.el).html(html);
     return this;
   },
@@ -68,6 +67,5 @@ var MessageView = Backbone.View.extend({
     }
     return html;
   },
-
 
 });
