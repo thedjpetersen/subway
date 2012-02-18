@@ -61,8 +61,10 @@ $(function() {
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
     $.each(data.channels, function(key, value){
+      console.log(value);
       irc.chatWindows.add({name: value['serverName']});
       var channel = irc.chatWindows.getByName(value['serverName']);
+      channel.set({topic: value['topic']});
       channel.userList = new UserList(channel);
       $.each(value.users, function(user, role) {
         channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
