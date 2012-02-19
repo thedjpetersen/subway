@@ -209,7 +209,7 @@ $(function() {
           renderedTime: utils.formatDate(message.date)
         }, true);
       } else {
-        var message_html = ich.message({
+        message_html = ich.message({
           user: message.user,
           content: message.message,
           renderedTime: utils.formatDate(message.date)
@@ -227,7 +227,12 @@ $(function() {
       message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
       output += message_html;
     });
-    channel.view.$('#chat-contents').prepend(output);
+    if(!$('#chat-contents').children().length) {
+      channel.view.$('#chat-contents').prepend(output);
+      $('#chat-contents').scrollTo('100%');
+    } else {
+      channel.view.$('#chat-contents').prepend(output);
+    }
   })
 
   irc.handleCommand = function(commandText) {
