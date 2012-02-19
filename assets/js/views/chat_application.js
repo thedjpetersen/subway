@@ -18,17 +18,15 @@ var ChatApplicationView = Backbone.View.extend({
 
     // Detect window focus so new message alerts come in
     // when window is not focused, even on current tab
-    var blurTimer, activeChat, lastActive;
+    var blurTimer, activeChat;
     $(window).blur(function() {
       blurTimer = setTimeout(function() {
         activeChat = irc.chatWindows.getActive();
-        lastActive = activeChat || lastActive;
         activeChat && activeChat.set('active', false);
-      }, 60000);
+      }, 1000);
     }).focus(function() {
       clearTimeout(blurTimer);
-      lastActive && lastActive.set('active', true);
-      lastActive && lastActive.trigger('clearUnread');
+      activeChat && activeChat.set('active', true);
     });
 
     this.render();
