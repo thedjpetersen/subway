@@ -108,6 +108,7 @@ $(function() {
       irc.chatWindows.add({name: data.nick, type: 'pm'})
         .trigger('forMe', 'newPm');
       chatWindow = irc.chatWindows.getByName(data.nick);
+      irc.chatWindows.setActive(chatWindow);
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
   });
