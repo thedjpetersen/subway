@@ -21,11 +21,16 @@ var ChatApplicationView = Backbone.View.extend({
     var blurTimer, activeChat;
     $(window).blur(function() {
       blurTimer = setTimeout(function() {
-        activeChat = irc.chatWindows.getActive();
+        // Only assign if there's currently an active window
+        activeChat = irc.chatWindows.getActive() ?
+                     irc.chatWindows.getActive() :
+                     activeChat;
+        console.log(activeChat.get('name') + ' blurred.');
         activeChat && activeChat.set('active', false);
       }, 1000);
     }).focus(function() {
       clearTimeout(blurTimer);
+      console.log(activeChat.get('name') + ' focused.');
       activeChat && activeChat.set('active', true);
     });
 
