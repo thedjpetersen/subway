@@ -192,18 +192,28 @@ $(function() {
   irc.socket.on('oldMessages', function(data){
     var output = '';
     channel = irc.chatWindows.getByName(data.name);
-    $.each(data.messages, function(index, message){
-      var type = '';
 
+    $.each(data.messages, function(index, message){
       if($('#' + message._id).length) {
         return true; //continue to next iteration
       }
 
-      var message_html = ich.message({
-        user: message.user,
-        content: message.message,
-        renderedTime: utils.formatDate(message.date)
-      }, true);
+      var type = '';
+      var message_html;
+      if (message.message.substr(1, 6) === 'ACTION') {
+        message_html = ich.action({
+          user: message.user,
+          content: message.message.substr(8),
+          renderedTime: utils.formatDate(message.date)
+        }, true);
+      } else {
+        var message_html = ich.message({
+          user: message.user,
+          content: message.message,
+          renderedTime: utils.formatDate(message.date)
+        }, true);
+      }
+
 
       if(message.user == irc.me.get('nick')){
         type = 'message-me';
