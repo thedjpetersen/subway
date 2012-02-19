@@ -71,6 +71,8 @@ $(function() {
       });
       irc.socket.emit('getOldMessages',{channelName: value['serverName'], skip:-100, amount: 100});
     });
+
+    $('.channel:first').click();
   });
 
   irc.socket.on('notice', function(data) {
