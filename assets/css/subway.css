@@ -122,6 +122,9 @@ html { overflow: hidden; }
 
 #user-box div:last-child{
   border-left: 5px solid #FA6900;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #user-box div i{
@@ -318,6 +321,9 @@ html { overflow: hidden; }
   width: 14%;
   vertical-align: top;
   padding: 1% 0% 1% 1%;
+  max-width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat-message {
