@@ -59,7 +59,7 @@ var ChatWindow = Backbone.Model.extend({
     if (this.get('active')) return;
     var signal = false;
     // Increment unread messages
-    if(msg.get('type') === 'message'){
+    if(msg.get('type') === 'message' || msg.get('type') === 'pm'){
       this.set({unread: this.get('unread') + 1});
     }
     if (this.get('type') === 'pm') signal = true;
