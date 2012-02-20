@@ -69,7 +69,7 @@ $(function() {
       $.each(value.users, function(user, role) {
         channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
       });
-      irc.socket.emit('getOldMessages',{channelName: value['serverName'], skip:-100, amount: 100});
+      irc.socket.emit('getOldMessages',{channelName: value['serverName'], skip:-50, amount: 50});
     });
 
     $('.channel:first').click();
@@ -116,7 +116,7 @@ $(function() {
     console.log('Join event received for ' + data.channel + ' - ' + data.nick);
     if (data.nick === irc.me.get('nick')) {
       irc.chatWindows.add({name: data.channel});
-      irc.socket.emit('getOldMessages',{channelName: data.channel, skip:-100, amount: 100});
+      irc.socket.emit('getOldMessages',{channelName: data.channel, skip:-50, amount: 50});
     } else {
       var channel = irc.chatWindows.getByName(data.channel);
       if (typeof channel === 'undefined') {
@@ -227,12 +227,13 @@ $(function() {
       message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
       output += message_html;
     });
-    if(!$('#chat-contents').children().length) {
-      channel.view.$('#chat-contents').prepend(output);
-      $('#chat-contents').scrollTo('100%');
-    } else {
-      channel.view.$('#chat-contents').prepend(output);
-    }
+    var old_height = channel.view.$('#chat-contents')[0].scrollHeight;
+    channel.view.$('#chat-contents').prepend(output);
+    var new_height = channel.view.$('#chat-contents')[0].scrollHeight+1000-old_height;
+
+    console.log(new_height);
+
+    $('#chat-contents').scrollTop(new_height);
   })
 
   irc.handleCommand = function(commandText) {

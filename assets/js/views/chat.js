@@ -27,6 +27,7 @@ var ChatView = Backbone.View.extend({
     );
     this.updateTitle();
     this.handleInput();
+    this.handleScroll();
     $('#chat-input').focus();
     return this;
   },
@@ -158,4 +159,12 @@ var ChatView = Backbone.View.extend({
     }
   },
 
+  handleScroll: function() {
+    $('#chat-contents').scroll(function(){
+      if ($('#chat-contents').scrollTop() < 150) {
+        var skip = (-50)-$('#chat-contents').children().length;
+        irc.socket.emit('getOldMessages',{channelName: irc.chatWindows.getActive().get('name'), skip:skip, amount: 10});
+      }
+    });
+  },
 });
