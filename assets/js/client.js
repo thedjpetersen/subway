@@ -231,9 +231,9 @@ $(function() {
     channel.view.$('#chat-contents').prepend(output);
     var new_height = channel.view.$('#chat-contents')[0].scrollHeight+1000-old_height;
 
-    console.log(new_height);
-
-    $('#chat-contents').scrollTop(new_height);
+    if(new_height > 1000){
+      $('#chat-contents').scrollTop(new_height);
+    }
   })
 
   irc.handleCommand = function(commandText) {
