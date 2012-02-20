@@ -33,13 +33,19 @@ var ChatView = Backbone.View.extend({
   },
 
   handleInput: function() {
+    $('#chat-button').click( function(){
+      message = $('#chat-input').val();
+      irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
+      $('#chat-input').val('');
+    });
+
     $('#chat-input').bind({
       // Enable button if there's any input
       change: function() {
         if ($(this).val().length) {
-          $('#chat_button').removeClass('disabled');
+          $('#chat-button').removeClass('disabled');
         } else {
-          $('#chat_button').addClass('disabled');
+          $('#chat-button').addClass('disabled');
         }
       },
 
@@ -65,7 +71,7 @@ var ChatView = Backbone.View.extend({
               irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
             }
             $(this).val('');
-            $('#chat_button').addClass('disabled');
+            $('#chat-button').addClass('disabled');
           } else if (event.keyCode == 9) {
             var searchRe;
             var match = false;
@@ -113,10 +119,10 @@ var ChatView = Backbone.View.extend({
               }
             }
         } else {
-            $('#chat_button').removeClass('disabled');
+            $('#chat-button').removeClass('disabled');
           }
         } else {
-          $('#chat_button').addClass('disabled');
+          $('#chat-button').addClass('disabled');
         }
       }
     });

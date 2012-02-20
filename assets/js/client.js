@@ -231,7 +231,7 @@ $(function() {
     channel.view.$('#chat-contents').prepend(output);
     var new_height = channel.view.$('#chat-contents')[0].scrollHeight+1000-old_height;
 
-    if(new_height > 1000){
+    if(new_height > 1200){
       $('#chat-contents').scrollTop(new_height);
     }
   })
