@@ -28,6 +28,7 @@ var ChatView = Backbone.View.extend({
     this.updateTitle();
     this.handleInput();
     this.handleScroll();
+    this.handleClick();
     $('#chat-input').focus();
     return this;
   },
@@ -171,6 +172,22 @@ var ChatView = Backbone.View.extend({
         var skip = (-50)-$('#chat-contents').children().length;
         irc.socket.emit('getOldMessages',{channelName: irc.chatWindows.getActive().get('name'), skip:skip, amount: 10});
       }
+    });
+  },
+
+  handleClick: function() {
+    $('.hide_embed').live("click", function() {
+      var embed_div = $(this).parent().siblings('.embed');
+      embed_div.addClass('hide');
+      $(this).siblings('.show_embed').removeClass('hide');
+      $(this).addClass('hide');
+    });
+
+    $('.show_embed').live("click", function() {
+      var embed_div = $(this).parent().siblings('.embed');
+      embed_div.removeClass('hide');
+      $(this).siblings('.hide_embed').removeClass('hide');
+      $(this).addClass('hide');
     });
   },
 });

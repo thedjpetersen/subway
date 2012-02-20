@@ -114,6 +114,9 @@ html { overflow: hidden; }
   color: #EEEEEE;
   font-weight: bold;
   border-top: 1px solid #666666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #user-box div:first-child{
@@ -122,9 +125,6 @@ html { overflow: hidden; }
 
 #user-box div:last-child{
   border-left: 5px solid #FA6900;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 #user-box div i{

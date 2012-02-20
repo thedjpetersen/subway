@@ -125,6 +125,11 @@ script(id="link", type="text/html")
   a(target="_blank", href="{{link}}") {{link}}
 
 script(id="image_embed", type="text/html")
+  div
+    a.hide_embed
+      i(class="icon-chevron-up")
+    a.show_embed.hide
+      i(class="icon-chevron-down")
   .embed
     img(src="{{link}}")
 
