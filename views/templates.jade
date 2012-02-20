@@ -134,6 +134,11 @@ script(id="image_embed", type="text/html")
     img(src="{{link}}")
 
 script(id="youtube_embed", type="text/html")
+  div
+    a.hide_embed
+      i(class="icon-chevron-up")
+    a.show_embed.hide
+      i(class="icon-chevron-down")
   .embed
     iframe(width="420", height="315", frameborder="0", allowfullscreen,
       src="http://www.youtube.com/embed/{{video_id}}?rel=0")
