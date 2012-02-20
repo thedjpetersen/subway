@@ -3,7 +3,10 @@ var ChatView = Backbone.View.extend({
     // We have to do this here or messages won't stay in the element
     // when we switch tabs
     this.setElement(ich.chat());
-    this.render();
+    var name = this.model.get('name');
+    if(name[0] === '#' || name === 'status'){
+      this.render();
+    }
     this.model.bind('change:topic', this.updateTitle, this);
     this.model.stream.bind('add', this.addMessage, this);
   },
@@ -57,6 +60,7 @@ var ChatView = Backbone.View.extend({
               irc.handleCommand(commandText);
             } else {
               // Send the message
+              console.log(irc.chatWindows.getActive().get('name'));
               irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
             }
             $(this).val('');

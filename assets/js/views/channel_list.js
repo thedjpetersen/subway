@@ -10,6 +10,10 @@ var ChannelListView = Backbone.View.extend({
     var view = new ChannelTabView({model: chatWindow});
     this.channelTabs.push(view);
     $(this.el).append(view.render().el);
-    view.setActive();
+
+    var name = chatWindow.get('name');
+    if(name[0] === '#' || name === 'status'){
+      view.setActive();
+    }
   }
 });

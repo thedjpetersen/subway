@@ -32,11 +32,16 @@ var WindowList = Backbone.Collection.extend({
   },
 
   setActive: function(selected) {
-    console.log(selected.get('name') + ' set as active chat!');
+    //This is here for private messages
+    var name = selected.get('name');
+    if((name[0] !== '#' && name !== 'status') && selected.stream.models.length < 1){
+      selected.set({active: false});
+      return;
+    }
+    console.log(name + ' set as active chat!');
     this.each(function(chat) {
       chat.set({active: false});
     });
-
     selected.set({active: true});
     selected.view.render();
   },
