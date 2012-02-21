@@ -33,11 +33,11 @@ var OverviewView = Backbone.View.extend({
       this.connect(event);
     }
     if($('#login-button').length){
-      event.target.nodeValue = 'Login';
+      event.action= 'Login';
       this.login_register(event);
     }
     if($('#register-button').length){
-      event.target.nodeValue = 'Register';
+      event.action = 'Register';
       this.login_register(event);
     }
   },
@@ -70,7 +70,7 @@ var OverviewView = Backbone.View.extend({
   },
 
   login_register: function(event) {
-    var action = event.target.innerText.toLowerCase() || event.target.nodeValue.toLowerCase();
+    var action = event.target.innerHTML.toLowerCase() || event.action.toLowerCase();
     event.preventDefault();
     $('.error').removeClass('error');
     var username = $('#' + action + '-username').val();
