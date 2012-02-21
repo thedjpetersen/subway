@@ -53,7 +53,7 @@ Replace step 1 above with this:
 this should install dependencies, and link the git checkout to your global
 node_modules directory.
 
-Discussion on the client takes place on the freenode channel #subway.
+Discussion on the client takes place on the freenode channel **#subway**.
 
 
 
