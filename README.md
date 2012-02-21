@@ -11,8 +11,8 @@ away.
 The inspiration from this project was trying to watch a fellow programmer try
 to explain how to set up screen/irssi to a non-technical person.
 
-Subway is built with [node.js](http://nodejs.org/) and
-Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc) on the backend,
+Subway is built with [node.js](http://nodejs.org/),
+Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc), and MongoDB on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
