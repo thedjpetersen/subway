@@ -4,22 +4,31 @@ Subway
 Subway is an IRC client/server combination.
 The server supports multiple simultaneous users. The client is a modern
 JavaScript-heavy web interface. Client/server communication is done with
-websockets (or best available fallback) via socket.io.
+websockets (or best available fallback) via socket.io. If the the user is
+logged in the client will stay persistant and log the channel why the user is
+away.
+
+The inspiration from this project was trying to watch a fellow programmer try
+to explain how to set up screen/irssi to a non-technical person.
 
 Subway is built with [node.js](http://nodejs.org/) and
 Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc) on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
-**[Try Subway on Nodester](http://subway.nodester.com)**
 **[Try Subway on RideZap](http://ridezap.com:3000)**
+
+Screenshots
+------------
+![Overview](http://people.oregonstate.edu/~petersed/overview.png)
+![Chat](http://people.oregonstate.edu/~petersed/chat.png)
 
 Installation
 ------------
 
 *Should be something like this, once implemented:*
 
-1. Assuming you already have node.js & npm, run:
+1. Assuming you already have node.js, npm, and mongo, run:
 
     $ npm install -g subway
 
@@ -27,7 +36,7 @@ Installation
 
     $ node bin/subway
 
-3. Point your browser at `http://localhost:8337/`
+3. Point your browser at `http://localhost:3000/`
 
 
 Development
