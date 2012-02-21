@@ -12,6 +12,7 @@ and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
 **[Try Subway on Nodester](http://subway.nodester.com)**
+**[Try Subway on RideZap](http://ridezap.com:3000)**
 
 Installation
 ------------
