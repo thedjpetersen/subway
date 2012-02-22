@@ -31,6 +31,13 @@ $(function() {
   irc.appView = new ChatApplicationView;
 
   // EVENTS //
+  irc.socket.emit('getDatabaseState', {});
+
+  irc.socket.on('databaseState', function(data) {
+    if(data.state == 0){
+      $('#login, #register').hide();
+    }
+  });
 
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
