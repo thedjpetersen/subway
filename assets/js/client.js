@@ -18,14 +18,6 @@ window.irc = {
   connected: false
 };
 
-// This isn't doing us any favors yet.
-// var ChatApplicationRouter = Backbone.Router.extend({
-//   initialize: function(options) {
-//     this.view = new ChatApplicationView;
-//   }
-// });
-
-
 $(function() {
   // window.app = new ChatApplicationRouter;
   irc.appView = new ChatApplicationView;
@@ -68,10 +60,16 @@ $(function() {
     irc.appView.render();
     irc.chatWindows.add({name: 'status', type: 'status'});
     $.each(data.channels, function(key, value){
-      console.log(value);
       irc.chatWindows.add({name: value['serverName']});
       var channel = irc.chatWindows.getByName(value['serverName']);
-      channel.set({topic: value['topic']});
+      var channelTabs = irc.appView.channelList.channelTabs;
+      var channelTab = channelTabs[channelTabs.length-1];
+      channel.set({
+        topic: value['topic'],
+        unread: value['unread_messages'],
+        unreadMentions: value['unread_mentions']
+      });
+      channelTab.updateUnreadCounts();
       channel.userList = new UserList(channel);
       $.each(value.users, function(user, role) {
         channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
