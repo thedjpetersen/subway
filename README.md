@@ -1,18 +1,15 @@
 Subway
 ======
 
-Subway is an IRC client/server combination.
-The server supports multiple simultaneous users. The client is a modern
-JavaScript-heavy web interface. Client/server communication is done with
-websockets (or best available fallback) via socket.io. If the the user is
-logged in the client will stay persistant and log the channel why the user is
-away.
-
-The inspiration from this project was trying to watch a fellow programmer try
-to explain how to set up screen/irssi to a non-technical person.
+Subway is a web-based IRC client with a multi-user backend and a
+JavaScript-heave UI. Frontend/backend communication is done with
+websockets (or best available fallback where not available).
+The backend supports connection persistence and optional logging when the
+browser disconnects.
 
 Subway is built with [node.js](http://nodejs.org/),
-Martyn Smith's [node-irc](https://github.com/martynsmith/node-irc), and MongoDB on the backend,
+[node-irc](https://github.com/martynsmith/node-irc)
+and [MongoDB](http://www.mongodb.org/) on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
@@ -30,11 +27,12 @@ Installation
 
 1. Assuming you already have node.js, npm, and mongo, run:
 
-    $ npm install -g subway
+    $ git clone https://github.com/thedjpetersen/subway.git
+    $ cd subway
 
 2. Launch the web server
 
-    $ node bin/subway
+    $ node subway
 
 3. Point your browser at `http://localhost:3000/`
 
@@ -42,19 +40,9 @@ Installation
 Development
 -----------
 
-*Should be about like this, once implemented:*
-
-Replace step 1 above with this:
-
-    $ git clone https://github.com/thedjpetersen/subway.git
-    $ cd subway
-    $ npm link
-
-this should install dependencies, and link the git checkout to your global
-node_modules directory.
-
-Discussion on the client takes place on the freenode channel **#subway**.
-
+Discussion about the client takes place on the freenode channel **#subway**, and on
+this repository's [Issues](https://github.com/thedjpetersen/subway/issues) page.
+Contributors are welcome and greatly appreciated.
 
 
 History
@@ -73,6 +61,9 @@ Its goals are twofold:
 2) Provide a really easy method of persistent IRC connections, available
    from any web browser
 
+The inspiration for Subway was trying to watch a fellow programmer try
+to explain how to set up screen/irssi to a non-technical person.
+
 
 Credits
 -------
@@ -82,7 +73,7 @@ Major Subway contributors include:
 - [David Petersen](https://github.com/thedjpetersen), developer
 - [Aaron Kavlie](https://github.com/akavlie), developer
 - [Jamie Soar](http://www.jamiesoarmusic.co.uk/), notification sounds
-- Some icons by Yusuke Kamiyamane. All rights reserved. Licensed under a Creative Commons Attribution 3.0 License.
+- Yusuke Kamiyamane, some icons
 
 
 License
