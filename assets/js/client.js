@@ -108,7 +108,10 @@ $(function() {
     } else if(data.to !== irc.me.get('nick')) {
       // Handle PMs intiated by me
       if (typeof chatWindow === 'undefined') {
+        var myNick = irc.me.get('nick');
+        var logname = (myNick < data.to) ? myNick + data.to : data.to + myNick;
         irc.chatWindows.add({name: data.to, type: 'pm'});
+        irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
         chatWindow = irc.chatWindows.getByName(data.to);
       }
       chatWindow.stream.add({sender: data.from, raw: data.text, type: 'pm'});
@@ -118,8 +121,11 @@ $(function() {
   irc.socket.on('pm', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.nick);
     if (typeof chatWindow === 'undefined') {
+      var myNick = irc.me.get('nick');
+      var logname = (myNick < data.nick) ? myNick + data.nick : data.nick + myNick;
       irc.chatWindows.add({name: data.nick, type: 'pm'})
         .trigger('forMe', 'newPm');
+      irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
       chatWindow = irc.chatWindows.getByName(data.nick);
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
