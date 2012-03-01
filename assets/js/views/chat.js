@@ -4,9 +4,11 @@ var ChatView = Backbone.View.extend({
     // when we switch tabs
     this.setElement(ich.chat());
     var name = this.model.get('name');
+    /*
     if(name[0] === '#' || name === 'status'){
       this.render();
     }
+    */
     this.model.bind('change:topic', this.updateTitle, this);
     this.model.stream.bind('add', this.addMessage, this);
   },

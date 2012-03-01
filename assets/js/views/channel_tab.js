@@ -55,6 +55,7 @@ var ChannelTabView = Backbone.View.extend({
     if (this.model.get('type') === 'channel')
       irc.socket.emit('part', this.model.get('name'));
     else
+      irc.socket.emit('part_pm', this.model.get('name'));
       this.model.destroy();
   },
 
