@@ -75,6 +75,8 @@ Major Subway contributors include:
 - [Jamie Soar](http://www.jamiesoarmusic.co.uk/), notification sounds
 - Yusuke Kamiyamane, some icons
 
+**The logo right now is a Gowalla icon, we are not planning on keeping this, we are only planning on using it as a placeholder**
+
 
 License
 -------
