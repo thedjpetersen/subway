@@ -27,12 +27,12 @@ Installation
 
 1. Assuming you already have node.js, npm, and mongo, run:
 
-    $ git clone https://github.com/thedjpetersen/subway.git
-    $ cd subway
+        $ git clone https://github.com/thedjpetersen/subway.git
+        $ cd subway
 
 2. Launch the web server
 
-    $ node subway
+        $ node subway
 
 3. Point your browser at `http://localhost:3000/`
 
