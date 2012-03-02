@@ -30,11 +30,15 @@ Installation
     $ git clone https://github.com/thedjpetersen/subway.git
     $ cd subway
 
-2. Launch the web server
+2. Install the dependencies using npm:
+    
+    $ npm install
+
+3. Launch the web server
 
     $ node subway
 
-3. Point your browser at `http://localhost:3000/`
+4. Point your browser at `http://localhost:3000/`
 
 
 Development
