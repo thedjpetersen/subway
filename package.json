@@ -1,7 +1,9 @@
 {
   "name": "subway",
   "description": "A browser-based IRC client with server",
-  "keywords": ["irc"],
+  "keywords": [
+    "irc"
+  ],
   "author": "David Petersen <davjpetersen@gmail.com>",
   "version": "0.1.0",
   "main": "./lib/subway.js",
@@ -16,8 +18,13 @@
     "jade": "",
     "connect-assets": "",
     "irc": "git://github.com/martynsmith/node-irc.git",
-    "socket.io": "",
+    "socket.io": "0.9.x-1",
     "mongoose": "",
     "bcrypt": ""
+  },
+  "noAnalyze": true,
+  "subdomain": "subway",
+  "scripts": {
+    "start": "subway"
   }
 }
