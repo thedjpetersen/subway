@@ -41,6 +41,15 @@ Installation
 4. Point your browser at `http://localhost:3000/`
 
 
+Deployment
+-----------
+### Nodejitsu
+To deploy to Nodejitsu, update the `name` and `subdomain` values in `package.json` to the appropriate values for your app. Then:
+
+    $ jitsu env set PORT 80
+    $ jitsu deploy
+
+
 Development
 -----------
 
