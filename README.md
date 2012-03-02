@@ -2,7 +2,7 @@ Subway
 ======
 
 Subway is a web-based IRC client with a multi-user backend and a
-JavaScript-heave UI. Frontend/backend communication is done with
+JavaScript-heavy UI. Frontend/backend communication is done with
 websockets (or best available fallback where not available).
 The backend supports connection persistence and optional logging when the
 browser disconnects.
