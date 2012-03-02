@@ -283,6 +283,14 @@ $(function() {
           irc.appView.channelList.channelTabs[0].setActive();
         }
         break;
+      case '/topic':
+        if (commandText[2]) {
+          irc.socket.emit('topic', {name: commandText[1], topic: commandText[2]});
+        } else {
+          irc.socket.emit('topic', {name: irc.chatWindows.getActive().get('name'),
+            topic: commandText[1]});
+        }
+        break;
       case '/me':
         irc.socket.emit('action', {
           target: irc.chatWindows.getActive().get('name'),
