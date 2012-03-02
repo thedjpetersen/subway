@@ -32,7 +32,7 @@ Installation
 
 2. Install the dependencies using npm:
     
-    $ npm install
+    	$ npm install
 
 3. Launch the web server
 
