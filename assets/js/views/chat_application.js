@@ -42,8 +42,6 @@ var ChatApplicationView = Backbone.View.extend({
       var overview = new OverviewView;
     } else {
       this.channelList = new ChannelListView;
-      // irc.me.on('change:nick', this.renderUserBox, this);
-      this.renderUserBox();
     }
     return this;
   },

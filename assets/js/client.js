@@ -41,10 +41,15 @@ $(function() {
 
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
+    var window = irc.chatWindows.getByName('status');
     irc.socket.emit('getNick', {});
     irc.connected = true;
-    irc.appView.render();
-    irc.chatWindows.add({name: 'status', type: 'status'});
+    if(window === undefined){
+      irc.appView.render();
+      irc.chatWindows.add({name: 'status', type: 'status'});
+    } else {
+      irc.appView.renderUserBox();
+    }
 
     // Will reflect modified nick, if chosen nick was taken already
     irc.me.set('nick', data.message.args[0]);
@@ -101,7 +106,15 @@ $(function() {
 
   irc.socket.on('notice', function(data) {
     //TODO: make this work
-    //irc.chatWindows.getByName('status').stream.add({sender: 'notice', raw: data.text, type: 'notice'});
+    var window = irc.chatWindows.getByName('status');
+    if(window === undefined){
+      irc.connected = true;
+      irc.appView.render();
+      irc.chatWindows.add({name: 'status', type: 'status'});
+      window = irc.chatWindows.getByName('status');
+    }
+    var sender = (data.nick !== undefined) ? data.nick : 'notice';
+    window.stream.add({sender: sender, raw: data.text, type: 'notice'});
   });
 
   // Message of the Day
