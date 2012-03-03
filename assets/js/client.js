@@ -34,7 +34,7 @@ $(function() {
   irc.socket.emit('getDatabaseState', {});
 
   irc.socket.on('databaseState', function(data) {
-    if(data.state == 0){
+    if(data.state === 0){
       $('#login, #register').hide();
     }
   });
@@ -118,13 +118,6 @@ $(function() {
       chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
     } else if(data.to !== irc.me.get('nick')) {
       // Handle PMs intiated by me
-      if (typeof chatWindow === 'undefined') {
-        var myNick = irc.me.get('nick');
-        var logname = (myNick < data.to) ? myNick + data.to : data.to + myNick;
-        irc.chatWindows.add({name: data.to, type: 'pm'});
-        irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
-        chatWindow = irc.chatWindows.getByName(data.to);
-      }
       chatWindow.stream.add({sender: data.from, raw: data.text, type: 'pm'});
     }
   });
@@ -300,8 +293,15 @@ $(function() {
       case '/query':
       case '/privmsg':
       case '/msg':
+        var target = commandText[1];
+        var myNick = irc.me.get('nick');
+        var logname = (myNick < target) ? myNick + target : target + myNick;
+        if (typeof irc.chatWindows.getByName(target) === 'undefined') {
+          irc.chatWindows.add({name: target, type: 'pm'});
+        }
+        irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
         irc.socket.emit('say', {
-          target: commandText[1],
+          target: target,
           message: commandText.splice(2).join(" ")
         });
         break;
@@ -309,7 +309,7 @@ $(function() {
         commandText[0] = commandText[0].substr(1).toUpperCase();
         irc.socket.emit('command', commandText);
     }
-  }
+  };
 
-})
+});
 

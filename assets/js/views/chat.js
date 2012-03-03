@@ -150,7 +150,7 @@ var ChatView = Backbone.View.extend({
 
     $chatWindow.append(view.el);
 
-    if (sender === irc.me.get('nick') && 'message'.indexOf(type) === 0) {
+    if (sender === irc.me.get('nick') && ['message', 'pm'].indexOf(type) !== -1) {
       $(view.el).addClass('message-me');
     }
 
@@ -200,5 +200,5 @@ var ChatView = Backbone.View.extend({
       $(this).siblings('.hide_embed').removeClass('hide');
       $(this).addClass('hide');
     });
-  },
+  }
 });
