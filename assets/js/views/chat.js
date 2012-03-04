@@ -42,7 +42,9 @@ var ChatView = Backbone.View.extend({
       $('#chat-input').val('');
     });
 
-    var isEnter = false;
+    // Only submit message on enter if both keydown & keyup are present
+    // so IMEs work
+    var keydownEnter = false;
     $('#chat-input').bind({
       // Enable button if there's any input
       change: function() {
@@ -58,13 +60,13 @@ var ChatView = Backbone.View.extend({
         if (event.keyCode == 9) {
           event.preventDefault();
         }
-        isEnter = (event.keyCode == 13);
+        keydownEnter = (event.keyCode === 13);
       },
 
       keyup: function(event) {
         var self = this;
         if ($(this).val().length) {
-          if (isEnter && event.keyCode == 13) {
+          if (keydownEnter && event.keyCode === 13) {
             var message = $(this).val();
             // Handle IRC commands
             if (message.substr(0, 1) === '/') {
