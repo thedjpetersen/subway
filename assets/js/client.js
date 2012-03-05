@@ -71,6 +71,7 @@ $(function() {
     irc.me = new User({nick: data.nick, server: data.server});
     irc.connected = true;
     irc.appView.render();
+    irc.appView.renderUserBox();
     irc.chatWindows.add({name: 'status', type: 'status'});
     $.each(data.channels, function(key, value){
       if(value['serverName'][0] == '#'){
