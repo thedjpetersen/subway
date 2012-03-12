@@ -217,7 +217,7 @@ $(function() {
   });
 
   irc.socket.on('error', function(data) {
-    console.log(data.messsage);
+    console.log(data.message);
   });
 
   irc.socket.on('netError', function(data) {
