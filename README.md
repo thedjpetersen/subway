@@ -46,6 +46,10 @@ Deployment
 ### Nodejitsu
 To deploy to Nodejitsu, update the `name` and `subdomain` values in `package.json` to the appropriate values for your app. Then:
 
+    $ jitsu databases create mongo subway
+
+Now change the line `mongoose.connect('mongodb://localhost/subway');` in lib/irchandler.js to the connect URI you got back from jitsu. Then:
+
     $ jitsu env set PORT 80
     $ jitsu deploy
 
