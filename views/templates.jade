@@ -35,13 +35,21 @@ script(id="overview_connection", type="text/html")
     a.overview_button#home Home
   form.form-horizontal
     .control-group
+      label(for="connect-nick") Nick
+      .controls
+        input#connect-nick(type="text")
+    .control-group
       label(for="connect-server") Server
       .controls
         input#connect-server(type="text")
     .control-group
-      label(for="connect-nick") Nick
+      label(for="connect-port") Port
       .controls
-        input#connect-nick(type="text")
+        input#connect-port(type="text")
+    .control-group
+      label(for="connect-ssl") SSL
+      .controls
+        input#connect-ssl(type="checkbox")
     a(id="connect-button", class="btn btn-primary", type="button") Connect
 
 script(id="overview_settings", type="text/html")

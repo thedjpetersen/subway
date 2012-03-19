@@ -47,6 +47,8 @@ var OverviewView = Backbone.View.extend({
     $('.error').removeClass('error');
     var server = $('#connect-server').val();
     var nick = $('#connect-nick').val();
+    var ssl = $('#connect-ssl').val();
+    var port = $('#connect-port').val();
     if (!server) {
       $('#connect-server').closest('.clearfix').addClass('error');
       $('#connect-server').addClass('error');
@@ -55,13 +57,21 @@ var OverviewView = Backbone.View.extend({
       $('#connect-nick').closest('.clearfix').addClass('error');
       $('#connect-nick').addClass('error');
     }
+    if (!ssl) {
+      ssl = false;
+    }
+    if (!port) {
+      port = ssl ? 6697 : 6667;
+    }
     if (nick && server) {
       $('form').append(ich.load_image());
       $('#connect-button').addClass('disabled');
 
       var connectInfo = {
         nick: nick,
-        server: server
+        server: server,
+        ssl: ssl,
+        port: port
       };
       irc.me = new User(connectInfo);
       irc.me.on('change:nick', irc.appView.renderUserBox);
