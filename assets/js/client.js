@@ -63,6 +63,11 @@ $(function() {
     }
   });
 
+  irc.socket.on('disconnect', function() {
+    alert('You were disconnected from the server.');
+  });
+  
+
   irc.socket.on('register_success', function(data) {
     $('#overview').html(ich.overview_connection());
   });
