@@ -13,8 +13,6 @@ and [MongoDB](http://www.mongodb.org/) on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 
-**[Try Subway on RideZap](http://ridezap.com:3000)**
-
 Screenshots
 ------------
 ![Overview](http://people.oregonstate.edu/~petersed/overview.png)
