@@ -7,6 +7,7 @@ html { overflow: hidden; }
   width: 100%;
   position: absolute;
   zoom: 1;
+  padding: 0;
 }
 .container-fluid:before, .container-fluid:after {
   display: table;
