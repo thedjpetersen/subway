@@ -65,6 +65,7 @@ $(function() {
 
   irc.socket.on('disconnect', function() {
     alert('You were disconnected from the server.');
+    $('.container-fluid').css('opacity', '0.5');
   });
   
 
@@ -203,7 +204,7 @@ $(function() {
     var channel = irc.chatWindows.getByName(data.channel);
     channel.userList = new UserList(channel);
     $.each(data.nicks, function(nick, role){
-      channel.userList.add(new User({nick: nick, role: role, idle:61, user_status: 'idle', activity: ''}))
+      channel.userList.add(new User({nick: nick, role: role, idle:61, user_status: 'idle', activity: ''}));
     });
   });
 
@@ -212,6 +213,12 @@ $(function() {
       irc.me.set('nick', data.newNick);
 
     // TODO: If not me, change name in user list and send channel message
+    var channel = irc.chatWindows.getByName(data.channels[0]);
+    var user = channel.userList.getByNick(data.oldNick);
+    user.set({nick: data.newNick});
+    user.view.render();
+    var nickMessage = new Message({type: 'nick', oldNick: data.oldNick, newNick: data.newNick});
+    channel.stream.add(nickMessage);
   });
 
   irc.socket.on('topic', function(data) {
