@@ -37,8 +37,13 @@ var ChatView = Backbone.View.extend({
 
   handleInput: function() {
     $('#chat-button').click( function(){
-      message = $('#chat-input').val();
-      irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
+      var message = $('#chat-input').val();
+      if (message.substr(0, 1) === '/') {
+        var commandText = message.split(' ');
+        irc.handleCommand(commandText);
+      } else {
+        irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
+      }
       $('#chat-input').val('');
     });
 
