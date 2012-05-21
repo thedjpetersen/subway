@@ -42,6 +42,22 @@ script(id="overview_connection", type="text/html")
       label(for="connect-nick") Nick
       .controls
         input#connect-nick(type="text")
+    .control-group
+      label(for="connect-port") Port
+      .controls
+        input#connect-port(type="text")
+    .control-group
+      label(for="connect-secure") SSL
+      .controls
+        input#connect-secure(type="checkbox")
+    .control-group
+      label(for="connect-selfSigned") Self-signed SSL Cert
+      .controls
+        input#connect-selfSigned(type="checkbox")
+    .control-group
+      label(for="connect-password") Password
+      .controls
+        input#connect-password(type="password")
     a(id="connect-button", class="btn btn-primary", type="button") Connect
 
 script(id="overview_settings", type="text/html")
