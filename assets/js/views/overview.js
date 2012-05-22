@@ -47,6 +47,10 @@ var OverviewView = Backbone.View.extend({
     $('.error').removeClass('error');
     var server = $('#connect-server').val();
     var nick = $('#connect-nick').val();
+		var port = $('#connect-port').val();
+		var secure = $('#connect-secure').val();
+		var selfSigned = $('#connect-selfSigned').val();
+		var password = $('#connect-password').val();
     if (!server) {
       $('#connect-server').closest('.clearfix').addClass('error');
       $('#connect-server').addClass('error');
@@ -61,7 +65,11 @@ var OverviewView = Backbone.View.extend({
 
       var connectInfo = {
         nick: nick,
-        server: server
+        server: server,
+				port: port,
+				secure: secure,
+				selfSigned: selfSigned,
+				password: password
       };
       irc.me = new User(connectInfo);
       irc.me.on('change:nick', irc.appView.renderUserBox);
