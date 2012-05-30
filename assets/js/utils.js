@@ -52,7 +52,7 @@ window.utils = {
         }
 
         //Add embedded images
-        if (jQuery.inArray(href.substr(-3), ['jpg', 'gif', 'png']) > -1){
+        if (jQuery.inArray(href.substr(-3), ['jpg', 'gif', 'png']) > -1 || jQuery.inArray(href.substr(-4), ['jpeg']) > -1) {
           parsed = parsed.split('</div><div class=\"chat-time\">').join(ich.image_embed({link:href}, true) + '</div><div class=\"chat-time\">');
         }
       }
