@@ -8,6 +8,7 @@ html { overflow: hidden; }
   position: absolute;
   zoom: 1;
   padding: 0;
+  font-size: 12px;
 }
 .container-fluid:before, .container-fluid:after {
   display: table;
@@ -108,6 +109,11 @@ html { overflow: hidden; }
   margin-top: 35px;
   background: #434950;
 }
+
+#ssl-self-signed {
+  display: none;
+}
+
 
 #user-box div{
   padding: 10px 25px;
