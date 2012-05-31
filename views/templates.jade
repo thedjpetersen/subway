@@ -39,21 +39,21 @@ script(id="overview_connection", type="text/html")
       .controls
         input#connect-server(type="text")
     .control-group
-      label(for="connect-nick") Nick
-      .controls
-        input#connect-nick(type="text")
-    .control-group
       label(for="connect-port") Port
       .controls
-        input#connect-port(type="text")
+        input#connect-port.input-small(type="text", placeholder="6667")
     .control-group
       label(for="connect-secure") SSL
       .controls
         input#connect-secure(type="checkbox")
-    .control-group
+    .control-group#ssl-self-signed
       label(for="connect-selfSigned") Self-signed SSL Cert
       .controls
         input#connect-selfSigned(type="checkbox")
+    .control-group
+      label(for="connect-nick") Nick
+      .controls
+        input#connect-nick(type="text")
     .control-group
       label(for="connect-password") Password
       .controls
