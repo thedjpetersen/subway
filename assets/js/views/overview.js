@@ -8,7 +8,7 @@ var OverviewView = Backbone.View.extend({
     'click #login-button': 'login_register',
     'click #register-button': 'login_register',
     'keypress': 'connectOnEnter',
-    'click #connect-secure': 'toggle_ssl_options'
+    'click #connect-secure': 'toggle_ssl_port'
   },
 
   el: '.content',
@@ -51,7 +51,6 @@ var OverviewView = Backbone.View.extend({
     var nick = $('#connect-nick').val();
     var port = $('#connect-port').val();
     var secure = $('#connect-secure').is(':checked');
-    var selfSigned = $('#connect-selfSigned').is(':checked');
     var password = $('#connect-password').val();
     
     if (!server) {
@@ -73,7 +72,6 @@ var OverviewView = Backbone.View.extend({
         server: server,
 	port: port,
         secure: secure,
-        selfSigned: selfSigned,
         password: password
       };
 
@@ -112,10 +110,9 @@ var OverviewView = Backbone.View.extend({
     });
   },
 
-  toggle_ssl_options: function(event) {
+  toggle_ssl_port: function(event) {
     var port = $('#connect-secure').is(':checked') ? 6697 : 6667 
     $('#connect-port').attr('placeholder', port)
-    $('#ssl-self-signed').toggle();
   }
 
 

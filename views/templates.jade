@@ -41,15 +41,11 @@ script(id="overview_connection", type="text/html")
     .control-group
       label(for="connect-port") Port
       .controls
-        input#connect-port.input-small(type="text", placeholder="6667")
-    .control-group
-      label(for="connect-secure") SSL
-      .controls
-        input#connect-secure(type="checkbox")
-    .control-group#ssl-self-signed
-      label(for="connect-selfSigned") Self-signed SSL Cert
-      .controls
-        input#connect-selfSigned(type="checkbox")
+        .input-append
+          input#connect-port.input-small(type="text", placeholder="6667") 
+          label.add-on(for="connect-secure")
+            span.text SSL
+            input#connect-secure(type="checkbox")
     .control-group
       label(for="connect-nick") Nick
       .controls
