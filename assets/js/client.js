@@ -210,13 +210,17 @@ $(function() {
     if (data.oldNick === irc.me.get('nick'))
       irc.me.set('nick', data.newNick);
 
-    // TODO: If not me, change name in user list and send channel message
     var channel = irc.chatWindows.getByName(data.channels[0]);
     var user = channel.userList.getByNick(data.oldNick);
     user.set({nick: data.newNick});
     user.view.render();
+
+    // Add nickmessage to all channels
     var nickMessage = new Message({type: 'nick', oldNick: data.oldNick, newNick: data.newNick});
-    channel.stream.add(nickMessage);
+    for( var i in data.channels ) {
+      channel = irc.chatWindows.getByName(data.channels[i]);
+      channel.stream.add(nickMessage);
+    }
   });
 
   irc.socket.on('topic', function(data) {
@@ -298,6 +302,12 @@ $(function() {
         } else {
           irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
           irc.appView.channelList.channelTabs[0].setActive();
+        }
+        break;
+
+      case '/nick':
+        if (commandText[1]) {
+          irc.socket.emit('nick', {nick : commandText[1]});
         }
         break;
       case '/topic':
