@@ -62,6 +62,8 @@ html { overflow: hidden; }
 }
 
 #overview label { width: 70px; }
+#overview label.add-on { width: auto; }
+#overview label span.text { vertical-align: middle; margin-left: 5px; }
 #overview .controls { margin-left: 90px; }
 #overview button { margin-left: 90px; }
 
