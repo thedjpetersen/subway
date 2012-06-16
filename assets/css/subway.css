@@ -138,6 +138,14 @@ html { overflow: hidden; }
   margin-right: 5px;
 }
 
+#channels {
+  position: absolute;
+  top: 290px;
+  bottom: 0;
+  overflow: auto;
+  width: 100%;
+}
+
 #channels > .channel {
   padding: 5% 5% 5% 20%;
   color: #333333;
