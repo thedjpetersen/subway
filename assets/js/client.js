@@ -78,12 +78,13 @@ $(function() {
     irc.appView.renderUserBox();
     irc.chatWindows.add({name: 'status', type: 'status'});
     $.each(data.channels, function(key, value){
-      if(value['serverName'][0] == '#'){
-        irc.chatWindows.add({name: value['serverName']});
+      var chanName = value['serverName'].toLowerCase();
+      if(chanName[0] == '#'){
+        irc.chatWindows.add({name: chanName});
       } else {
-        irc.chatWindows.add({name: value['serverName'], type: 'pm'});
+        irc.chatWindows.add({name: chanName, type: 'pm'});
       }
-      var channel = irc.chatWindows.getByName(value['serverName']);
+      var channel = irc.chatWindows.getByName(chanName);
       var channelTabs = irc.appView.channelList.channelTabs;
       var channelTab = channelTabs[channelTabs.length-1];
       channel.set({
@@ -92,16 +93,14 @@ $(function() {
         unreadMentions: value['unread_mentions']
       });
       channelTab.updateUnreadCounts();
-      if(value['serverName'][0] == '#'){
+      if(chanName[0] == '#'){
         channel.userList = new UserList(channel);
         $.each(value.users, function(user, role) {
           channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
         });
-        irc.socket.emit('getOldMessages',{channelName: value['serverName'], skip:-50, amount: 50});
+        irc.socket.emit('getOldMessages',{channelName: chanName, skip:-50, amount: 50});
       } else {
-        var myNick = irc.me.get('nick');
-        var logname = (myNick < value['serverName']) ? myNick + value['serverName'] : value['serverName'] + myNick;
-        irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
+        irc.socket.emit('getOldMessages',{channelName: chanName, skip:-50, amount: 50});
         channel.stream.add(new Message({sender:'', raw:''}));
       }
     });
@@ -129,40 +128,39 @@ $(function() {
   });
 
   irc.socket.on('message', function(data) {
-    var chatWindow = irc.chatWindows.getByName(data.to);
+    var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
     var type = 'message';
     // Only handle channel messages here; PMs handled separately
     if (data.to.substr(0, 1) === '#') {
-      chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
+      chatWindow.stream.add({sender: data.from.toLowerCase(), raw: data.text, type: type});
     } else if(data.to !== irc.me.get('nick')) {
       // Handle PMs intiated by me
-      chatWindow.stream.add({sender: data.from, raw: data.text, type: 'pm'});
+      chatWindow.stream.add({sender: data.from.toLowerCase(), raw: data.text, type: 'pm'});
     }
   });
 
   irc.socket.on('pm', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.nick);
     if (typeof chatWindow === 'undefined') {
-      var myNick = irc.me.get('nick');
-      var logname = (myNick < data.nick) ? myNick + data.nick : data.nick + myNick;
       irc.chatWindows.add({name: data.nick, type: 'pm'})
         .trigger('forMe', 'newPm');
-      irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
+      irc.socket.emit('getOldMessages',{channelName: data.nick, skip:-50, amount: 50});
       chatWindow = irc.chatWindows.getByName(data.nick);
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
   });
 
   irc.socket.on('join', function(data) {
-    console.log('Join event received for ' + data.channel + ' - ' + data.nick);
+    var chanName = data.channel.toLowerCase();
+    console.log('Join event received for ' + chanName + ' - ' + data.nick);
     if (data.nick === irc.me.get('nick')) {
-      irc.chatWindows.add({name: data.channel});
-      irc.socket.emit('getOldMessages',{channelName: data.channel, skip:-50, amount: 50});
+      irc.chatWindows.add({name: chanName});
+      irc.socket.emit('getOldMessages',{channelName: chanName, skip:-50, amount: 50});
     } else {
-      var channel = irc.chatWindows.getByName(data.channel);
+      var channel = irc.chatWindows.getByName(chanName);
       if (typeof channel === 'undefined') {
-        irc.chatWindows.add({name: data.channel});
-        channel = irc.chatWindows.getByName(data.channel);
+        irc.chatWindows.add({name: chanName});
+        channel = irc.chatWindows.getByName(chanName);
       }
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'idle', activity: ''});
       var joinMessage = new Message({type: 'join', nick: data.nick});
@@ -171,8 +169,9 @@ $(function() {
   });
 
   irc.socket.on('part', function(data) {
-    console.log('Part event received for ' + data.channel + ' - ' + data.nick);
-    var channel = irc.chatWindows.getByName(data.channel);
+    var chanName = data.channel.toLowerCase();
+    console.log('Part event received for ' + chanName + ' - ' + data.nick);
+    var channel = irc.chatWindows.getByName(chanName);
     if (data.nick === irc.me.get('nick')) {
       channel.part();
     } else {
@@ -199,7 +198,7 @@ $(function() {
   });
 
   irc.socket.on('names', function(data) {
-    var channel = irc.chatWindows.getByName(data.channel);
+    var channel = irc.chatWindows.getByName(data.channel.toLowerCase());
     channel.userList = new UserList(channel);
     $.each(data.nicks, function(nick, role){
       channel.userList.add(new User({nick: nick, role: role, idle:61, user_status: 'idle', activity: ''}));
@@ -224,7 +223,7 @@ $(function() {
   });
 
   irc.socket.on('topic', function(data) {
-    var channel = irc.chatWindows.getByName(data.channel);
+    var channel = irc.chatWindows.getByName(data.channel.toLowerCase());
     channel.set({topic: data.topic});
     var topicMessage = new Message({type: 'topic', nick: data.nick, topic: data.topic});
     channel.stream.add(topicMessage);
