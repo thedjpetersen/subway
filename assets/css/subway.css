@@ -106,7 +106,7 @@ html { overflow: hidden; }
 }
 
 #user-box {
-  margin-top: 35px;
+  margin-top: 10px;
   background: #434950;
 }
 
@@ -136,6 +136,14 @@ html { overflow: hidden; }
 
 #user-box div i{
   margin-right: 5px;
+}
+
+#channels {
+  position: absolute;
+  top: 255px;
+  bottom: 0;
+  overflow: auto;
+  width: 100%;
 }
 
 #channels > .channel {
@@ -210,7 +218,7 @@ html { overflow: hidden; }
 }
 
 #logo > img {
-  margin-top: 10%;
+  margin-top: 10px;
 }
 
 /* Here are the styles for the chat window */
@@ -247,6 +255,7 @@ html { overflow: hidden; }
 .window_title{
   font-weight:bold;
   margin-right: 2%;
+  white-space:nowrap;
 }
 
 .titlebar #topic{
