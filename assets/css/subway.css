@@ -405,6 +405,7 @@ html { overflow: hidden; }
 .userlist_user {
   border-bottom: 1px solid #CCCCCC;
   display: table;
+  height: 31px;
   width: 100%;
 }
 
