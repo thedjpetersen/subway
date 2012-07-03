@@ -109,7 +109,6 @@ $(function() {
   });
 
   irc.socket.on('notice', function(data) {
-    //TODO: make this work
     var window = irc.chatWindows.getByName('status');
     if(window === undefined){
       irc.connected = true;
@@ -230,7 +229,14 @@ $(function() {
   });
 
   irc.socket.on('error', function(data) {
-    console.log(data.message);
+    var window = irc.chatWindows.getByName('status');
+    if(window === undefined){
+      irc.connected = true;
+      irc.appView.render();
+      irc.chatWindows.add({name: 'status', type: 'status'});
+      window = irc.chatWindows.getByName('status');
+    }
+    window.stream.add({sender: 'error', raw: data.text, type: 'notice'});
   });
 
   irc.socket.on('netError', function(data) {

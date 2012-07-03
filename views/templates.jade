@@ -46,6 +46,10 @@ script(id="overview_connection", type="text/html")
       label(for="connect-secure") SSL
       .controls
         input#connect-secure(type="checkbox")
+    .control-group
+      label(for="connect-rejoin") Bouncer Mode
+      .controls
+        input#connect-rejoin(type="checkbox")
     .control-group#ssl-self-signed
       label(for="connect-selfSigned") Self-signed SSL Cert
       .controls
@@ -63,7 +67,7 @@ script(id="overview_connection", type="text/html")
 script(id="overview_settings", type="text/html")
   #home_parent
     a.overview_button#home Home
-  p The Settings will go here - Don't worry I am going to get around to it...someday...
+  p Coming soon.
 
 script(id="overview_login", type="text/html")
   #home_parent

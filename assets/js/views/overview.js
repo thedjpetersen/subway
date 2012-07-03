@@ -52,6 +52,7 @@ var OverviewView = Backbone.View.extend({
     var port = $('#connect-port').val();
     var secure = $('#connect-secure').is(':checked');
     var selfSigned = $('#connect-selfSigned').is(':checked');
+    var rejoin = $('#connect-rejoin').is(':checked');
     var password = $('#connect-password').val();
     
     if (!server) {
@@ -74,6 +75,7 @@ var OverviewView = Backbone.View.extend({
 	port: port,
         secure: secure,
         selfSigned: selfSigned,
+        rejoin: rejoin,
         password: password
       };
 
