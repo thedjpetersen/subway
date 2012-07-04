@@ -50,7 +50,7 @@ var MessageView = Backbone.View.extend({
           type: 'part',
           nick: this.model.get('nick'),
           action: 'left',
-          reason: '(' + this.model.get('reason') + ')',
+          reason: this.model.get('reason') !== 'undefined' ? '('+this.model.get('reason')+')' : '(leaving)'
           //Message resolving to undefined will include again later
           //message: '(' + this.model.get('message') + ')'
         });
