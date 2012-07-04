@@ -50,6 +50,8 @@ var OverviewView = Backbone.View.extend({
     var server = $('#connect-server').val();
     var nick = $('#connect-nick').val();
     var port = $('#connect-port').val();
+    var away = $('#connect-away').val();
+    var realName = $('#connect-realName').val();
     var secure = $('#connect-secure').is(':checked');
     var selfSigned = $('#connect-selfSigned').is(':checked');
     var rejoin = $('#connect-rejoin').is(':checked');
@@ -72,10 +74,12 @@ var OverviewView = Backbone.View.extend({
       var connectInfo = {
         nick: nick,
         server: server,
-	port: port,
+	      port: port,
         secure: secure,
         selfSigned: selfSigned,
         rejoin: rejoin,
+        away: away,
+        realName: realName,
         password: password
       };
 

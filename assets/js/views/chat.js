@@ -120,7 +120,7 @@ var ChatView = Backbone.View.extend({
                 match = true;
                 //We decide whether or not to add colon
                 if (sentence.length === 1) {
-                  $('#chat-input').val(sentence.join(' ') +  ":");
+                  $('#chat-input').val(sentence.join(' ') +  ": ");
                 } else {
                   $('#chat-input').val(sentence.join(' '));
                 }
