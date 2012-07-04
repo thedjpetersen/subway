@@ -441,7 +441,7 @@ html { overflow: hidden; }
 
 .userlist_user_name{
   font-weight: bold;
-  max-width: 100px;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }

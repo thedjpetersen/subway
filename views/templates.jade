@@ -59,6 +59,14 @@ script(id="overview_connection", type="text/html")
       .controls
         input#connect-nick(type="text")
     .control-group
+      label(for="connect-realName") Real Name
+      .controls
+        input#connect-realName(type="text")
+    .control-group
+      label(for="connect-away") Away Message
+      .controls
+        input#connect-away(type="text", placeholder="AFK")
+    .control-group
       label(for="connect-password") Password
       .controls
         input#connect-password(type="password")

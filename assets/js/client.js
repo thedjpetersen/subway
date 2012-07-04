@@ -332,13 +332,12 @@ $(function() {
       case '/query':
       case '/privmsg':
       case '/msg':
-        var target = commandText[1];
+        var target = commandText[1].toLowerCase();
         var myNick = irc.me.get('nick');
-        var logname = (myNick < target) ? myNick + target : target + myNick;
         if (typeof irc.chatWindows.getByName(target) === 'undefined') {
           irc.chatWindows.add({name: target, type: 'pm'});
         }
-        irc.socket.emit('getOldMessages',{channelName: logname, skip:-50, amount: 50});
+        irc.socket.emit('getOldMessages',{channelName: target, skip:-50, amount: 50});
         irc.socket.emit('say', {
           target: target,
           message: commandText.splice(2).join(" ")
