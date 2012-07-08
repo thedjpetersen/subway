@@ -46,10 +46,6 @@ script(id="overview_connection", type="text/html")
       label(for="connect-secure") SSL
       .controls
         input#connect-secure(type="checkbox")
-    .control-group
-      label(for="connect-rejoin") Bouncer Mode
-      .controls
-        input#connect-rejoin(type="checkbox")
     .control-group#ssl-self-signed
       label(for="connect-selfSigned") Self-signed SSL Cert
       .controls
@@ -59,6 +55,10 @@ script(id="overview_connection", type="text/html")
       .controls
         input#connect-nick(type="text")
     .control-group
+      label(for="connect-password") Password (optional)
+      .controls
+        input#connect-password(type="password")
+    .control-group
       label(for="connect-realName") Real Name
       .controls
         input#connect-realName(type="text")
@@ -67,9 +67,9 @@ script(id="overview_connection", type="text/html")
       .controls
         input#connect-away(type="text", placeholder="AFK")
     .control-group
-      label(for="connect-password") Password
+      label(for="connect-rejoin") Bouncer Mode
       .controls
-        input#connect-password(type="password")
+        input#connect-rejoin(type="checkbox")
     a(id="connect-button", class="btn btn-primary", type="button") Connect
 
 script(id="overview_settings", type="text/html")
