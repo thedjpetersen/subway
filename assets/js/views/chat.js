@@ -182,7 +182,7 @@ var ChatView = Backbone.View.extend({
   handleScroll: function() {
     $('#chat-contents').scroll(function(){
       if ($('#chat-contents').scrollTop() < 150) {
-        var skip = (-50)-$('#chat-contents').children().length;
+        var skip = $('#chat-contents').children().length;
         var windowName = irc.chatWindows.getActive().get('name');
         var target;
         if(windowName[0] == '#'){
@@ -191,7 +191,7 @@ var ChatView = Backbone.View.extend({
           var userName = irc.me.get('nick');
           target = (userName < windowName) ? userName + windowName : windowName + userName;
         }
-        irc.socket.emit('getOldMessages',{channelName: target, skip:skip, amount: 10});
+        irc.socket.emit('getOldMessages',{channelName: target, skip:skip, amount: 50});
       }
     });
   },
