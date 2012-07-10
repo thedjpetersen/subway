@@ -98,9 +98,9 @@ $(function() {
         $.each(value.users, function(user, role) {
           channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
         });
-        irc.socket.emit('getOldMessages',{channelName: chanName, skip:-50, amount: 50});
+        irc.socket.emit('getOldMessages',{channelName: chanName, skip:0, amount: 50});
       } else {
-        irc.socket.emit('getOldMessages',{channelName: chanName, skip:-50, amount: 50});
+        irc.socket.emit('getOldMessages',{channelName: chanName, skip:0, amount: 50});
         channel.stream.add(new Message({sender:'', raw:''}));
       }
     });
@@ -143,7 +143,7 @@ $(function() {
     if (typeof chatWindow === 'undefined') {
       irc.chatWindows.add({name: data.nick, type: 'pm'})
         .trigger('forMe', 'newPm');
-      irc.socket.emit('getOldMessages',{channelName: data.nick, skip:-50, amount: 50});
+      irc.socket.emit('getOldMessages',{channelName: data.nick, skip:0, amount: 50});
       chatWindow = irc.chatWindows.getByName(data.nick);
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
@@ -154,7 +154,7 @@ $(function() {
     console.log('Join event received for ' + chanName + ' - ' + data.nick);
     if (data.nick === irc.me.get('nick')) {
       irc.chatWindows.add({name: chanName});
-      irc.socket.emit('getOldMessages',{channelName: chanName, skip:-50, amount: 50});
+      irc.socket.emit('getOldMessages',{channelName: chanName, skip:0, amount: 50});
     } else {
       var channel = irc.chatWindows.getByName(chanName);
       if (typeof channel === 'undefined') {
@@ -252,11 +252,11 @@ $(function() {
     var output = '';
     channel = irc.chatWindows.getByName(data.name);
 
-    $.each(data.messages, function(index, message){
+    $.each(data.messages.reverse(), function(index, message){
       if($('#' + message._id).length) {
         return true; //continue to next iteration
       }
-
+      
       var type = '';
       var message_html;
       if (message.message.substr(1, 6) === 'ACTION') {
@@ -337,7 +337,7 @@ $(function() {
         if (typeof irc.chatWindows.getByName(target) === 'undefined') {
           irc.chatWindows.add({name: target, type: 'pm'});
         }
-        irc.socket.emit('getOldMessages',{channelName: target, skip:-50, amount: 50});
+        irc.socket.emit('getOldMessages',{channelName: target, skip:0, amount: 50});
         irc.socket.emit('say', {
           target: target,
           message: commandText.splice(2).join(" ")
