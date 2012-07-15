@@ -5,7 +5,7 @@
     "irc"
   ],
   "author": "David Petersen <davjpetersen@gmail.com>",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "./lib/subway.js",
   "bin": {
     "subway": "./subway"
@@ -14,16 +14,16 @@
     "node": ">=0.6.1"
   },
   "env": {
-      "PYTHON": "/opt/local/bin/python2.7"
+    "PYTHON": "/opt/local/bin/python2.7"
   },
   "dependencies": {
-    "express": ">=2.5.2",
-    "jade": ">=0.19.0",
-    "connect-assets": ">=2.1.6",
+    "express": "2.5.x",
+    "jade": "0.26.x",
+    "connect-assets": "2.2.x",
     "irc": "git://github.com/martynsmith/node-irc.git",
-    "socket.io": ">=0.9.x",
-    "mongoose": ">=2.5.7",
-    "bcrypt": ">=0.5.0"
+    "socket.io": "0.9.x",
+    "mongoose": "2.7.x",
+    "bcrypt": "0.7.x"
   },
   "noAnalyze": true,
   "subdomain": "subway",
