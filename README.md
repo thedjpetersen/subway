@@ -87,7 +87,7 @@ Major Subway contributors include:
 
 - [David Petersen](https://github.com/thedjpetersen), developer
 - [Aaron Kavlie](https://github.com/akavlie), developer
-- Eric Barch, developer
+- [Eric Barch](https://github.com/ericbarch), developer
 - [Jamie Soar](http://www.jamiesoarmusic.co.uk/), notification sounds
 - Yusuke Kamiyamane, some icons
 
