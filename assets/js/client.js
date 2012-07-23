@@ -54,6 +54,7 @@ $(function() {
   });
 
   irc.socket.on('login_success', function(data) {
+    irc.username = data.username;
     if(data.exists){
       irc.socket.emit('connect', {});
     } else {
@@ -72,7 +73,7 @@ $(function() {
   });
 
   irc.socket.on('restore_connection', function(data) {
-    irc.me = new User({nick: data.nick, server: data.server});
+    irc.me = new User({nick: data.nick, server: (irc.username) ? irc.username : data.server, username: irc.username});
     irc.connected = true;
     irc.appView.render();
     irc.appView.renderUserBox();
