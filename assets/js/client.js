@@ -88,7 +88,7 @@ $(function() {
       var channelTabs = irc.appView.channelList.channelTabs;
       var channelTab = channelTabs[channelTabs.length-1];
       channel.set({
-        topic: utils.linkify(value['topic']),
+        topic: value['topic'],
         unread: value['unread_messages'],
         unreadMentions: value['unread_mentions']
       });
@@ -223,7 +223,7 @@ $(function() {
 
   irc.socket.on('topic', function(data) {
     var channel = irc.chatWindows.getByName(data.channel.toLowerCase());
-    channel.set({topic: utils.linkify(data.topic)});
+    channel.set({topic: data.topic});
     var topicMessage = new Message({type: 'topic', nick: data.nick, topic: utils.linkify(data.topic)});
     channel.stream.add(topicMessage);
   });
