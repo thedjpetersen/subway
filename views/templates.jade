@@ -33,43 +33,34 @@ script(id="overview", type="text/html")
 script(id="overview_connection", type="text/html")
   #home_parent
     a.overview_button#home Home
-  form.form-horizontal
+  form.form-inline
     .control-group
       label(for="connect-server") Server
-      .controls
-        input#connect-server(type="text")
+      input#connect-server(type="text")
     .control-group
       label(for="connect-port") Port
-      .controls
-        input#connect-port.input-small(type="text", placeholder="6667")
+      input#connect-port.input-small(type="text", placeholder="6667")
     .control-group
       label(for="connect-secure") SSL
-      .controls
-        input#connect-secure(type="checkbox")
+      input#connect-secure(type="checkbox")
     .control-group#ssl-self-signed
       label(for="connect-selfSigned") Self-signed SSL Cert
-      .controls
-        input#connect-selfSigned(type="checkbox")
+      input#connect-selfSigned(type="checkbox")
     .control-group
       label(for="connect-nick") Nick
-      .controls
-        input#connect-nick(type="text")
+      input#connect-nick(type="text")
     .control-group
       label(for="connect-password") Password (optional)
-      .controls
-        input#connect-password(type="password")
+      input#connect-password(type="password")
     .control-group
       label(for="connect-realName") Real Name
-      .controls
-        input#connect-realName(type="text")
+      input#connect-realName(type="text")
     .control-group
       label(for="connect-away") Away Message
-      .controls
-        input#connect-away(type="text", placeholder="AFK")
+      input#connect-away(type="text", placeholder="AFK")
     .control-group
       label(for="connect-rejoin") Bouncer Mode
-      .controls
-        input#connect-rejoin(type="checkbox")
+      input#connect-rejoin(type="checkbox")
     a(id="connect-button", class="btn btn-primary", type="button") Connect
 
 script(id="overview_settings", type="text/html")
@@ -80,29 +71,25 @@ script(id="overview_settings", type="text/html")
 script(id="overview_login", type="text/html")
   #home_parent
     a.overview_button#home Home
-  form.form-horizontal
+  form.form-inline
     .control-group
       label(for="login-username") Username
-      .controls
-        input#login-username(type="text")
+      input#login-username(type="text")
     .control-group
       label(for="login-password") Password
-      .controls
-        input#login-password(type="password")
+      input#login-password(type="password")
     a(id="login-button", class="btn btn-primary", type="submit") Login
 
 script(id="overview_register", type="text/html")
   #home_parent
     a.overview_button#home Home
-  form.form-horizontal
+  form.form-inline
     .control-group
       label(for="register-username") Username
-      .controls
-        input#register-username(type="text")
+      input#register-username(type="text")
     .control-group
       label(for="register-password") Password
-      .controls
-        input#register-password(type="password")
+      input#register-password(type="password")
     a(id="register-button", class="btn btn-primary", type="button") Register
 
 script(id="titlebar", type="text/html")

@@ -139,9 +139,6 @@ html { overflow: hidden; }
 }
 
 #channels {
-  position: absolute;
-  top: 255px;
-  bottom: 0;
   overflow: auto;
   width: 100%;
 }
