@@ -12,7 +12,7 @@ var MessageView = Backbone.View.extend({
     if (_.include(['join', 'part', 'nick', 'topic', 'quit'], this.model.get('type')))
       html = this.setText(this.model.get('type'));
     // This handles whether to output a message or an action
-    else if (this.model.get('text').substr(1, 6) === 'ACTION') {
+    else if (this.model.get('text') && this.model.get('text').substr(1, 6) === 'ACTION') {
       html = ich.action({
         user: nick,
         content: this.model.get('text').substr(8),
@@ -54,7 +54,7 @@ var MessageView = Backbone.View.extend({
           //Message resolving to undefined will include again later
           //message: '(' + this.model.get('message') + ')'
         });
-        break
+        break;
       case 'nick':
         html = ich.nick({
           oldNick: this.model.get('oldNick'),
@@ -66,6 +66,6 @@ var MessageView = Backbone.View.extend({
         break;
     }
     return html;
-  },
+  }
 
 });

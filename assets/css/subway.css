@@ -134,10 +134,6 @@ html { overflow: hidden; }
   border-left: 5px solid #FA6900;
 }
 
-#user-box div i{
-  margin-right: 5px;
-}
-
 #channels {
   overflow: auto;
   width: 100%;
@@ -294,6 +290,10 @@ html { overflow: hidden; }
   font-size: 1.3em;
 }
 
+.spacing-right {
+  margin-right: 5px;
+}
+
 .message-box {
   border-bottom: 1px solid #DDDDDD;
   display: table;
@@ -447,3 +447,4 @@ html { overflow: hidden; }
   margin-left: 5px;
   color: #666666;
 }
+

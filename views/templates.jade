@@ -35,33 +35,35 @@ script(id="overview_connection", type="text/html")
     a.overview_button#home Home
   form.form-inline
     .control-group
-      label(for="connect-server") Server
-      input#connect-server(type="text")
-    .control-group
-      label(for="connect-port") Port
-      input#connect-port.input-small(type="text", placeholder="6667")
-    .control-group
-      label(for="connect-secure") SSL
-      input#connect-secure(type="checkbox")
-    .control-group#ssl-self-signed
-      label(for="connect-selfSigned") Self-signed SSL Cert
-      input#connect-selfSigned(type="checkbox")
-    .control-group
       label(for="connect-nick") Nick
       input#connect-nick(type="text")
+    .control-group
+      label(for="connect-server") Server
+      input#connect-server(type="text")
     .control-group
       label(for="connect-password") Password (optional)
       input#connect-password(type="password")
     .control-group
       label(for="connect-realName") Real Name
       input#connect-realName(type="text")
-    .control-group
-      label(for="connect-away") Away Message
-      input#connect-away(type="text", placeholder="AFK")
-    .control-group
-      label(for="connect-rejoin") Bouncer Mode
-      input#connect-rejoin(type="checkbox")
-    a(id="connect-button", class="btn btn-primary", type="button") Connect
+    .connect-more-options.hide
+      .control-group
+        label(for="connect-port") Port
+        input#connect-port.input-small(type="text", placeholder="6667")
+      .control-group
+        label(for="connect-secure") SSL
+        input#connect-secure(type="checkbox")
+      .control-group#ssl-self-signed
+        label(for="connect-selfSigned") Self-signed SSL Cert
+        input#connect-selfSigned(type="checkbox")
+      .control-group
+        label(for="connect-away") Away Message
+        input#connect-away(type="text", placeholder="AFK")
+      .control-group
+        label(for="connect-rejoin") Bouncer Mode
+        input#connect-rejoin(type="checkbox")
+    a(id="connect-button", class="btn btn-primary spacing-right", type="button") Connect
+    a(id="connect-more-options-button", class="btn", type="button") More Options
 
 script(id="overview_settings", type="text/html")
   #home_parent
@@ -122,10 +124,10 @@ script(id="channel", type="text/html")
 
 script(id="user_box", type="text/html")
   div
-    i(class="icon-user icon-white")
+    i(class="icon-user icon-white spacing-right")
     {{nick}}
   div
-    i(class="icon-asterisk icon-white")
+    i(class="icon-asterisk icon-white spacing-right")
     {{server}}
 
 script(id="userlist_user", type="text/html")

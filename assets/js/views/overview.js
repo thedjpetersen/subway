@@ -5,6 +5,7 @@ var OverviewView = Backbone.View.extend({
 
   events: {
     'click #connect-button': 'connect',
+    'click #connect-more-options-button': 'more_options',
     'click #login-button': 'login_register',
     'click #register-button': 'login_register',
     'keypress': 'connectOnEnter',
@@ -47,15 +48,15 @@ var OverviewView = Backbone.View.extend({
     event.preventDefault();
     $('.error').removeClass('error');
 
-    var server = $('#connect-server').val();
-    var nick = $('#connect-nick').val();
-    var port = $('#connect-port').val();
-    var away = $('#connect-away').val();
-    var realName = $('#connect-realName').val();
-    var secure = $('#connect-secure').is(':checked');
-    var selfSigned = $('#connect-selfSigned').is(':checked');
-    var rejoin = $('#connect-rejoin').is(':checked');
-    var password = $('#connect-password').val();
+    var server = $('#connect-server').val(),
+    nick = $('#connect-nick').val(),
+    port = $('#connect-port').val(),
+    away = $('#connect-away').val(),
+    realName = $('#connect-realName').val() || nick,
+    secure = $('#connect-secure').is(':checked'),
+    selfSigned = $('#connect-selfSigned').is(':checked'),
+    rejoin = $('#connect-rejoin').is(':checked'),
+    password = $('#connect-password').val();
     
     if (!server) {
       $('#connect-server').closest('.clearfix').addClass('error');
@@ -74,7 +75,7 @@ var OverviewView = Backbone.View.extend({
       var connectInfo = {
         nick: nick,
         server: server,
-	      port: port,
+        port: port,
         secure: secure,
         selfSigned: selfSigned,
         rejoin: rejoin,
@@ -87,6 +88,10 @@ var OverviewView = Backbone.View.extend({
       irc.me.on('change:nick', irc.appView.renderUserBox);
       irc.socket.emit('connect', connectInfo);
     }
+  },
+
+  more_options: function() {
+    this.$el.find('.connect-more-options').toggleClass('hide');
   },
 
   login_register: function(event) {
@@ -119,10 +124,8 @@ var OverviewView = Backbone.View.extend({
   },
 
   toggle_ssl_options: function(event) {
-    var port = $('#connect-secure').is(':checked') ? 6697 : 6667 
-    $('#connect-port').attr('placeholder', port)
+    var port = $('#connect-secure').is(':checked') ? 6697 : 6667 ;
+    $('#connect-port').attr('placeholder', port);
     $('#ssl-self-signed').toggle();
   }
-
-
 });
