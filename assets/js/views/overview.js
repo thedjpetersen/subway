@@ -59,13 +59,11 @@ var OverviewView = Backbone.View.extend({
     password = $('#connect-password').val();
     
     if (!server) {
-      $('#connect-server').closest('.clearfix').addClass('error');
-      $('#connect-server').addClass('error');
+      $('#connect-server').closest('.control-group').addClass('error');
     }
     
     if (!nick) {
-      $('#connect-nick').closest('.clearfix').addClass('error');
-      $('#connect-nick').addClass('error');
+      $('#connect-nick').closest('.control-group').addClass('error');
     }
     
     if (nick && server) {
