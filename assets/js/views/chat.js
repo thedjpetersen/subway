@@ -182,9 +182,10 @@ var ChatView = Backbone.View.extend({
   handleScroll: function() {
     $('#chat-contents').scroll(function(){
       if ($('#chat-contents').scrollTop() < 150) {
-        var skip = $('#chat-contents').children().length;
-        var windowName = irc.chatWindows.getActive().get('name');
-        var target;
+        var skip = $('#chat-contents').children().length,
+        windowName = irc.chatWindows.getActive().get('name'),
+        target;
+
         if(windowName[0] == '#'){
           target = windowName;
         } else {

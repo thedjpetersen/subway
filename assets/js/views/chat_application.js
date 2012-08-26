@@ -26,11 +26,11 @@ var ChatApplicationView = Backbone.View.extend({
         activeChat = irc.chatWindows.getActive() ?
                      irc.chatWindows.getActive() :
                      activeChat;
-        activeChat && activeChat.set('active', false);
+        if (activeChat && activeChat.set) { activeChat.set('active', false); }
       }, 1000);
     }).focus(function() {
       clearTimeout(blurTimer);
-      activeChat && activeChat.set('active', true);
+      if(activeChat && activeChat.set) { activeChat.set('active', true); }
     });
 
     this.render();

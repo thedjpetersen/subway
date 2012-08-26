@@ -20,13 +20,13 @@ var WindowList = Backbone.Collection.extend({
   },
 
   getByName: function(name) {
-    return this.detect(function(chat) {
+    return this.find(function(chat) {
       return chat.get('name') === name;
     });
   },
 
   getActive: function() {
-    return this.detect(function(chat) {
+    return this.find(function(chat) {
       return chat.get('active') === true;
     });
   },

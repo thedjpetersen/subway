@@ -13,13 +13,13 @@
 
 window.irc = {
   socket: io.connect(null, {port: PORT}),
-  chatWindows: new WindowList,
+  chatWindows: new WindowList(),
   connected: false
 };
 
 $(function() {
   // window.app = new ChatApplicationRouter;
-  irc.appView = new ChatApplicationView;
+  irc.appView = new ChatApplicationView();
 
   // EVENTS //
 
@@ -78,7 +78,7 @@ $(function() {
     irc.appView.renderUserBox();
     irc.chatWindows.add({name: 'status', type: 'status'});
     $.each(data.channels, function(key, value){
-      var chanName = value['serverName'].toLowerCase();
+      var chanName = value.serverName.toLowerCase();
       if(chanName[0] == '#'){
         irc.chatWindows.add({name: chanName});
       } else {
@@ -88,9 +88,9 @@ $(function() {
       var channelTabs = irc.appView.channelList.channelTabs;
       var channelTab = channelTabs[channelTabs.length-1];
       channel.set({
-        topic: value['topic'],
-        unread: value['unread_messages'],
-        unreadMentions: value['unread_mentions']
+        topic: value.topic,
+        unread: value.unread_messages,
+        unreadMentions: value.unread_mentions
       });
       channelTab.updateUnreadCounts();
       if(chanName[0] == '#'){
@@ -109,15 +109,16 @@ $(function() {
   });
 
   irc.socket.on('notice', function(data) {
-    var window = irc.chatWindows.getByName('status');
-    if(window === undefined){
+    var status = irc.chatWindows.getByName('status');
+    if(status === undefined){
       irc.connected = true;
       irc.appView.render();
       irc.chatWindows.add({name: 'status', type: 'status'});
-      window = irc.chatWindows.getByName('status');
+      status = irc.chatWindows.getByName('status');
     }
     var sender = (data.nick !== undefined) ? data.nick : 'notice';
-    window.stream.add({sender: sender, raw: data.text, type: 'notice'});
+    console.log(status);
+    status.stream.add({sender: sender, raw: data.text, type: 'notice'});
   });
 
   // Message of the Day
@@ -236,16 +237,15 @@ $(function() {
       irc.chatWindows.add({name: 'status', type: 'status'});
       window = irc.chatWindows.getByName('status');
     }
-    window.stream.add({sender: 'error', raw: data.text, type: 'notice'});
+    window.stream.add({sender: 'error', raw: data.message.args.join(), type: 'notice'});
   });
 
   irc.socket.on('netError', function(data) {
-    console.log(data);
     irc.appView.showError('Invalid server');
   });
 
   irc.socket.on('login_error', function(data) {
-    irc.appView.showError(data['message']);
+    irc.appView.showError(data.message);
   });
 
   irc.socket.on('oldMessages', function(data){
@@ -291,7 +291,7 @@ $(function() {
     if(new_height > 1200){
       $('#chat-contents').scrollTop(new_height);
     }
-  })
+  });
 
   irc.handleCommand = function(commandText) {
     switch (commandText[0]) {
