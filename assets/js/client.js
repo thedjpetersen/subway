@@ -14,7 +14,8 @@
 window.irc = {
   socket: io.connect(null, {port: PORT}),
   chatWindows: new WindowList(),
-  connected: false
+  connected: false,
+  loggedIn: false
 };
 
 $(function() {
@@ -25,7 +26,7 @@ $(function() {
 
   // **TODO**: is there a better place for this to go?
   $(window).bind('beforeunload', function() {
-    if(!window.irc.connected) { return null; }
+    if(!window.irc.connected || window.irc.loggedIn) { return null; }
     return "If you leave, you'll be signed out of Subway.";
   });
 
@@ -56,6 +57,7 @@ $(function() {
   irc.socket.on('login_success', function(data) {
     if(data.exists){
       irc.socket.emit('connect', {});
+      window.irc.loggedIn = true;
     } else {
       $('#overview').html(ich.overview_connection());
     }
