@@ -14,6 +14,12 @@
 window.irc = {
   socket: io.connect(null, {port: PORT}),
   chatWindows: new WindowList(),
+  connected: false,
+  loggedIn: false
+};
+
+window.unity = {
+  api: external.getUnityObject(1.0),
   connected: false
 };
 
@@ -21,11 +27,20 @@ $(function() {
   // window.app = new ChatApplicationRouter;
   irc.appView = new ChatApplicationView();
 
+
+  window.unity.init({
+    name: "Subay IRC",
+    iconUrl: window.location.protocol+"//"+window.location.host+"/assets/images/subway.png",
+    onInit: function() {
+      window.unity.connected = true;
+    }
+  });
+
   // EVENTS //
 
   // **TODO**: is there a better place for this to go?
   $(window).bind('beforeunload', function() {
-    if(!window.irc.connected) { return null; }
+    if(!window.irc.connected || window.irc.loggedIn) { return null; }
     return "If you leave, you'll be signed out of Subway.";
   });
 
@@ -56,6 +71,7 @@ $(function() {
   irc.socket.on('login_success', function(data) {
     if(data.exists){
       irc.socket.emit('connect', {});
+      window.irc.loggedIn = true;
     } else {
       $('#overview').html(ich.overview_connection());
     }

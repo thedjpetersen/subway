@@ -69,6 +69,20 @@ var WindowList = Backbone.Collection.extend({
     return count;
   }
 
+  unreadByChannel: function() {
+    var channels = this.byType('channel');
+    var pms = this.byType('pm');
+
+    var windowCounts = {};
+    $.each(channels, function(key, chat) {
+      windowCounts[chat.get('name')] = chat.get('unread');
+    });
+
+    $.each(pms, function(key, pm) {
+      windowCounts[pm.get('name')] = pm.get('unread');
+    });
+
+    return windowCounts;
 });
 
 var UserList = Backbone.Collection.extend({
