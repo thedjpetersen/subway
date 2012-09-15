@@ -67,7 +67,7 @@ var WindowList = Backbone.Collection.extend({
     }, 0);
 
     return count;
-  }
+  },
 
   unreadByChannel: function() {
     var channels = this.byType('channel');
@@ -83,6 +83,7 @@ var WindowList = Backbone.Collection.extend({
     });
 
     return windowCounts;
+  }
 });
 
 var UserList = Backbone.Collection.extend({
