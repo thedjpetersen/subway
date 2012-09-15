@@ -19,7 +19,7 @@ window.irc = {
 };
 
 window.unity = {
-  api: external.getUnityObject(1.0),
+  api: null,
   connected: false
 };
 
@@ -27,14 +27,20 @@ $(function() {
   // window.app = new ChatApplicationRouter;
   irc.appView = new ChatApplicationView();
 
-
-  window.unity.init({
-    name: "Subay IRC",
-    iconUrl: window.location.protocol+"//"+window.location.host+"/assets/images/subway.png",
-    onInit: function() {
-      window.unity.connected = true;
-    }
-  });
+  try {
+    window.unity.api = external.getUnityObject(1.0);
+    window.unity.init({
+      name: "Subay IRC",
+      iconUrl: window.location.protocol+"//"+window.location.host+"/assets/images/subway.png",
+      onInit: function() {
+        window.unity.connected = true;
+        console.log('Unity support enabled');
+      }
+    });
+  } catch(e) {
+    window.unity.api = null;
+    console.log('Unity support not available');
+  }
 
   // EVENTS //
 
