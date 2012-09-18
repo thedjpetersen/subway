@@ -1,0 +1,44 @@
+@media screen and (max-width: 720px) {
+  .container-fluid {
+    /* Remove sidebars */ }
+    .container-fluid div.sidebar {
+      width: 0; }
+    .container-fluid div#user-window {
+      width: 0; }
+    .container-fluid div.content {
+      margin-left: 0;
+      margin-right: 0; }
+    .container-fluid div#chat-window {
+      width: 120%; }
+    .container-fluid div#channels {
+      display: block;
+      height: 5%;
+      left: 0;
+      position: fixed;
+      overflow: hidden;
+      top: 0;
+      z-index: 1; }
+      .container-fluid div#channels div.channel {
+        border: 1px solid rgba(10, 10, 10, 0.5);
+        border-radius: 25px 25px 0 0;
+        display: inline-block;
+        height: 34px;
+        width: 25%;
+        text-align: center;
+        padding: 5px 0;
+        position: relative; }
+        .container-fluid div#channels div.channel span.channel-name {
+          padding-right: 5px; }
+        .container-fluid div#channels div.channel span.unread, .container-fluid div#channels div.channel span.unread-mentions {
+          float: none; }
+        .container-fluid div#channels div.channel div.close-button {
+          position: absolute;
+          top: 5px;
+          right: 5px; }
+    .container-fluid div#chat-bar {
+      position: fixed;
+      left: 0;
+      top: 34px;
+      z-index: 1; }
+    .container-fluid div#chat-contents {
+      margin-top: 34px; } }
