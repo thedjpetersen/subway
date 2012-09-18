@@ -24,16 +24,18 @@
         display: inline-block;
         height: 34px;
         width: 25%;
-        text-align: center;
-        padding: 5px 0;
+        text-align: left;
+        padding: 7px 0;
         position: relative; }
         .container-fluid div#channels div.channel span.channel-name {
+          margin-left: 15px;
           padding-right: 5px; }
         .container-fluid div#channels div.channel span.unread, .container-fluid div#channels div.channel span.unread-mentions {
           float: none; }
         .container-fluid div#channels div.channel div.close-button {
+          visibility: visible;
           position: absolute;
-          top: 5px;
+          top: 7px;
           right: 5px; }
     .container-fluid div#chat-bar {
       position: fixed;

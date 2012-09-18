@@ -29,18 +29,20 @@
                 display: inline-block;
                 height: 34px;
                 width: 25%;
-                text-align: center;
-                padding: 5px 0;
+                text-align: left;
+                padding: 7px 0;
                 position: relative;
                 span.channel-name {
+                    margin-left: 15px;
                     padding-right: 5px;
                 }
                 span.unread, span.unread-mentions {
                     float: none;
                 }
                 div.close-button {
+                    visibility: visible;
                     position: absolute;
-                    top: 5px;
+                    top: 7px;
                     right: 5px;
                 }
             }
