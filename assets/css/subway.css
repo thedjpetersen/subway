@@ -229,6 +229,12 @@ html { overflow: hidden; }
   margin-right: 0.3em;
 }
 
+.slide {
+  position: fixed;
+  width: 0;
+  height: 0;
+}
+
 #logo {
   text-align: center;
 }
@@ -377,6 +383,11 @@ html { overflow: hidden; }
 
 .chat-message.motd {
   white-space: pre;
+}
+
+div.embed-toggle {
+    display: inline;
+    margin-left: 5px;
 }
 
 .chat-message .embed img{
