@@ -1,16 +1,24 @@
 @media screen and (max-width: 720px) {
   .container-fluid {
     /* Remove sidebars */ }
-    .container-fluid div.sidebar {
+    .container-fluid .sidebar {
       width: 0; }
-    .container-fluid div#user-window {
-      width: 0; }
-    .container-fluid div.content {
+    .container-fluid #user-window {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 33%;
+      z-index: 2; }
+    .container-fluid .content {
       margin-left: 0;
-      margin-right: 0; }
-    .container-fluid div#chat-window {
-      width: 120%; }
-    .container-fluid div#channels {
+      margin-right: 0;
+      width: 100%; }
+      .container-fluid .content.user-window-toggled {
+        right: 33%; }
+    .container-fluid #chat-window {
+      width: 100%; }
+    .container-fluid #channels {
       display: block;
       height: 5%;
       left: 0;
@@ -18,29 +26,54 @@
       overflow: hidden;
       top: 0;
       z-index: 1; }
-      .container-fluid div#channels div.channel {
+      .container-fluid #channels div.channel {
         border: 1px solid rgba(10, 10, 10, 0.5);
         border-radius: 25px 25px 0 0;
         display: inline-block;
         height: 34px;
-        width: 25%;
+        width: 30%;
         text-align: left;
         padding: 7px 0;
         position: relative; }
-        .container-fluid div#channels div.channel span.channel-name {
+        .container-fluid #channels div.channel span.channel-name {
           margin-left: 15px;
           padding-right: 5px; }
-        .container-fluid div#channels div.channel span.unread, .container-fluid div#channels div.channel span.unread-mentions {
+        .container-fluid #channels div.channel span.unread, .container-fluid #channels div.channel span.unread-mentions {
           float: none; }
-        .container-fluid div#channels div.channel div.close-button {
+        .container-fluid #channels div.channel div.close-button {
           visibility: visible;
           position: absolute;
           top: 7px;
           right: 5px; }
-    .container-fluid div#chat-bar {
+      .container-fluid #channels.user-window-toggled {
+        left: -33%; }
+    .container-fluid #chat-bar {
       position: fixed;
       left: 0;
       top: 34px;
       z-index: 1; }
-    .container-fluid div#chat-contents {
-      margin-top: 34px; } }
+      .container-fluid #chat-bar.user-window-toggled {
+        left: -33%; }
+    .container-fluid #chat-contents {
+      margin-top: 34px; }
+    .container-fluid #user-window-toggle {
+      background: rgba(67, 73, 80, 0.5);
+      border-radius: 50px 0 0;
+      bottom: 56px;
+      display: block;
+      height: 55px;
+      position: fixed;
+      right: 0;
+      width: 55px;
+      z-index: 1; }
+      .container-fluid #user-window-toggle:hover {
+        background: rgba(67, 73, 80, 0.75);
+        cursor: pointer; }
+      .container-fluid #user-window-toggle.user-window-toggled {
+        right: 33%; }
+    .container-fluid input#chat-input {
+      width: 65%; }
+    .container-fluid #chat-button {
+      width: 20%;
+      padding-left: 0;
+      padding-right: 0; } }

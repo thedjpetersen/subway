@@ -1,21 +1,29 @@
 @media screen and (max-width: 720px) {
     .container-fluid {
         /* Remove sidebars */
-        div.sidebar {
+        .sidebar {
             width: 0;
         }
-        div#user-window {
-            width: 0;
+        #user-window {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 33%;
+            z-index: 2;
         }
-        div.content {
+        .content {
             margin-left: 0;
             margin-right: 0;
+            width: 100%;
+            &.user-window-toggled {
+                right: 33%;
+            }
         }
-        div#chat-window {
-            width: 120%;
+        #chat-window {
+            width: 100%;
         }
-
-        div#channels {
+        #channels {
             display: block;
             height: 5%;
             left: 0;
@@ -28,7 +36,7 @@
                 border-radius: 25px 25px 0 0;
                 display: inline-block;
                 height: 34px;
-                width: 25%;
+                width: 30%;
                 text-align: left;
                 padding: 7px 0;
                 position: relative;
@@ -46,16 +54,50 @@
                     right: 5px;
                 }
             }
+            &.user-window-toggled {
+                left: -33%;
+            }
         }
-        div#chat-bar {
+        #chat-bar {
             position: fixed;
             left: 0;
             top: 34px;
             z-index: 1;
+            &.user-window-toggled {
+                left: -33%;
+            }
         }
-        div#chat-contents {
+        #chat-contents {
             margin-top: 34px;
         }
+
+        #user-window-toggle {
+            background: rgba(67, 73, 80, .5);
+            border-radius: 50px 0 0;
+            bottom: 56px;
+            display: block;
+            height: 55px;
+            position: fixed;
+            right: 0;
+            width: 55px;
+            z-index: 1;
+            &:hover {
+                background: rgba(67, 73, 80, .75);
+                cursor: pointer;
+            }
+            &.user-window-toggled {
+                right: 33%;
+            }
+        }
+        input#chat-input {
+            width: 65%;
+        }
+        #chat-button {
+            width: 20%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
 
     }
 }

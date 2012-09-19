@@ -211,5 +211,12 @@ var ChatView = Backbone.View.extend({
       $(this).siblings('.hide_embed').removeClass('hide');
       $(this).addClass('hide');
     });
+
+    $('.content').removeClass('user-window-toggled');
+    $('#user-window-toggle').click(function() {
+        $('#user-window').toggle();
+        $('.content, #channels, #chat-bar').toggleClass('user-window-toggled');
+        $(this).toggleClass('user-window-toggled');
+    });
   }
 });
