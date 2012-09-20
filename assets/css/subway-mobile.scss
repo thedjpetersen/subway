@@ -24,32 +24,34 @@
             width: 100%;
         }
         #channels {
-            display: block;
+            display: inline-block;
             height: 34px;
-            left: 0;
+            left: 34px;
             position: fixed;
-            overflow: hidden;
+            overflow: visible;
             top: 0;
+            white-space: nowrap;
             z-index: 1;
             div.channel {
                 border: 1px solid rgba(10, 10, 10, .5);
                 border-radius: 25px 0 0;
                 display: inline-block;
                 height: 34px;
+                left: 0;
                 padding: 7px 0;
-                margin: 0 3px;
                 position: relative;
                 text-align: left;
-                width: 25%;
+                width: 120px;
                 span.channel-name {
-                    display: block;
+                    display: inline-block;
                     margin-left: 8px;
-                    overflow: hidden;
+                    overflow: none;
                     text-overflow: ellipsis;
-                    width: 50%;
+                    width: 45%;
                 }
                 span.unread, span.unread-mentions {
                     float: none;
+                    vertical-align: 6px;
                 }
                 div.close-button {
                     position: absolute;
@@ -58,28 +60,30 @@
                     visibility: visible;
                 }
             }
-            #prev-channel, #next-channel {
-                background: rgba(67, 73, 80, .5);
+            #slide-prev, #slide-next {
+                background: rgba(67, 73, 80, .75);
                 color: white;
                 font-size: 24px;
                 display: inline-block;
                 height: 34px;
                 padding-top: 4px;
+                position: fixed;
                 text-align: center;
                 width: 34px;
+                z-index: 2;
                 &:hover {
-                    background: rgba(67, 73, 80, .75);
+                    background: rgba(67, 73, 80, .95);
                     cursor: pointer;
                 }
             }
-            #prev-channel {
-                float: left;
+            #slide-prev {
+                left: 0;
                 &:after {
                     content: "<";
                 }
             }
-            #next-channel {
-                float: right;
+            #slide-next {
+                right: 0;
                 &:after {
                     content: ">";
                 }
@@ -102,7 +106,8 @@
         }
 
         #user-window-toggle {
-            background: rgba(67, 73, 80, .5);
+            background: rgba(67, 73, 80, .1);
+            border: 1px solid rgba(67, 73, 80, .3);
             border-radius: 50px 0 0;
             bottom: 56px;
             display: block;

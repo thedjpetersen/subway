@@ -19,55 +19,59 @@
     .container-fluid #chat-window {
       width: 100%; }
     .container-fluid #channels {
-      display: block;
+      display: inline-block;
       height: 34px;
-      left: 0;
+      left: 34px;
       position: fixed;
-      overflow: hidden;
+      overflow: visible;
       top: 0;
+      white-space: nowrap;
       z-index: 1; }
       .container-fluid #channels div.channel {
         border: 1px solid rgba(10, 10, 10, 0.5);
         border-radius: 25px 0 0;
         display: inline-block;
         height: 34px;
+        left: 0;
         padding: 7px 0;
-        margin: 0 3px;
         position: relative;
         text-align: left;
-        width: 25%; }
+        width: 120px; }
         .container-fluid #channels div.channel span.channel-name {
-          display: block;
+          display: inline-block;
           margin-left: 8px;
-          overflow: hidden;
+          overflow: none;
           text-overflow: ellipsis;
-          width: 50%; }
+          width: 45%; }
         .container-fluid #channels div.channel span.unread, .container-fluid #channels div.channel span.unread-mentions {
-          float: none; }
+          float: none;
+          vertical-align: 6px; }
         .container-fluid #channels div.channel div.close-button {
           position: absolute;
           right: 0;
           top: 7px;
           visibility: visible; }
-      .container-fluid #channels #prev-channel, .container-fluid #channels #next-channel {
-        background: rgba(67, 73, 80, 0.5);
+      .container-fluid #channels #slide-prev, .container-fluid #channels #slide-next {
+        background: rgba(67, 73, 80, 0.75);
         color: white;
         font-size: 24px;
         display: inline-block;
         height: 34px;
         padding-top: 4px;
+        position: fixed;
         text-align: center;
-        width: 34px; }
-        .container-fluid #channels #prev-channel:hover, .container-fluid #channels #next-channel:hover {
-          background: rgba(67, 73, 80, 0.75);
+        width: 34px;
+        z-index: 2; }
+        .container-fluid #channels #slide-prev:hover, .container-fluid #channels #slide-next:hover {
+          background: rgba(67, 73, 80, 0.95);
           cursor: pointer; }
-      .container-fluid #channels #prev-channel {
-        float: left; }
-        .container-fluid #channels #prev-channel:after {
+      .container-fluid #channels #slide-prev {
+        left: 0; }
+        .container-fluid #channels #slide-prev:after {
           content: "<"; }
-      .container-fluid #channels #next-channel {
-        float: right; }
-        .container-fluid #channels #next-channel:after {
+      .container-fluid #channels #slide-next {
+        right: 0; }
+        .container-fluid #channels #slide-next:after {
           content: ">"; }
       .container-fluid #channels.user-window-toggled {
         left: -75%; }
@@ -81,7 +85,8 @@
     .container-fluid #chat-contents {
       margin-top: 34px; }
     .container-fluid #user-window-toggle {
-      background: rgba(67, 73, 80, 0.5);
+      background: rgba(67, 73, 80, 0.1);
+      border: 1px solid rgba(67, 73, 80, 0.3);
       border-radius: 50px 0 0;
       bottom: 56px;
       display: block;
