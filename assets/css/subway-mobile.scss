@@ -9,7 +9,7 @@
             position: fixed;
             top: 0;
             right: 0;
-            width: 33%;
+            width: 75%;
             z-index: 2;
         }
         .content {
@@ -17,7 +17,7 @@
             margin-right: 0;
             width: 100%;
             &.user-window-toggled {
-                right: 33%;
+                right: 75%;
             }
         }
         #chat-window {
@@ -25,7 +25,7 @@
         }
         #channels {
             display: block;
-            height: 5%;
+            height: 34px;
             left: 0;
             position: fixed;
             overflow: hidden;
@@ -33,29 +33,59 @@
             z-index: 1;
             div.channel {
                 border: 1px solid rgba(10, 10, 10, .5);
-                border-radius: 25px 25px 0 0;
+                border-radius: 25px 0 0;
                 display: inline-block;
                 height: 34px;
-                width: 30%;
-                text-align: left;
                 padding: 7px 0;
+                margin: 0 3px;
                 position: relative;
+                text-align: left;
+                width: 25%;
                 span.channel-name {
-                    margin-left: 15px;
-                    padding-right: 5px;
+                    display: block;
+                    margin-left: 8px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 50%;
                 }
                 span.unread, span.unread-mentions {
                     float: none;
                 }
                 div.close-button {
-                    visibility: visible;
                     position: absolute;
+                    right: 0;
                     top: 7px;
-                    right: 5px;
+                    visibility: visible;
+                }
+            }
+            #prev-channel, #next-channel {
+                background: rgba(67, 73, 80, .5);
+                color: white;
+                font-size: 24px;
+                display: inline-block;
+                height: 34px;
+                padding-top: 4px;
+                text-align: center;
+                width: 34px;
+                &:hover {
+                    background: rgba(67, 73, 80, .75);
+                    cursor: pointer;
+                }
+            }
+            #prev-channel {
+                float: left;
+                &:after {
+                    content: "<";
+                }
+            }
+            #next-channel {
+                float: right;
+                &:after {
+                    content: ">";
                 }
             }
             &.user-window-toggled {
-                left: -33%;
+                left: -75%;
             }
         }
         #chat-bar {
@@ -64,7 +94,7 @@
             top: 34px;
             z-index: 1;
             &.user-window-toggled {
-                left: -33%;
+                left: -75%;
             }
         }
         #chat-contents {
@@ -86,10 +116,17 @@
                 cursor: pointer;
             }
             &.user-window-toggled {
-                right: 33%;
+                right: 75%;
+            }
+        }
+        #input-container {
+            text-align: center;
+            .input {
+                padding-top: 12px;
             }
         }
         input#chat-input {
+            float: none;
             width: 65%;
         }
         #chat-button {
