@@ -1,16 +1,53 @@
+@mixin box-shadow($shadow) {
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
 @media screen and (max-width: 720px) {
     .container-fluid {
-        /* Remove sidebars */
+        /* Overview. */
+        #overview {
+            left: 0;
+            margin-top: 0;
+            bottom: 0;
+            position: fixed;
+            padding: 0;
+            width: 100%;
+            z-index: 1;
+            ul {
+                margin: 0;
+                li {
+                    margin: 0;
+                    padding: 10px 0;
+                    width: 50%;
+                }
+            }
+        }
+        #logo, .sidebar h2 {
+            display: block;
+            position: fixed;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            z-index: 1;
+        }
+        .sidebar h2 {
+            margin-top: 40%;
+        }
+
+        /* Convert channel sidebar to browser-like tabs. */
         .sidebar {
             width: 0;
         }
         #user-window {
+            @include box-shadow(0 0 4px 2px #333);
             display: none;
             position: fixed;
             top: 0;
             right: 0;
             width: 75%;
-            z-index: 2;
+            z-index: 3;
         }
         .content {
             margin-left: 0;
@@ -22,6 +59,9 @@
         }
         #chat-window {
             width: 100%;
+            div {
+                z-index: 2;
+            }
         }
         #channels {
             display: inline-block;
@@ -31,7 +71,7 @@
             overflow: visible;
             top: 0;
             white-space: nowrap;
-            z-index: 1;
+            z-index: 2;
             div.channel {
                 border: 1px solid rgba(10, 10, 10, .5);
                 border-radius: 25px 0 0;
@@ -60,11 +100,11 @@
                     visibility: visible;
                 }
             }
-            #slide-prev, #slide-next {
+            .slide {
                 background: rgba(67, 73, 80, .75);
                 color: white;
                 font-size: 24px;
-                display: inline-block;
+                display: none;
                 height: 34px;
                 padding-top: 4px;
                 position: fixed;
@@ -88,15 +128,11 @@
                     content: ">";
                 }
             }
-            &.user-window-toggled {
-                left: -75%;
-            }
         }
         #chat-bar {
             position: fixed;
             left: 0;
             top: 34px;
-            z-index: 1;
             &.user-window-toggled {
                 left: -75%;
             }
@@ -105,6 +141,7 @@
             margin-top: 34px;
         }
 
+        /* Toggleable sliding sidebar replacement for user window. */
         #user-window-toggle {
             background: rgba(67, 73, 80, .1);
             border: 1px solid rgba(67, 73, 80, .3);
@@ -115,9 +152,9 @@
             position: fixed;
             right: 0;
             width: 55px;
-            z-index: 1;
+            z-index: 3;
             &:hover {
-                background: rgba(67, 73, 80, .75);
+                background: rgba(67, 73, 80, .5);
                 cursor: pointer;
             }
             &.user-window-toggled {
@@ -139,7 +176,8 @@
             padding-left: 0;
             padding-right: 0;
         }
-
-
+    }
+    .channel {
+        background: darken(#F5F5F5, 5%);
     }
 }

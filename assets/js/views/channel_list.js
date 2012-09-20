@@ -11,6 +11,7 @@ var ChannelListView = Backbone.View.extend({
 
   initialize: function() {
     irc.chatWindows.bind('add', this.addChannel, this);
+    $('.slide').css('display', 'inline-block');
     this.channelTabs = []
   },
 

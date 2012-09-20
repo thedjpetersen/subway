@@ -212,6 +212,7 @@ var ChatView = Backbone.View.extend({
       $(this).addClass('hide');
     });
 
+    // MOBILE: toggler slides user list in from the left.
     $('.content').removeClass('user-window-toggled');
     $('#user-window-toggle').click(function() {
         $('#user-window').toggle();
