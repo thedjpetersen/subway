@@ -33,7 +33,19 @@
             z-index: 1;
         }
         .sidebar h2 {
-            margin-top: 40%;
+            margin-top: 120px;
+        }
+        .sidebar {
+            margin-top: 2%;
+        }
+        form.form-inline {
+            padding: 0 10px;
+        }
+        #home {
+            margin: 10px 17px 0;
+        }
+        p#settings-soon {
+            text-align: center;
         }
 
         /* Convert channel sidebar to browser-like tabs. */
