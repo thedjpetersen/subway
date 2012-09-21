@@ -130,6 +130,12 @@
       right: 0;
       width: 55px;
       z-index: 3; }
+      .container-fluid #user-window-toggle img {
+        position: absolute;
+        top: 18px;
+        left: 18px;
+        height: 30px;
+        width: 30px; }
       .container-fluid #user-window-toggle:hover {
         background: rgba(67, 73, 80, 0.5);
         cursor: pointer; }

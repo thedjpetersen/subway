@@ -165,6 +165,13 @@
             right: 0;
             width: 55px;
             z-index: 3;
+            img {
+                position: absolute;
+                top: 18px;
+                left: 18px;
+                height: 30px;
+                width: 30px;
+            }
             &:hover {
                 background: rgba(67, 73, 80, .5);
                 cursor: pointer;

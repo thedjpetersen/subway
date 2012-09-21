@@ -116,6 +116,7 @@ script(id="chat", type="text/html")
           span(class='window_title') User List
       #user-list.bar
     #user-window-toggle
+      img(src="/assets/images/register.svg")
 
 script(id="channel", type="text/html")
   span(class="channel-name") {{name}}
@@ -145,7 +146,7 @@ script(id="link", type="text/html")
   a(target="_blank", href="{{link}}") {{link}}
 
 script(id="image_embed", type="text/html")
-  div
+  div.embed-toggle
     a.hide_embed
       i(class="icon-chevron-up")
     a.show_embed.hide

@@ -356,6 +356,11 @@ html { overflow: hidden; }
   white-space: pre;
 }
 
+div.embed-toggle {
+    display: inline;
+    margin-left: 5px;
+}
+
 .chat-message .embed img{
   display: block;
   max-width: 100%;

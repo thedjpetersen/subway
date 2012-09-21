@@ -25,7 +25,7 @@ var ChannelListView = Backbone.View.extend({
     if(name[0] === '#' || name === 'status'){
       view.setActive();
 
-      if ($el.css('position') == 'fixed') {
+      if ($el.css('position') == 'fixed' && !(chatWindow.get('initial'))) {
         // MOBILE: navigate the tab list all the way to the right, to the
         // newest tab.
         $el.css('left', -1 * (this.channelTabs.length - 1) *
@@ -36,24 +36,30 @@ var ChannelListView = Backbone.View.extend({
 
   slidePrev: function() {
     // MOBILE: slide the tab list left, but don't let first tab hit the left.
-    var $el = $(this.el);
-    if ($el.css('position') != 'fixed') { return; }
+    var that = this;
+    setTimeout(function() {
+        var $el = $(that.el);
+        if ($el.css('position') != 'fixed') { return; }
 
-    var left = parseInt($el.css('left'), 10);
-    if (left < BTN_WIDTH) {
-      $el.css('left', left + TAB_WIDTH + 'px');
-    }
+        var left = parseInt($el.css('left'), 10);
+        if (left < BTN_WIDTH) {
+          $el.animate({'left': left + TAB_WIDTH + 'px'}, 100);
+        }
+    }, 200);
   },
 
   slideNext: function() {
     // MOBILE: slide the tab list right, but don't go farther than last tabs.
-    var $el = $(this.el);
-    if ($el.css('position') != 'fixed') { return; }
+    var that = this;
+    setTimeout(function() {
+        var $el = $(that.el);
+        if ($el.css('position') != 'fixed') { return; }
 
-    var left = parseInt($el.css('left'), 10);
-    if (left >= -1 * (this.channelTabs.length - 2) * TAB_WIDTH) {
-        $el.css('left', left - TAB_WIDTH + 'px');
-    }
+        var left = parseInt($el.css('left'), 10);
+        if (left >= -1 * (that.channelTabs.length - 2) * TAB_WIDTH) {
+            $el.animate({'left': left - TAB_WIDTH + 'px'}, 100);
+        }
+    }, 200);
   },
 
 });
