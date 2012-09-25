@@ -56,7 +56,8 @@ var OverviewView = Backbone.View.extend({
     secure = $('#connect-secure').is(':checked'),
     selfSigned = $('#connect-selfSigned').is(':checked'),
     rejoin = $('#connect-rejoin').is(':checked'),
-    password = $('#connect-password').val();
+    password = $('#connect-password').val(),
+    encoding = $('#connect-encoding').val();
     
     if (!server) {
       $('#connect-server').closest('.control-group').addClass('error');
@@ -79,7 +80,8 @@ var OverviewView = Backbone.View.extend({
         rejoin: rejoin,
         away: away,
         realName: realName,
-        password: password
+        password: password,
+        encoding: encoding
       };
 
       irc.me = new User(connectInfo);
