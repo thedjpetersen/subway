@@ -20,10 +20,11 @@
     "express": "2.5.x",
     "jade": "0.26.x",
     "connect-assets": "2.2.x",
-    "irc": "git://github.com/martynsmith/node-irc.git",
+    "irc": "git://github.com/noraesae/node-irc.git",
     "socket.io": "0.9.x",
     "mongoose": "2.7.x",
-    "bcrypt": "0.7.x"
+    "bcrypt": "0.7.x",
+    "iconv": "1.2.x"
   },
   "noAnalyze": true,
   "subdomain": "subway",
