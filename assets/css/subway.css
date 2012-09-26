@@ -115,8 +115,8 @@ html { overflow: hidden; }
 }
 
 
-#user-box div{
-  padding: 10px 25px;
+#user-box .user_box_element {
+  padding: 10px 15px 10px 25px;
   background: #434950;
   color: #EEEEEE;
   font-weight: bold;
@@ -126,12 +126,35 @@ html { overflow: hidden; }
   text-overflow: ellipsis;
 }
 
-#user-box div:first-child{
+#user-box .user_box_element:first-child{
   border-left: 5px solid #8A9B0F;
 }
 
-#user-box div:last-child{
+#user-box .user_box_element:last-child{
   border-left: 5px solid #FA6900;
+}
+
+#user-box .user_box_element .close-button {
+  display: block;
+  color: white;
+  text-shadow: 0 1px 0 black;
+  font: bold 20px Arial;
+  line-height: 19px;
+  float: right;
+  opacity: 0.3;
+  width: 24px;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 5px;
+  visibility: hidden;
+}
+
+#user-box .user_box_element:hover .close-button {
+  visibility: visible;
+}
+
+#user-box .user_box_element .close-button:hover {
+  opacity: 0.8;
 }
 
 #channels {

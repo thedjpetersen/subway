@@ -58,6 +58,11 @@ var ChatApplicationView = Backbone.View.extend({
 
   renderUserBox: function() {
     $('#user-box').html(ich.user_box(irc.me.toJSON()));
+
+    // disconnect server handler
+    $('#user-box .close-button').click(function() {
+      irc.socket.emit('disconnectServer');
+    });
   },
 
   // Show number of unread mentions in title
