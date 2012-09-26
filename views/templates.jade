@@ -148,10 +148,11 @@ script(id="channel", type="text/html")
   {{/notStatus}}
 
 script(id="user_box", type="text/html")
-  div
+  div.user_box_element
     i(class="icon-user icon-white spacing-right")
     {{nick}}
-  div
+  div.user_box_element
+    .close-button ×
     i(class="icon-asterisk icon-white spacing-right")
     {{server}}
 

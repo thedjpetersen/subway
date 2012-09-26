@@ -270,6 +270,19 @@ $(function() {
     irc.appView.showError(data.message);
   });
 
+  irc.socket.on('reset', function(data) {
+    irc.chatWindows = new WindowList();
+    irc.connected = false;
+    irc.loggedIn = false;
+    irc.me = null;
+
+    // move to main view
+    irc.appView.render();
+
+    // remove login and register button if no database
+    irc.socket.emit('getDatabaseState', {});
+  });
+
   irc.socket.on('oldMessages', function(data){
     var output = '';
     channel = irc.chatWindows.getByName(data.name);
