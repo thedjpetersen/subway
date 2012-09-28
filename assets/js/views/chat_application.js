@@ -36,10 +36,12 @@ var ChatApplicationView = Backbone.View.extend({
     this.render();
   },
 
+  overview: null,
+
   render: function() {
     $('body').html($(this.el).html(ich.chat_application()));
     if (!irc.connected) {
-      var overview = new OverviewView;
+      this.overview = new OverviewView;
     } else {
       this.channelList = new ChannelListView;
     }
