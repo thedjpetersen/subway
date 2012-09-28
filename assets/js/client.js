@@ -79,7 +79,7 @@ $(function() {
       irc.socket.emit('connect', {});
       window.irc.loggedIn = true;
     } else {
-      $('#overview').html(ich.overview_connection());
+      irc.appView.overview.render({currentTarget: {id: "connection"}});
     }
   });
 
@@ -90,7 +90,7 @@ $(function() {
   
 
   irc.socket.on('register_success', function(data) {
-    $('#overview').html(ich.overview_connection());
+    irc.appView.overview.render({currentTarget: {id: "connection"}});
   });
 
   irc.socket.on('restore_connection', function(data) {
