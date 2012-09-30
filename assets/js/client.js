@@ -349,66 +349,119 @@ $(function() {
     }
   });
 
-  irc.handleCommand = function(commandText) {
-    switch (commandText[0]) {
-      case '/join':
-        irc.socket.emit('join', commandText[1]);
-        break;
-      case '/wc':
-      case '/close':
-      case '/part':
-        if (commandText[1]) {
-          irc.socket.emit('part', commandText[1]);
-          irc.appView.channelList.channelTabs[0].setActive();
-        } else {
-          irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
-          irc.appView.channelList.channelTabs[0].setActive();
-        }
-        break;
+  irc.commands = (function(){
+    var commandStore = {
+      'default': function(args, command){
+        // Do nothing, override it;
+      },
+    };
 
-      case '/nick':
-        if (commandText[1]) {
-          irc.socket.emit('nick', {nick : commandText[1]});
+    that = {
+      add: function(name, handler, helpText){
+        commandStore[name] = {
+          handler: handler,
+          help: helpText
+        };
+      },
+
+      alias: function(name, toName){
+        commandStore[name] = commandStore[toName];
+      },
+
+      lookup: function(string){
+        var command, results = [];
+        string = string.toLowerCase();
+
+        for (command in commandStore) {
+          if (commandStore.hasOwnProperty(command)){
+            if (command.toLowerCase().indexOf(string) === 0 && string.replace(/\s+/g, '')) {
+              results.push(command);
+            }
+          }
         }
-        break;
-      case '/topic':
-        if (commandText[2]) {
-          irc.socket.emit('topic', {name: commandText[1], topic: commandText[2]});
-        } else {
-          irc.socket.emit('topic', {name: irc.chatWindows.getActive().get('name'),
-            topic: commandText[1]});
+        return results.sort();
+      },
+
+      handle: function(args){
+        var command = args[0];
+        var handler = commandStore[command] && commandStore[command].handler;
+
+        args.splice(0, 1);
+
+        if (typeof(handler) === 'function'){
+          handler(args, command);
         }
-        break;
-      case '/whois':
-        if (commandText[1]){
-            irc.socket.emit('whois', {nick: commandText[1]});
-        }
-        break;
-      case '/me':
-        irc.socket.emit('action', {
-          target: irc.chatWindows.getActive().get('name'),
-          message: commandText.splice(1).join(" ")
-        });
-        break;
-      case '/query':
-      case '/privmsg':
-      case '/msg':
-        var target = commandText[1].toLowerCase();
-        var myNick = irc.me.get('nick');
-        if (typeof irc.chatWindows.getByName(target) === 'undefined') {
-          irc.chatWindows.add({name: target, type: 'pm'});
-        }
-        irc.socket.emit('getOldMessages',{channelName: target, skip:0, amount: 50});
-        irc.socket.emit('say', {
-          target: target,
-          message: commandText.splice(2).join(" ")
-        });
-        break;
-      default:
-        commandText[0] = commandText[0].substr(1).toUpperCase();
-        irc.socket.emit('command', commandText);
+      }
+    };
+
+    return that;
+
+  }());
+
+  irc.commands.add('join', function(args){
+    irc.socket.emit('join', args[0]);
+  });
+
+  irc.commands.add('part', function(args){
+    if (args[0]) {
+      irc.socket.emit('part', args[0]);
+      irc.appView.channelList.channelTabs[0].setActive();
+    } else {
+      irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
+      irc.appView.channelList.channelTabs[0].setActive();
     }
-  };
+  });
+  irc.commands.alias('wc', 'part');
+  irc.commands.alias('close', 'part');
+
+  irc.commands.add('nick', function(args){
+    if (args[0]) {
+      irc.socket.emit('nick', {nick : args[0]});
+    }
+  });
+
+  irc.commands.add('topic', function(args){
+    if (args[1]) {
+      irc.socket.emit('topic', {name: args[0], topic: args[1]});
+    } else {
+      irc.socket.emit('topic', {name: irc.chatWindows.getActive().get('name'),
+        topic: args[0]});
+    }
+  });
+
+  irc.commands.add('whois', function(args){
+    if (args[0]){
+      irc.socket.emit('whois', {nick: args[0]});
+    }
+  });
+
+  irc.commands.add('me', function(args){
+    irc.socket.emit('action', {
+      target: irc.chatWindows.getActive().get('name'),
+      message: args.join(" ")
+    });
+  });
+
+  irc.commands.add('query', function(args){
+    var target = args[0].toLowerCase();
+    var myNick = irc.me.get('nick');
+    if (typeof irc.chatWindows.getByName(target) === 'undefined') {
+      irc.chatWindows.add({name: target, type: 'pm'});
+    }
+    irc.socket.emit('getOldMessages',{channelName: target, skip:0, amount: 50});
+    irc.socket.emit('say', {
+      target: target,
+      message: args.splice(1).join(" ")
+    });
+  });
+  irc.commands.alias('msg', 'query');
+  irc.commands.alias('privmsg', 'query');
+
+  irc.commands.add('default', function(args, command){
+    command = command.substr(1).toUpperCase();
+    args.unshift(command);
+    irc.socket.emit('command', args);
+  });
 
 });
 

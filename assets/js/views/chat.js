@@ -39,8 +39,8 @@ var ChatView = Backbone.View.extend({
     $('#chat-button').click( function(){
       var message = $('#chat-input').val();
       if (message.substr(0, 1) === '/') {
-        var commandText = message.split(' ');
-        irc.handleCommand(commandText);
+        var commandText = message.substr(1).split(' ');
+        irc.commands.handle(commandText);
       } else {
         irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
       }
@@ -75,8 +75,8 @@ var ChatView = Backbone.View.extend({
             var message = $(this).val();
             // Handle IRC commands
             if (message.substr(0, 1) === '/') {
-              var commandText = message.split(' ');
-              irc.handleCommand(commandText);
+              var commandText = message.substr(1).split(' ');
+              irc.commands.handle(commandText);
             } else {
               // Send the message
               console.log(irc.chatWindows.getActive().get('name'));
