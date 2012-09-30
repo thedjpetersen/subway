@@ -149,6 +149,27 @@ $(function() {
     irc.chatWindows.getByName('status').stream.add(message);
   });
 
+  // Whois data
+  irc.socket.on('whois', function(data){
+    var key, message;
+    var stream = irc.chatWindows.getByName('status').stream;
+    if (data.info){
+      var info = {
+        " ": data.info.nick + ' (' + (data.info.user + '@' + data.info.host) + ')',
+        realname: data.info.realname,
+        server: data.info.server + ' (' + data.info.serverinfo + ')',
+        account: data.info.account
+      };
+
+      for (key in info){
+        if (info.hasOwnProperty(key)){
+          message = new Message({sender: key, raw:  info[key], type: 'whois'});
+          stream.add(message);
+        }
+      }
+    }
+  });
+
   irc.socket.on('message', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
     var type = 'message';
@@ -356,6 +377,11 @@ $(function() {
         } else {
           irc.socket.emit('topic', {name: irc.chatWindows.getActive().get('name'),
             topic: commandText[1]});
+        }
+        break;
+      case '/whois':
+        if (commandText[1]){
+            irc.socket.emit('whois', {nick: commandText[1]});
         }
         break;
       case '/me':
