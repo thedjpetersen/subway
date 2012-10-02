@@ -22,7 +22,7 @@ var OverviewView = Backbone.View.extend({
       $('#overview').html(ich.overview_home());
     } else {
       var func = ich['overview_' + event.currentTarget.id];
-      $('#overview').html(func());
+      $('#overview').html(func({'loggedIn': irc.loggedIn}));
     }
 
     $('.overview_button').bind('click', $.proxy(this.render, this));
@@ -57,7 +57,8 @@ var OverviewView = Backbone.View.extend({
     selfSigned = $('#connect-selfSigned').is(':checked'),
     rejoin = $('#connect-rejoin').is(':checked'),
     password = $('#connect-password').val(),
-    encoding = $('#connect-encoding').val();
+    encoding = $('#connect-encoding').val(),
+    keepAlive = false;
     
     if (!server) {
       $('#connect-server').closest('.control-group').addClass('error');
@@ -65,6 +66,10 @@ var OverviewView = Backbone.View.extend({
     
     if (!nick) {
       $('#connect-nick').closest('.control-group').addClass('error');
+    }
+
+    if (irc.loggedIn && $('#connect-keep-alive').length) {
+      keepAlive = $('#connect-keep-alive').is(':checked');
     }
     
     if (nick && server) {
@@ -81,7 +86,8 @@ var OverviewView = Backbone.View.extend({
         away: away,
         realName: realName,
         password: password,
-        encoding: encoding
+        encoding: encoding,
+        keepAlive: keepAlive
       };
 
       irc.me = new User(connectInfo);
