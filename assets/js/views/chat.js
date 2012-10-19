@@ -69,10 +69,11 @@ var ChatView = Backbone.View.extend({
       },
 
       keyup: function(event) {
-        var self = this;
+        var self = this, message;
+
         if ($(this).val().length) {
           if (keydownEnter && event.keyCode === 13) {
-            var message = $(this).val();
+            message = $(this).val();
             // Handle IRC commands
             if (message.substr(0, 1) === '/') {
               var commandText = message.substr(1).split(' ');
@@ -85,6 +86,27 @@ var ChatView = Backbone.View.extend({
             $(this).val('');
             $('#chat-button').addClass('disabled');
           } else if (event.keyCode == 9) {
+
+            // Command autocomplete
+            message = $(this).val();
+
+            if (message.substr(0, 1) === '/') {
+                var lookupResults = irc.commands.lookup(message.substr(1).split(' ')[0]);
+
+                if (lookupResults[0]){
+                    // Just give back the first autocomplete result all the time
+                    // for now, instead of cycling through all.
+                    $(this).val('/' + lookupResults[0] + ' ');
+
+                    // TODO: Make this smarter, but I think this keypress
+                    // listener might use a refactor first.
+
+                    // Didn't want to mess with names listener, so I return here.
+                    return;
+                }
+            }
+            // End command autocomplete
+
             var searchRe;
             var match = false;
             var channel = irc.chatWindows.getActive();
