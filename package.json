@@ -17,7 +17,7 @@
     "PYTHON": "/opt/local/bin/python2.7"
   },
   "dependencies": {
-    "express": "2.5.x",
+    "express": "3.0.x",
     "jade": "0.26.x",
     "connect-assets": "2.2.x",
     "irc": "git://github.com/noraesae/node-irc.git",
