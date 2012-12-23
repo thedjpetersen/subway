@@ -4,9 +4,11 @@ script(id="chat_application", type="text/html")
       img(src='/assets/images/subway.png')
     h2 Subway
       br
-      small IRC client
+      small IRC Client
     #user-box
     #channels
+      #slide-prev.slide
+      #slide-next.slide
   .content
 
 script(id="load_image", type="text/html")
@@ -98,7 +100,7 @@ script(id="overview_connection", type="text/html")
 script(id="overview_settings", type="text/html")
   #home_parent
     a.overview_button#home Home
-  p Coming soon.
+  p#settings-soon Coming soon.
 
 script(id="overview_login", type="text/html")
   #home_parent
@@ -143,6 +145,8 @@ script(id="chat", type="text/html")
         .titlebar
           span(class='window_title') User List
       #user-list.bar
+    #user-window-toggle
+      img(src="/assets/images/register.svg")
 
 script(id="channel", type="text/html")
   span(class="channel-name") {{name}}
@@ -173,7 +177,7 @@ script(id="link", type="text/html")
   a(target="_blank", href="{{link}}") {{link}}
 
 script(id="image_embed", type="text/html")
-  div
+  div.embed-toggle
     a.hide_embed
       i(class="icon-chevron-up")
     a.show_embed.hide

@@ -1,0 +1,157 @@
+@media screen and (max-width: 720px) {
+  .container-fluid {
+    /* Overview. */
+    /* Convert channel sidebar to browser-like tabs. */
+    /* Toggleable sliding sidebar replacement for user window. */ }
+    .container-fluid #overview {
+      left: 0;
+      margin-top: 0;
+      bottom: 0;
+      position: fixed;
+      padding: 0;
+      width: 100%;
+      z-index: 1; }
+      .container-fluid #overview ul {
+        margin: 0; }
+        .container-fluid #overview ul li {
+          margin: 0;
+          padding: 10px 0;
+          width: 50%; }
+    .container-fluid #logo, .container-fluid .sidebar h2 {
+      display: block;
+      position: fixed;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      z-index: 1; }
+    .container-fluid .sidebar h2 {
+      margin-top: 120px; }
+    .container-fluid .sidebar {
+      margin-top: 2%; }
+    .container-fluid form.form-inline {
+      padding: 0 10px; }
+    .container-fluid #home {
+      margin: 10px 17px 0; }
+    .container-fluid p#settings-soon {
+      text-align: center; }
+    .container-fluid .sidebar {
+      width: 0; }
+    .container-fluid #user-window {
+      -webkit-box-shadow: 0 0 4px 2px #333333;
+      -moz-box-shadow: 0 0 4px 2px #333333;
+      box-shadow: 0 0 4px 2px #333333;
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 75%;
+      z-index: 3; }
+    .container-fluid .content {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%; }
+      .container-fluid .content.user-window-toggled {
+        right: 75%; }
+    .container-fluid #chat-window {
+      width: 100%; }
+      .container-fluid #chat-window div {
+        z-index: 2; }
+    .container-fluid #channels {
+      display: inline-block;
+      height: 34px;
+      left: 34px;
+      position: fixed;
+      overflow: visible;
+      top: 0;
+      white-space: nowrap;
+      z-index: 2; }
+      .container-fluid #channels div.channel {
+        border: 1px solid rgba(10, 10, 10, 0.5);
+        border-radius: 25px 0 0;
+        display: inline-block;
+        height: 34px;
+        left: 0;
+        padding: 7px 0;
+        position: relative;
+        text-align: left;
+        width: 120px; }
+        .container-fluid #channels div.channel span.channel-name {
+          display: inline-block;
+          margin-left: 8px;
+          overflow: none;
+          text-overflow: ellipsis;
+          width: 45%; }
+        .container-fluid #channels div.channel span.unread, .container-fluid #channels div.channel span.unread-mentions {
+          float: none;
+          vertical-align: 6px; }
+        .container-fluid #channels div.channel div.close-button {
+          position: absolute;
+          right: 0;
+          top: 7px;
+          visibility: visible; }
+      .container-fluid #channels .slide {
+        background: rgba(67, 73, 80, 0.75);
+        color: white;
+        font-size: 24px;
+        display: none;
+        height: 34px;
+        padding-top: 4px;
+        position: fixed;
+        text-align: center;
+        width: 34px;
+        z-index: 2; }
+        .container-fluid #channels .slide:hover {
+          background: rgba(67, 73, 80, 0.95);
+          cursor: pointer; }
+      .container-fluid #channels #slide-prev {
+        left: 0; }
+        .container-fluid #channels #slide-prev:after {
+          content: "<"; }
+      .container-fluid #channels #slide-next {
+        right: 0; }
+        .container-fluid #channels #slide-next:after {
+          content: ">"; }
+    .container-fluid #chat-bar {
+      position: fixed;
+      left: 0;
+      top: 34px; }
+      .container-fluid #chat-bar.user-window-toggled {
+        left: -75%; }
+    .container-fluid #chat-contents {
+      margin-top: 34px; }
+    .container-fluid #user-window-toggle {
+      background: rgba(67, 73, 80, 0.1);
+      border: 1px solid rgba(67, 73, 80, 0.3);
+      border-radius: 50px 0 0;
+      bottom: 56px;
+      display: block;
+      height: 55px;
+      position: fixed;
+      right: 0;
+      width: 55px;
+      z-index: 3; }
+      .container-fluid #user-window-toggle img {
+        position: absolute;
+        top: 18px;
+        left: 18px;
+        height: 30px;
+        width: 30px; }
+      .container-fluid #user-window-toggle:hover {
+        background: rgba(67, 73, 80, 0.5);
+        cursor: pointer; }
+      .container-fluid #user-window-toggle.user-window-toggled {
+        right: 75%; }
+    .container-fluid #input-container {
+      text-align: center; }
+      .container-fluid #input-container .input {
+        padding-top: 12px; }
+    .container-fluid input#chat-input {
+      float: none;
+      width: 65%; }
+    .container-fluid #chat-button {
+      width: 20%;
+      padding-left: 0;
+      padding-right: 0; }
+
+  .channel {
+    background: #e8e8e8; } }
