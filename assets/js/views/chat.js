@@ -11,6 +11,8 @@ var ChatView = Backbone.View.extend({
     */
     this.model.bind('change:topic', this.updateTitle, this);
     this.model.stream.bind('add', this.addMessage, this);
+    // Track sent messages to allow up/down navigation in message input
+    this.model.set('input_scrollback', { items: [], index: null });
   },
 
   updateTitle: function(channel) {
@@ -36,16 +38,30 @@ var ChatView = Backbone.View.extend({
   },
 
   handleInput: function() {
-    $('#chat-button').click( function(){
-      var message = $('#chat-input').val();
+    function sendMessage() {
+      var message = $('#chat-input').val(),
+          activeChat = irc.chatWindows.getActive();
+      if (message.length == 0) return;
+      // Save the message to our input_scrollback
+      if (typeof activeChat !== 'undefined') {
+        var input_scrollback = activeChat.get('input_scrollback');
+        input_scrollback.items.push(message);
+        input_scrollback.index = null;
+        activeChat.set('input_scrollback', input_scrollback);
+      }
+      // Handle IRC commands
       if (message.substr(0, 1) === '/') {
         var commandText = message.substr(1).split(' ');
         irc.commands.handle(commandText);
       } else {
+        // Send the message
+        console.log(irc.chatWindows.getActive().get('name'));
         irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
       }
       $('#chat-input').val('');
-    });
+      $('#chat-button').addClass('disabled');
+    }
+    $('#chat-button').click(sendMessage);
 
     // Only submit message on enter if both keydown & keyup are present
     // so IMEs work
@@ -66,24 +82,35 @@ var ChatView = Backbone.View.extend({
           event.preventDefault();
         }
         keydownEnter = (event.keyCode === 13);
+        var activeChat = irc.chatWindows.getActive();
+        if (typeof activeChat !== 'undefined' && (event.keyCode == 38 || event.keyCode == 40)) {
+          var direction = (event.keyCode == 38) ? -1 : 1,
+              input_scrollback = activeChat.get('input_scrollback'),
+              new_position = input_scrollback.index + direction;
+          if (input_scrollback.index == null) { // Are we at the end of the list?
+            if (direction == 1) return; // We can't scroll past the end of the list
+            new_position = input_scrollback.items.length - 1; // Go to the last item in the list
+            input_scrollback.recall = $(this).val(); // Save anything the user had typed
+          }
+          if (new_position < 0) return; // We can't scroll past the start of the list
+          if (new_position == input_scrollback.items.length) {
+            $(this).val(input_scrollback.recall); // Recall the user's previous message
+            input_scrollback.index = null;
+          } else {
+            $(this).val(input_scrollback.items[new_position]);
+            input_scrollback.index = new_position;
+          }
+          activeChat.set('input_scrollback', input_scrollback);
+          event.preventDefault();
+        }
       },
 
       keyup: function(event) {
-        var self = this;
+        var self = this,
+            activeChat = irc.chatWindows.getActive();
         if ($(this).val().length) {
           if (keydownEnter && event.keyCode === 13) {
-            var message = $(this).val();
-            // Handle IRC commands
-            if (message.substr(0, 1) === '/') {
-              var commandText = message.substr(1).split(' ');
-              irc.commands.handle(commandText);
-            } else {
-              // Send the message
-              console.log(irc.chatWindows.getActive().get('name'));
-              irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
-            }
-            $(this).val('');
-            $('#chat-button').addClass('disabled');
+            sendMessage();
           } else if (event.keyCode == 9) {
             var searchRe;
             var match = false;
@@ -131,12 +158,11 @@ var ChatView = Backbone.View.extend({
                 $('#chat-input').val(sentence.join(' '));
               }
             }
-        } else {
-            $('#chat-button').removeClass('disabled');
+          } else if (event.keyCode == 27) { // Escape
+            $(this).val('');
           }
-        } else {
-          $('#chat-button').addClass('disabled');
         }
+        $('#chat-input').change(); // Something has likely changed, so lets refresh the send button
         isEnter = false;
       }
     });
