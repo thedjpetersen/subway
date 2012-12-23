@@ -30,7 +30,7 @@ $(function() {
   try {
     window.unity.api = external.getUnityObject(1.0);
     window.unity.init({
-      name: "Subay IRC",
+      name: "Subway IRC",
       iconUrl: window.location.protocol+"//"+window.location.host+"/assets/images/subway.png",
       onInit: function() {
         window.unity.connected = true;
@@ -87,7 +87,7 @@ $(function() {
     alert('You were disconnected from the server.');
     $('.container-fluid').css('opacity', '0.5');
   });
-  
+
 
   irc.socket.on('register_success', function(data) {
     window.irc.loggedIn = true;
@@ -103,9 +103,9 @@ $(function() {
     $.each(data.channels, function(key, value){
       var chanName = value.serverName.toLowerCase();
       if(chanName[0] == '#'){
-        irc.chatWindows.add({name: chanName});
+        irc.chatWindows.add({name: chanName, initial: true});
       } else {
-        irc.chatWindows.add({name: chanName, type: 'pm'});
+        irc.chatWindows.add({name: chanName, type: 'pm', initial: true});
       }
       var channel = irc.chatWindows.getByName(chanName);
       var channelTabs = irc.appView.channelList.channelTabs;
@@ -309,38 +309,41 @@ $(function() {
     var output = '';
     channel = irc.chatWindows.getByName(data.name);
 
-    $.each(data.messages.reverse(), function(index, message){
-      if($('#' + message._id).length) {
-        return true; //continue to next iteration
-      }
-      
-      var type = '';
-      var message_html;
-      if (message.message.substr(1, 6) === 'ACTION') {
-        message_html = ich.action({
-          user: message.user,
-          content: message.message.substr(8),
-          renderedTime: utils.formatDate(message.date)
-        }, true);
-      } else {
-        message_html = ich.message({
-          user: message.user,
-          content: message.message,
-          renderedTime: utils.formatDate(message.date)
-        }, true);
-      }
+    if (data.messages) {
+        $.each(data.messages.reverse(), function(index, message){
+          if($('#' + message._id).length) {
+            return true; //continue to next iteration
+          }
+
+          var type = '';
+          var message_html;
+          if (message.message.substr(1, 6) === 'ACTION') {
+            message_html = ich.action({
+              user: message.user,
+              content: message.message.substr(8),
+              renderedTime: utils.formatDate(message.date)
+            }, true);
+          } else {
+            message_html = ich.message({
+              user: message.user,
+              content: message.message,
+              renderedTime: utils.formatDate(message.date)
+            }, true);
+          }
 
 
-      if(message.user == irc.me.get('nick')){
-        type = 'message-me';
-      } else {
-        message_html = utils.mentions(message_html);
-      }
+          if(message.user == irc.me.get('nick')){
+            type = 'message-me';
+          } else {
+            message_html = utils.mentions(message_html);
+          }
 
-      message_html = utils.linkify(message_html);
-      message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
-      output += message_html;
-    });
+          message_html = utils.linkify(message_html);
+          message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
+          output += message_html;
+        });
+    }
+
     var old_height = channel.view.$('#chat-contents')[0].scrollHeight;
     channel.view.$('#chat-contents').prepend(output);
     var new_height = channel.view.$('#chat-contents')[0].scrollHeight+1000-old_height;

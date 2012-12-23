@@ -44,6 +44,7 @@ var ChatApplicationView = Backbone.View.extend({
       this.overview = new OverviewView;
     } else {
       this.channelList = new ChannelListView;
+      $('.slide').css('display', 'inline-block');
     }
     return this;
   },
