@@ -78,22 +78,22 @@ var ChatView = Backbone.View.extend({
 
       // Prevent tab moving focus for tab completion
       keydown: function(event) {
-        if (event.keyCode == 9) {
+        if (event.keyCode === 9) {
           event.preventDefault();
         }
         keydownEnter = (event.keyCode === 13);
         var activeChat = irc.chatWindows.getActive();
-        if (typeof activeChat !== 'undefined' && (event.keyCode == 38 || event.keyCode == 40)) {
-          var direction = (event.keyCode == 38) ? -1 : 1,
+        if (typeof activeChat !== 'undefined' && (event.keyCode === 38 || event.keyCode === 40)) {
+          var direction = (event.keyCode === 38) ? -1 : 1,
               input_scrollback = activeChat.get('input_scrollback'),
               new_position = input_scrollback.index + direction;
-          if (input_scrollback.index == null) { // Are we at the end of the list?
-            if (direction == 1) return; // We can't scroll past the end of the list
+          if (input_scrollback.index === null) { // Are we at the end of the list?
+            if (direction === 1) return; // We can't scroll past the end of the list
             new_position = input_scrollback.items.length - 1; // Go to the last item in the list
             input_scrollback.recall = $(this).val(); // Save anything the user had typed
           }
           if (new_position < 0) return; // We can't scroll past the start of the list
-          if (new_position == input_scrollback.items.length) {
+          if (new_position === input_scrollback.items.length) {
             $(this).val(input_scrollback.recall); // Recall the user's previous message
             input_scrollback.index = null;
           } else {
