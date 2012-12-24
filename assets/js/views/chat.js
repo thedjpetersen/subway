@@ -58,8 +58,7 @@ var ChatView = Backbone.View.extend({
         console.log(irc.chatWindows.getActive().get('name'));
         irc.socket.emit('say', {target: irc.chatWindows.getActive().get('name'), message:message});
       }
-      $('#chat-input').val('');
-      $('#chat-button').addClass('disabled');
+      $('#chat-input').val('').change();
     }
     $('#chat-button').click(sendMessage);
 
