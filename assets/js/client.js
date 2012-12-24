@@ -184,12 +184,12 @@ $(function() {
   });
 
   irc.socket.on('pm', function(data) {
-    var chatWindow = irc.chatWindows.getByName(data.nick);
+    var chatWindow = irc.chatWindows.getByName(data.nick.toLowerCase());
     if (typeof chatWindow === 'undefined') {
-      irc.chatWindows.add({name: data.nick, type: 'pm'})
+      irc.chatWindows.add({name: data.nick.toLowerCase(), type: 'pm'})
         .trigger('forMe', 'newPm');
-      irc.socket.emit('getOldMessages',{channelName: data.nick, skip:0, amount: 50});
-      chatWindow = irc.chatWindows.getByName(data.nick);
+      irc.socket.emit('getOldMessages',{channelName: data.nick.toLowerCase(), skip:0, amount: 50});
+      chatWindow = irc.chatWindows.getByName(data.nick.toLowerCase());
     }
     chatWindow.stream.add({sender: data.nick, raw: data.text, type: 'pm'});
   });
