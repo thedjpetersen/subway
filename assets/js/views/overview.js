@@ -48,7 +48,7 @@ var OverviewView = Backbone.View.extend({
     event.preventDefault();
     $('.error').removeClass('error');
 
-    var server = $('#connect-server').val(),
+    var server = $('#connect-server').val() || "default",
     nick = $('#connect-nick').val(),
     port = $('#connect-port').val(),
     away = $('#connect-away').val(),
@@ -62,7 +62,7 @@ var OverviewView = Backbone.View.extend({
     
     if (!server) {
       $('#connect-server').closest('.control-group').addClass('error');
-    }
+    } 
     
     if (!nick) {
       $('#connect-nick').closest('.control-group').addClass('error');
