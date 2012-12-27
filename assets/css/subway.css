@@ -383,6 +383,7 @@ html { overflow: hidden; }
 
 .chat-message.motd {
   white-space: pre;
+  font: 12px monospace;
 }
 
 div.embed-toggle {
