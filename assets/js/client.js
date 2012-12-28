@@ -425,11 +425,12 @@ $(function() {
   });
 
   irc.commands.add('topic', function(args){
-    if (args[1]) {
-      irc.socket.emit('topic', {name: args[0], topic: args[1]});
-    } else {
+    // If args[0] starts with # or &, a topic name has been provided
+    if (args[0].indexOf('#') === 0 || args[0].indexOf('&') === 0) {
+      irc.socket.emit('topic', {name: args.shift(), topic: args.join(' ')});
+    } else { // Otherwise, assume we're changing the current channel's topic
       irc.socket.emit('topic', {name: irc.chatWindows.getActive().get('name'),
-        topic: args[0]});
+        topic: args.join(' ')});
     }
   });
 
