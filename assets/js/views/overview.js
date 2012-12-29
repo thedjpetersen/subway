@@ -48,7 +48,7 @@ var OverviewView = Backbone.View.extend({
     event.preventDefault();
     $('.error').removeClass('error');
 
-    var server = $('#connect-server').val(),
+    var server = $('#connect-server').val() || "default",
     nick = $('#connect-nick').val(),
     port = $('#connect-port').val(),
     away = $('#connect-away').val(),
