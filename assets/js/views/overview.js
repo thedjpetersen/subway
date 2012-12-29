@@ -62,7 +62,7 @@ var OverviewView = Backbone.View.extend({
     
     if (!server) {
       $('#connect-server').closest('.control-group').addClass('error');
-    } 
+    }
     
     if (!nick) {
       $('#connect-nick').closest('.control-group').addClass('error');
