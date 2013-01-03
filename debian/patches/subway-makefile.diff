@@ -43,7 +43,7 @@ Last-Update: 2013-01-03
 +	mkdir -p $(log_prefix)/subway
 +	touch $(log_prefix)/subway/subway.log
 +	mkdir -p $(etc_prefix)/subway
-+	ln -s $(lib_prefix)/subway/config.js $(etc_prefix)/subway/config.js
++	ln -s /var/lib/subway/config.js $(etc_prefix)/subway/config.js
 +	chown -R irc.irc $(lib_prefix)/subway $(log_prefix)/subway
 +
 +uninstall:
