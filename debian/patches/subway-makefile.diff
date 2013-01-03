@@ -39,15 +39,8 @@ Last-Update: 2013-01-03
 +	mkdir -p $(bin_prefix)
 +	$(INSTALL) subway $(bin_prefix)
 +	chown root.root $(bin_prefix)/subway
-+	sed -i "s#\./#$(lib_prefix)/subway/#" $(bin_prefix)/subway
++	sed -i "s#\./#/var/lib/subway/#" $(bin_prefix)/subway
 +	mkdir -p $(log_prefix)/subway
 +	touch $(log_prefix)/subway/subway.log
 +	mkdir -p $(etc_prefix)/subway
 +	ln -s /var/lib/subway/config.js $(etc_prefix)/subway/config.js
-+	chown -R irc.irc $(lib_prefix)/subway $(log_prefix)/subway
-+
-+uninstall:
-+	rm -rf /var/lib/subway
-+	rm -rf /etc/subway
-+	rm -rf /var/log/subway 		
-+	rm /usr/bin/subway
