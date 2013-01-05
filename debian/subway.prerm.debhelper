@@ -1,5 +1,0 @@
-# Automatically added by dh_installinit
-if [ -e "/etc/init/subway.conf" ]; then
-	invoke-rc.d subway stop || exit $?
-fi
-# End automatically added section
