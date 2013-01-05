@@ -1,0 +1,22 @@
+Source: subway
+Section: net
+Priority: extra
+Maintainer: Hugues Obolonsky <hugh@atoc.org>
+Build-Depends: debhelper (>= 8.0.0), npm (>= 1.1.69)
+Standards-Version: 2.4
+Homepage: https://github.com/thedjpetersen/subway
+#Vcs-Git: git://github.com/thedjpetersen/subway.git
+
+Package: subway
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, nodejs (>= 0.8.16), mongodb-server
+Description: Subway is a web-based IRC client with a multi-user backend and a JavaScript-heavy UI.
+ Subway is a combination of two projects that started independently with a similar technology stack and similar aims
+ .
+ subway-web / subway-server by David Petersen
+ web-irc by Aaron Kavlie
+ Its goals are twofold: 
+   1) Become the best web-based IRC client available 
+   2) Provide a really easy method of persistent IRC connections, available from any web browser
+ .
+ The inspiration for Subway was trying to watch a fellow programmer try to explain how to set up screen/irssi to a non-technical person.
