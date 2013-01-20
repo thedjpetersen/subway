@@ -96,7 +96,6 @@ var ChatView = Backbone.View.extend({
             var partialMatch = sentence.pop();
             var users = channel.userList.getUsers();
             var userIndex=0;
-            console.log(sentence, partialMatch)
             searchRe = new RegExp(self.partialMatch, "i");
             if(self.partialMatch === undefined) {
               self.partialMatch = partialMatch;
