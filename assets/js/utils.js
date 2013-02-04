@@ -61,7 +61,10 @@ window.utils = {
   },
 
   mentions: function(text) {
-    var re = new RegExp('\\b' + irc.me.get('nick') + '\\b', 'g');
+    var escape = function(text) {
+      return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+    };
+    var re = new RegExp(escape(irc.me.get('nick')), 'g');
     var parsed = text.replace(re, function(nick) {
       return '<span class="mention">' + nick + '</span>';
     });
