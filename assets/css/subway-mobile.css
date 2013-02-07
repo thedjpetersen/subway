@@ -27,9 +27,11 @@
     .container-fluid .sidebar h2 {
       margin-top: 120px; }
     .container-fluid .sidebar {
-      margin-top: 2%; }
+      margin-top: 2%;
+      z-index: 2; }
     .container-fluid form.form-inline {
-      padding: 0 10px; }
+      padding: 0 10px;
+      text-align: center; }
     .container-fluid #home {
       margin: 10px 17px 0; }
     .container-fluid p#settings-soon {

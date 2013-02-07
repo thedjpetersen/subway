@@ -55,7 +55,7 @@ html { overflow: hidden; }
 
 #overview {
   width: 400px;
-  margin: 10% auto;
+  margin: 10% auto 30% auto;
   padding: 10px;
   background: #E7E9ED;
   border: 2px solid #DDD;
