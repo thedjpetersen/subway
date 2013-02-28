@@ -110,9 +110,16 @@ var OverviewView = Backbone.View.extend({
       irc.socket.emit('connect', connectInfo);
 
       // Save standard settings in session storage.
-      sessionStorage.setItem('nick', nick);
-      sessionStorage.setItem('realName', realName);
-      sessionStorage.setItem('server', server);
+      if ($('#connect-remember').attr('checked')) {
+        sessionStorage.setItem('nick', nick);
+        sessionStorage.setItem('realName', realName);
+        sessionStorage.setItem('server', server);
+      }
+      else {
+        sessionStorage.removeItem('nick');
+        sessionStorage.removeItem('realName');
+        sessionStorage.removeItem('server');
+      }
     }
   },
 
