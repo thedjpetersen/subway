@@ -403,7 +403,14 @@ $(function() {
   }());
 
   irc.commands.add('join', function(args){
-    irc.socket.emit('join', args[0]);
+    var connect = args[0];
+
+    // Support using channel keys and passwords.
+    if (args[1]) {
+      connect = connect + ' ' + args[1]
+    }
+
+    irc.socket.emit('join', connect);
   });
 
   irc.commands.add('part', function(args){
