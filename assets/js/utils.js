@@ -41,13 +41,11 @@ window.utils = {
       //Look for embeddable media in all the links
       for (var i=0; i<links.length; i++){
         var href = links[i];
+        
         //Add embedded youtube video
-        if (href.search('http://www.youtube.com') > -1) {
-          var video_id = href.split('v=')[1];
-          var targetPosition = video_id.indexOf('&');
-          if(targetPosition !== -1) {
-            video_id = video_id.substring(0, targetPosition);
-          }
+        var ytre = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/; // http://stackoverflow.com/questions/2964678/jquery-youtube-url-validation-with-regex/10315969#10315969
+        var video_id = (href.match(ytre)) ? RegExp.$1 : false;
+        if (video_id !== false) {
           parsed = parsed.split('</div><div class=\"chat-time\">').join(ich.youtube_embed({video_id:video_id}, true) + '</div><div class=\"chat-time\">');
         }
 
