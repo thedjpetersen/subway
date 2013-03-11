@@ -71,6 +71,10 @@ var ChatView = Backbone.View.extend({
       keyup: function(event) {
         var self = this;
         if ($(this).val().length) {
+
+          // Reset partialMatch
+          if (event.keyCode !== 9) delete self.partialMatch;
+
           if (keydownEnter && event.keyCode === 13) {
             var message = $(this).val();
             // Handle IRC commands
@@ -88,7 +92,7 @@ var ChatView = Backbone.View.extend({
             var searchRe;
             var match = false;
             var channel = irc.chatWindows.getActive();
-            var sentence = $('#chat-input').val().split(' ');
+            var sentence = $('#chat-input').val().trim().split(' ');
             var partialMatch = sentence.pop();
             var users = channel.userList.getUsers();
             var userIndex=0;
@@ -127,7 +131,8 @@ var ChatView = Backbone.View.extend({
                 //We break from our loop
                 break;
               } else if(i === users.length-1 && match === false) {
-                sentence.push('');
+                // Prevent input from clearing on subsequent tab-press
+                sentence.push(partialMatch);
                 $('#chat-input').val(sentence.join(' '));
               }
             }

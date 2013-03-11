@@ -41,7 +41,7 @@ var ChatApplicationView = Backbone.View.extend({
   render: function() {
     $('body').html($(this.el).html(ich.chat_application()));
     if (!irc.connected) {
-      this.overview = new OverviewView;
+      this.overview = new OverviewView();
     } else {
       this.channelList = new ChannelListView;
       $('.slide').css('display', 'inline-block');
@@ -71,18 +71,20 @@ var ChatApplicationView = Backbone.View.extend({
   // Show number of unread mentions in title
   showUnread: function() {
     var unreads = irc.chatWindows.unreadCount();
-    if (unreads > 0)
+    if (unreads > 0) {
       document.title = '(' + unreads + ') ' + this.originalTitle;
       if( window.unity.connected ) {
         window.unity.api.Launcher.setCount(unreads);
         window.unity.api.Launcher.setUrgent(true);
       }
-    else
+    }
+    else {
       document.title = this.originalTitle;
       if( window.unity.connected ) {
         window.unity.api.Launcher.clearCount();
         window.unity.api.Launcher.setUrgent(false);
       }
+    }
   },
 
   playSound: function(type) {
