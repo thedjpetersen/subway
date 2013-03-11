@@ -285,7 +285,9 @@ $(function() {
   });
 
   irc.socket.on('netError', function(data) {
-    irc.appView.showError('Invalid server');
+    if(!$('.alert-error').length) {
+      irc.appView.showError('Invalid server');
+    }
   });
 
   irc.socket.on('login_error', function(data) {

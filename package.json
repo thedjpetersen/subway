@@ -19,8 +19,8 @@
   "dependencies": {
     "express": "3.0.x",
     "jade": "0.26.x",
-    "connect-assets": "2.3.x",
-    "irc": "git://github.com/noraesae/node-irc.git",
+    "connect-assets": "2.4.x",
+    "irc": "0.3.x",
     "socket.io": "0.9.x",
     "mongoose": "2.7.x",
     "bcrypt": "0.7.x",
