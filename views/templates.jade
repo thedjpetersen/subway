@@ -9,6 +9,9 @@ script(id="chat_application", type="text/html")
     #channels
       #slide-prev.slide
       #slide-next.slide
+      form#join-channel.hide
+        label(for="join-channel-name") Join channel
+        input#join-channel-name(type="text", placeholder="Join #channel")
   .content
 
 script(id="load_image", type="text/html")
