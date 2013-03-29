@@ -12,6 +12,21 @@ var ChannelListView = Backbone.View.extend({
   initialize: function() {
     irc.chatWindows.bind('add', this.addChannel, this);
     $('.slide').css('display', 'inline-block');
+    $('#join-channel-name').bind({
+      keyup: function(event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          irc.socket.emit('join', $('#join-channel-name').val());
+          $('#join-channel-name').val('');
+        }
+      },
+      keydown: function(event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+        }
+      }
+    });
+    $('#join-channel').css('display', 'block');
     this.channelTabs = []
   },
 
@@ -19,7 +34,7 @@ var ChannelListView = Backbone.View.extend({
     var $el = $(this.el);
     var view = new ChannelTabView({model: chatWindow});
     this.channelTabs.push(view);
-    $el.append(view.render().el);
+    $el.prepend(view.render().el);
 
     var name = chatWindow.get('name');
     if(name[0] === '#' || name === 'status'){

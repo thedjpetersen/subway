@@ -229,6 +229,21 @@ html { overflow: hidden; }
   margin-right: 0.3em;
 }
 
+#channels form {
+  width: 8em;
+  margin: 0 auto;
+}
+
+#channels label {
+  display: none;
+}
+
+#channels input {
+  width: 100%;
+  height: 12px;
+  font-size: 12px;
+}
+
 .slide {
   position: fixed;
   width: 0;
