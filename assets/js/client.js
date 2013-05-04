@@ -183,6 +183,13 @@ $(function() {
     }
   });
 
+  irc.socket.on('action', function(data) {
+    var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
+    var type = 'message';
+
+    chatWindow.stream.add({sender: data.from, raw: ' ACTION ' + data.text, type: type});
+  });
+
   irc.socket.on('pm', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.nick.toLowerCase());
     if (typeof chatWindow === 'undefined') {
