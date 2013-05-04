@@ -3,3 +3,4 @@ builtAssets/
 run.sh
 *.swp
 .sass-cache
+.DS_Store

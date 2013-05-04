@@ -11,7 +11,6 @@ Try it out [here](http://198.58.100.168:3000/). Thanks linode for the instance!
 
 Subway is built with [node.js](http://nodejs.org/),
 [node-irc](https://github.com/martynsmith/node-irc)
-and [MongoDB](http://www.mongodb.org/) on the backend,
 and [Backbone.js](http://documentcloud.github.com/backbone/) and
 [jQuery](http://jquery.com/) on the frontend.
 

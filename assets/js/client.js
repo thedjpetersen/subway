@@ -1,6 +1,5 @@
-//= require 'libs/socket.io.js'
-//= require 'libs/jquery-1.7.1.min.js'
-//= require 'libs/jquery.scrollTo-1.4.2-min.js'
+//= require 'libs/jquery-2.0.0.min.js'
+//= require 'libs/jquery.scrollTo-1.4.3.1-min.js'
 //= require 'libs/underscore-min.js'
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
@@ -181,6 +180,13 @@ $(function() {
       // Handle PMs intiated by me
       chatWindow.stream.add({sender: data.from.toLowerCase(), raw: data.text, type: 'pm'});
     }
+  });
+
+  irc.socket.on('action', function(data) {
+    var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
+    var type = 'message';
+
+    chatWindow.stream.add({sender: data.from, raw: ' ACTION ' + data.text, type: type});
   });
 
   irc.socket.on('pm', function(data) {
