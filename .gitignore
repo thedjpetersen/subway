@@ -4,3 +4,4 @@ run.sh
 *.swp
 .sass-cache
 .DS_Store
+subway.db

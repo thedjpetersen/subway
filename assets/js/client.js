@@ -49,13 +49,13 @@ $(function() {
     return "If you leave, you'll be signed out of Subway.";
   });
 
-  irc.socket.emit('getDatabaseState', {});
+  /*irc.socket.emit('getDatabaseState', {});
 
   irc.socket.on('databaseState', function(data) {
     if(data.state === 0){
       $('#login, #register').hide();
     }
-  });
+  });*/
 
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
@@ -310,7 +310,7 @@ $(function() {
     irc.appView.render();
 
     // remove login and register button if no database
-    irc.socket.emit('getDatabaseState', {});
+    // irc.socket.emit('getDatabaseState', {});
   });
 
   irc.socket.on('oldMessages', function(data){
