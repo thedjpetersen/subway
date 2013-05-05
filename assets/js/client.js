@@ -12,7 +12,7 @@
 
 
 window.irc = {
-  socket: io.connect(null, {port: PORT}),
+  socket: io.connect(null, {port: PORT, 'sync disconnect on unload': false}),
   chatWindows: new WindowList(),
   connected: false,
   loggedIn: false
