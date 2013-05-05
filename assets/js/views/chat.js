@@ -203,14 +203,14 @@ var ChatView = Backbone.View.extend({
   },
 
   handleClick: function() {
-    $('.hide_embed').live("click", function() {
+    $('.hide_embed').on("click", function() {
       var embed_div = $(this).parent().siblings('.embed');
       embed_div.addClass('hide');
       $(this).siblings('.show_embed').removeClass('hide');
       $(this).addClass('hide');
     });
 
-    $('.show_embed').live("click", function() {
+    $('.show_embed').on("click", function() {
       var embed_div = $(this).parent().siblings('.embed');
       embed_div.removeClass('hide');
       $(this).siblings('.hide_embed').removeClass('hide');

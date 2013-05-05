@@ -21,7 +21,8 @@
     "socket.io": "0.9.x",
     "bcrypt-nodejs": "0.0.x",
     "sqlite3": "2.1.x",
-    "orm": "2.0.x"
+    "orm": "2.0.x",
+    "node-uuid": "1.4.x"
   },
   "scripts": {
     "start": "subway"
