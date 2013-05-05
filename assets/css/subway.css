@@ -100,6 +100,14 @@ html { overflow: hidden; }
   cursor: pointer;
 }
 
+#overview #login {
+  display: none;
+}
+
+#overview #register {
+  display: none;
+}
+
 #overview form #loading_image{
   position: fixed;
   margin-left: 10px;

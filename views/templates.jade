@@ -34,7 +34,7 @@ script(id="overview", type="text/html")
 
 script(id="overview_connection", type="text/html")
   #home_parent
-    a.overview_button#home Home
+    a(onclick="irc.socket.emit('getDatabaseState', {});").overview_button#home Home
   form.form-inline
     .control-group
       label(for="connect-nick") Nick
@@ -102,12 +102,12 @@ script(id="overview_connection", type="text/html")
 
 script(id="overview_settings", type="text/html")
   #home_parent
-    a.overview_button#home Home
+    a(onclick="irc.socket.emit('getDatabaseState', {});").overview_button#home Home
   p#settings-soon Coming soon.
 
 script(id="overview_login", type="text/html")
   #home_parent
-    a.overview_button#home Home
+    a(onclick="irc.socket.emit('getDatabaseState', {});").overview_button#home Home
   form.form-inline
     .control-group
       label(for="login-username") Username
@@ -119,7 +119,7 @@ script(id="overview_login", type="text/html")
 
 script(id="overview_register", type="text/html")
   #home_parent
-    a.overview_button#home Home
+    a(onclick="irc.socket.emit('getDatabaseState', {});").overview_button#home Home
   form.form-inline
     .control-group
       label(for="register-username") Username
