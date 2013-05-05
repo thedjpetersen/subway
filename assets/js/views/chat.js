@@ -155,12 +155,6 @@ var ChatView = Backbone.View.extend({
 
     var nicksToIgnore = ['', 'notice', 'status'];
 
-    // Scroll down to show new message
-    var chatWindowHeight = ($chatWindow[0].scrollHeight - $chatWindow.height());
-    var scrollDown = false;
-    // If the user isn't scrolling go to the bottom message
-    if ((chatWindowHeight - $chatWindow.scrollTop()) <= 10) scrollDown = true;
-
     if (nicksToIgnore.indexOf(sender) === -1 && type === 'message'){
       var user = this.model.userList.getByNick(sender);
       var element = $(user.view.el);
@@ -179,7 +173,15 @@ var ChatView = Backbone.View.extend({
       $(view.el).addClass('message_notification');
     }
 
-    if(scrollDown) $('#chat-contents').animate({ scrollTop: $chatWindow[0].scrollHeight }, 750);
+    // Scroll down to show new message
+    var chatWindowHeight = ($chatWindow[0].scrollHeight - $chatWindow.height());
+    // If the window is large enough to be scrollable
+    if (chatWindowHeight > 0) {
+      // If the user isn't scrolling go to the bottom message
+      if ((chatWindowHeight - $chatWindow.scrollTop()) < 200) {
+        $('#chat-contents').animate({ scrollTop: $('#chat-contents')[0].scrollHeight }, 750);
+      }
+    }
   },
 
   handleScroll: function() {
