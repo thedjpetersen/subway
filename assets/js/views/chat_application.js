@@ -64,7 +64,7 @@ var ChatApplicationView = Backbone.View.extend({
 
     // disconnect server handler
     $('#user-box .close-button').click(function() {
-      irc.socket.emit('disconnectServer');
+      irc.socket.emit('logout');
     });
   },
 

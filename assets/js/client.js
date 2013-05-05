@@ -1,5 +1,4 @@
 //= require 'libs/jquery-2.0.0.min.js'
-//= require 'libs/jquery.scrollTo-1.4.3.1-min.js'
 //= require 'libs/underscore-min.js'
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
@@ -325,35 +324,35 @@ $(function() {
     channel = irc.chatWindows.getByName(data.name);
 
     if (data.messages) {
-        $.each(data.messages.reverse(), function(index, message){
-          if($('#' + message._id).length) {
+        $.each(data.messages, function(index, message){
+          if($('#msg' + message.id).length) {
             return true; //continue to next iteration
           }
 
           var type = '';
           var message_html;
-          if (message.message.substr(1, 6) === 'ACTION') {
+          if (message.msg.substr(1, 6) === 'ACTION') {
             message_html = ich.action({
-              user: message.user,
-              content: message.message.substr(8),
-              renderedTime: utils.formatDate(message.date)
+              user: message.from,
+              content: message.msg.substr(8),
+              renderedTime: utils.formatDate(message.at)
             }, true);
           } else {
             message_html = ich.message({
-              user: message.user,
-              content: message.message,
-              renderedTime: utils.formatDate(message.date)
+              user: message.from,
+              content: message.msg,
+              renderedTime: utils.formatDate(message.at)
             }, true);
           }
 
-          if(message.user == irc.me.get('nick')){
+          if(message.from == irc.me.get('nick')){
             type = 'message-me';
           } else {
             message_html = utils.mentions(message_html);
           }
 
           message_html = utils.linkify(message_html);
-          message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
+          message_html = "<div id=\"msg" + message.id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
           output += message_html;
         });
     }

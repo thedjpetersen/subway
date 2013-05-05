@@ -34,6 +34,6 @@ module.exports = {
     client_port: 80 // Websockets talk on port 80 on Nodester, regardless of listen port
   },
 
-  // limit each user's connection log to this amount of messages
+  // limit each user's connection log to this amount of messages (***not implemented yet***)
   max_log_size: 4096
 };
