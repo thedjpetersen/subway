@@ -70,7 +70,6 @@ var OverviewView = Backbone.View.extend({
     realName = $('#connect-realName').val() || nick,
     secure = $('#connect-secure').is(':checked'),
     selfSigned = $('#connect-selfSigned').is(':checked'),
-    rejoin = $('#connect-rejoin').is(':checked'),
     password = $('#connect-password').val(),
     encoding = $('#connect-encoding').val(),
     keepAlive = false;
@@ -97,7 +96,6 @@ var OverviewView = Backbone.View.extend({
         port: port,
         secure: secure,
         selfSigned: selfSigned,
-        rejoin: rejoin,
         away: away,
         realName: realName,
         password: password,

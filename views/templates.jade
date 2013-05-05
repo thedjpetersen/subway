@@ -59,14 +59,11 @@ script(id="overview_connection", type="text/html")
         label(for="connect-secure") SSL
         input#connect-secure(type="checkbox")
       .control-group#ssl-self-signed
-        label(for="connect-selfSigned") Self-signed SSL Cert
+        label(for="connect-selfSigned") Allow Self-signed Certs
         input#connect-selfSigned(type="checkbox")
       .control-group
         label(for="connect-away") Away Message
         input#connect-away(type="text", placeholder="AFK")
-      .control-group
-        label(for="connect-rejoin") Bouncer Mode
-        input#connect-rejoin(type="checkbox")
       .control-group
         label(for="connect-encoding") Encoding
         select#connect-encoding

@@ -155,6 +155,12 @@ var ChatView = Backbone.View.extend({
 
     var nicksToIgnore = ['', 'notice', 'status'];
 
+    // Scroll down to show new message
+    var chatWindowHeight = ($chatWindow[0].scrollHeight - $chatWindow.height());
+    var scrollDown = false;
+    // If the user isn't scrolling go to the bottom message
+    if ((chatWindowHeight - $chatWindow.scrollTop()) <= 10) scrollDown = true;
+
     if (nicksToIgnore.indexOf(sender) === -1 && type === 'message'){
       var user = this.model.userList.getByNick(sender);
       var element = $(user.view.el);
@@ -173,15 +179,7 @@ var ChatView = Backbone.View.extend({
       $(view.el).addClass('message_notification');
     }
 
-    // Scroll down to show new message
-    var chatWindowHeight = ($chatWindow[0].scrollHeight - $chatWindow.height());
-    // If the window is large enough to be scrollable
-    if (chatWindowHeight > 0) {
-      // If the user isn't scrolling go to the bottom message
-      if ((chatWindowHeight - $chatWindow.scrollTop()) < 200) {
-        $('#chat-contents').scrollTo(view.el, 200);
-      }
-    }
+    if(scrollDown) $('#chat-contents').animate({ scrollTop: $chatWindow[0].scrollHeight }, 750);
   },
 
   handleScroll: function() {
@@ -203,14 +201,14 @@ var ChatView = Backbone.View.extend({
   },
 
   handleClick: function() {
-    $('.hide_embed').live("click", function() {
+    $('.hide_embed').on("click", function() {
       var embed_div = $(this).parent().siblings('.embed');
       embed_div.addClass('hide');
       $(this).siblings('.show_embed').removeClass('hide');
       $(this).addClass('hide');
     });
 
-    $('.show_embed').live("click", function() {
+    $('.show_embed').on("click", function() {
       var embed_div = $(this).parent().siblings('.embed');
       embed_div.removeClass('hide');
       $(this).siblings('.hide_embed').removeClass('hide');

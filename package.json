@@ -5,29 +5,25 @@
     "irc"
   ],
   "author": "David Petersen <davjpetersen@gmail.com>",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "main": "./lib/subway.js",
   "bin": {
     "subway": "./subway"
   },
   "engines": {
-    "node": ">=0.6.1"
-  },
-  "env": {
-    "PYTHON": "/opt/local/bin/python2.7"
+    "node": ">=0.8.0"
   },
   "dependencies": {
-    "express": "3.0.x",
-    "jade": "0.26.x",
+    "express": "3.2.x",
+    "jade": "0.30.x",
     "connect-assets": "2.4.x",
     "irc": "0.3.x",
     "socket.io": "0.9.x",
-    "mongoose": "2.7.x",
-    "bcrypt": "0.7.x",
-    "iconv": "1.2.x"
+    "bcrypt-nodejs": "0.0.x",
+    "sqlite3": "2.1.x",
+    "orm": "2.0.x",
+    "node-uuid": "1.4.x"
   },
-  "noAnalyze": true,
-  "subdomain": "subway",
   "scripts": {
     "start": "subway"
   }

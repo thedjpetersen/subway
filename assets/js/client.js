@@ -1,6 +1,4 @@
-//= require 'libs/socket.io.js'
-//= require 'libs/jquery-1.7.1.min.js'
-//= require 'libs/jquery.scrollTo-1.4.2-min.js'
+//= require 'libs/jquery-2.0.0.min.js'
 //= require 'libs/underscore-min.js'
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
@@ -48,14 +46,6 @@ $(function() {
   $(window).bind('beforeunload', function() {
     if(!window.irc.connected || window.irc.loggedIn) { return null; }
     return "If you leave, you'll be signed out of Subway.";
-  });
-
-  irc.socket.emit('getDatabaseState', {});
-
-  irc.socket.on('databaseState', function(data) {
-    if(data.state === 0){
-      $('#login, #register').hide();
-    }
   });
 
   // Registration (server joined)
@@ -171,7 +161,7 @@ $(function() {
     }
   });
 
-  irc.socket.on('message', function(data) {
+  irc.socket.on('message#', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
     var type = 'message';
     // Only handle channel messages here; PMs handled separately
@@ -327,9 +317,6 @@ $(function() {
 
     // move to main view
     irc.appView.render();
-
-    // remove login and register button if no database
-    irc.socket.emit('getDatabaseState', {});
   });
 
   irc.socket.on('oldMessages', function(data){
@@ -337,36 +324,35 @@ $(function() {
     channel = irc.chatWindows.getByName(data.name);
 
     if (data.messages) {
-        $.each(data.messages.reverse(), function(index, message){
-          if($('#' + message._id).length) {
+        $.each(data.messages, function(index, message){
+          if($('#msg' + message.id).length) {
             return true; //continue to next iteration
           }
 
           var type = '';
           var message_html;
-          if (message.message.substr(1, 6) === 'ACTION') {
+          if (message.msg.substr(1, 6) === 'ACTION') {
             message_html = ich.action({
-              user: message.user,
-              content: message.message.substr(8),
-              renderedTime: utils.formatDate(message.date)
+              user: message.from,
+              content: message.msg.substr(8),
+              renderedTime: utils.formatDate(message.at)
             }, true);
           } else {
             message_html = ich.message({
-              user: message.user,
-              content: message.message,
-              renderedTime: utils.formatDate(message.date)
+              user: message.from,
+              content: message.msg,
+              renderedTime: utils.formatDate(message.at)
             }, true);
           }
 
-
-          if(message.user == irc.me.get('nick')){
+          if(message.from == irc.me.get('nick')){
             type = 'message-me';
           } else {
             message_html = utils.mentions(message_html);
           }
 
           message_html = utils.linkify(message_html);
-          message_html = "<div id=\"" + message._id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
+          message_html = "<div id=\"msg" + message.id + "\" class=\"message-box " + type + "\">" + message_html + "</div>";
           output += message_html;
         });
     }
