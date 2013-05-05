@@ -49,14 +49,6 @@ $(function() {
     return "If you leave, you'll be signed out of Subway.";
   });
 
-  /*irc.socket.emit('getDatabaseState', {});
-
-  irc.socket.on('databaseState', function(data) {
-    if(data.state === 0){
-      $('#login, #register').hide();
-    }
-  });*/
-
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
     var window = irc.chatWindows.getByName('status');
@@ -326,9 +318,6 @@ $(function() {
 
     // move to main view
     irc.appView.render();
-
-    // remove login and register button if no database
-    // irc.socket.emit('getDatabaseState', {});
   });
 
   irc.socket.on('oldMessages', function(data){
@@ -356,7 +345,6 @@ $(function() {
               renderedTime: utils.formatDate(message.date)
             }, true);
           }
-
 
           if(message.user == irc.me.get('nick')){
             type = 'message-me';

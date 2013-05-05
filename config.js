@@ -3,6 +3,9 @@ module.exports = {
 
   sqlite_path: 'subway.db',
 
+  // any connections with 'keep alive' selected should be reconnected on subway start
+  restore_connections: true,
+
   /* not implemented yet */
   guest_access: {
     enabled: false,                 // allow guests to use this instance (no account mode)
