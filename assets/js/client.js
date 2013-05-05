@@ -324,7 +324,7 @@ $(function() {
     channel = irc.chatWindows.getByName(data.name);
 
     if (data.messages) {
-        $.each(data.messages, function(index, message){
+        $.each(data.messages.reverse(), function(index, message){
           if($('#msg' + message.id).length) {
             return true; //continue to next iteration
           }
@@ -357,13 +357,15 @@ $(function() {
         });
     }
 
-    var old_height = channel.view.$('#chat-contents')[0].scrollHeight;
-    channel.view.$('#chat-contents').prepend(output);
-    var new_height = channel.view.$('#chat-contents')[0].scrollHeight+1000-old_height;
+    try {
+      var old_height = channel.view.$('#chat-contents')[0].scrollHeight;
+      channel.view.$('#chat-contents').prepend(output);
+      var new_height = channel.view.$('#chat-contents')[0].scrollHeight+1000-old_height;
 
-    if(new_height > 1200){
-      $('#chat-contents').scrollTop(new_height);
-    }
+      if(new_height > 1200){
+        $('#chat-contents').scrollTop(new_height);
+      }
+    } catch (err) {}
   });
 
   irc.commands = (function(){
