@@ -189,6 +189,24 @@ $(function() {
     chatWindow.stream.add({sender: data.from, raw: ' ACTION ' + data.text, type: type});
   });
 
+  irc.socket.on('+mode', function(data) {
+    var chatWindow = irc.chatWindows.getByName(data.channel.toLowerCase());
+
+    var message = 
+      'sets mode +' + data.mode + ' on ' + (data.argument ? data.argument : data.channel);
+
+    chatWindow.stream.add({sender: data.by, raw: message, type: 'mode'});
+  });
+
+  irc.socket.on('-mode', function(data) {
+    var chatWindow = irc.chatWindows.getByName(data.channel.toLowerCase());
+
+    var message = 
+      'sets mode -' + data.mode + ' on ' + (data.argument ? data.argument : data.channel);
+
+    chatWindow.stream.add({sender: data.by, raw: message, type: 'mode'});
+  });
+
   irc.socket.on('pm', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.nick.toLowerCase());
     if (typeof chatWindow === 'undefined') {

@@ -169,7 +169,7 @@ var ChatView = Backbone.View.extend({
       $(view.el).addClass('message-me');
     }
 
-    if(['join', 'part', 'topic', 'nick', 'quit'].indexOf(type) !== -1){
+    if(['join', 'part', 'topic', 'nick', 'quit', 'mode'].indexOf(type) !== -1){
       $(view.el).addClass('message_notification');
     }
 
