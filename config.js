@@ -1,7 +1,7 @@
 module.exports = {
   debug: true,
 
-  sqlite_path: 'subway.db',
+  sqlite_path: process.env.DB_PATH || 'subway.db',
 
   // any connections with 'keep alive' selected should be reconnected on subway start
   restore_connections: true,
@@ -26,7 +26,7 @@ module.exports = {
 
   dev: {
     port: process.env.PORT || 3000,
-    client_port: process.env.PORT || 3000
+    client_port: process.env.CLIENT_PORT || process.env.PORT || 3000
   },
 
   prod: {
