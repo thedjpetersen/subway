@@ -26,7 +26,7 @@ module.exports = {
 
   dev: {
     port: process.env.PORT || 3000,
-    client_port: process.env.PORT || 3000
+    client_port: process.env.CLIENT_PORT || process.env.PORT || 3000
   },
 
   prod: {
