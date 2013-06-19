@@ -70,43 +70,7 @@ var ChatWindow = Backbone.Model.extend({
     // All PMs & mentions
     if (signal) {
       this.trigger('forMe', 'message');
-
-      // Chrome Desktop Notfication support.
-      // Written by Maikel Wever (GitHub @maikelwever)
-      // Only send notification if Chrome supports it,
-      // and the page is hidden (to prevent annoyingness)
-      if (window.webkitNotifications && 
-            (document.webkitHidden == true || document.webkitHidden == undefined)
-          ) {
-        // Permissions should be granted in the settings window @ home
-        // This should be done only once per domain
-        if (window.webkitNotifications.checkPermission() == 0) {
-
-          // This builds the message title, according to the type of message.
-          var messageTitle = "Mention in ";
-          if (msg.attributes.type == "pm") {
-            messageTitle = "PM from ";
-          } 
-          messageTitle += msg.collection.channel.attributes.name;
-
-          // Create a webkit notification, with the subway logo,
-          // the above generated message title and
-          // the actual message send to the user
-          var notification = window.webkitNotifications.createNotification(
-            '/assets/images/subway.png',
-            messageTitle,
-            msg.attributes.sender + " says " + msg.attributes.text
-          );
-          // Notifications API requires an explicit show to show a notification
-          notification.show();
-
-          // Programatically close the notification after 5 seconds.
-          setTimeout(function() {
-            notification.close();
-          }, 5000);
-        }
-      }
-      // END Chrome Desktop Notification support
+      this.trigger('messageNotification', msg);
     }
   }
 

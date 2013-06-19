@@ -6,6 +6,11 @@ var ChatApplicationView = Backbone.View.extend({
     irc.chatWindows.bind('change:unread', this.showUnread, this)
       .bind('change:unreadMentions', this.showUnread, this)
       .bind('forMe', this.playSound, this);
+    
+    // Chrome Desktop Notification support
+    if (window.webkitNotifications) {
+      irc.chatWindows.bind('messageNotification', this.chromeNotification, this);
+    }
 
 
     // Preload sound files
@@ -105,5 +110,39 @@ var ChatApplicationView = Backbone.View.extend({
       return 'ogg'
     else if (!!(a.canPlayType('audio/mpeg;').replace(/no/, '')))
       return 'mp3'
+  },
+
+  // Chrome Desktop Notfication support.
+  // TODO: Setting to adjust time the notification shows.
+  chromeNotification: function(msg) {
+
+    // Only send notification if Chrome supports it,
+    // and the page is hidden (to prevent annoyingness)
+    // Permissions should be granted in the settings window @ home
+    // This should be done only once per domain
+    if ((document.webkitHidden === true || document.webkitHidden === undefined) 
+        && window.webkitNotifications.checkPermission() == 0) {
+
+      // This builds the message title, according to the type of message.
+      var messageTitle = _.isEqual(msg.get('type'), "pm") ? "PM from " : "Mention in ";
+      messageTitle += msg.collection.channel.get('name');
+
+      // Create a webkit notification, with the subway logo,
+      // the above generated message title and
+      // the actual message send to the user
+      var notification = window.webkitNotifications.createNotification(
+        '/assets/images/subway.png',
+        messageTitle,
+        msg.get('sender') + " says " + msg.get('text')
+      );
+
+      // Notifications API requires an explicit show to show a notification
+      notification.show();
+
+      // Close the notification after 5 seconds.
+      setTimeout(function() {
+        notification.close();
+      }, 5000);
+    }
   }
 });
