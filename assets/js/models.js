@@ -68,7 +68,10 @@ var ChatWindow = Backbone.Model.extend({
       signal = true;
     }
     // All PMs & mentions
-    if (signal) this.trigger('forMe', 'message');
+    if (signal) {
+      this.trigger('forMe', 'message');
+      this.trigger('messageNotification', msg);
+    }
   }
 
 });
