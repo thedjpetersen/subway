@@ -101,6 +101,8 @@ script(id="overview_settings", type="text/html")
   #home_parent
     a.overview_button#home Home
   p#settings-soon Coming soon.
+  p#settings-chrome-notifications
+    a(id="chrome-notifications-allow-button", class="btn btn-success", onclick="javascript:window.webkitNotifications.requestPermission();") Enable chrome desktop notifications (will ask for permission)
 
 script(id="overview_login", type="text/html")
   #home_parent
