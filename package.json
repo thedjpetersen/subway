@@ -14,14 +14,14 @@
     "node": ">=0.8.0"
   },
   "dependencies": {
-    "express": "3.2.x",
-    "jade": "0.30.x",
-    "connect-assets": "2.4.x",
+    "express": "3.3.x",
+    "jade": "0.34.x",
+    "connect-assets": "2.5.x",
     "irc": "0.3.x",
     "socket.io": "0.9.x",
     "bcrypt-nodejs": "0.0.x",
-    "sqlite3": "2.1.x",
-    "orm": "2.0.x",
+    "jugglingdb-sqlite3": "0.0.x",
+    "jugglingdb": "0.2.x",
     "node-uuid": "1.4.x"
   },
   "scripts": {
