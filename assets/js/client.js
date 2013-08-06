@@ -122,16 +122,17 @@ $(function() {
   });
 
   irc.socket.on('notice', function(data) {
-    var status = irc.chatWindows.getByName('status');
-    if(status === undefined){
+    var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
+    chatWindow = chatWindow || irc.chatWindows.getByName('status');
+    if(chatWindow === undefined){
       irc.connected = true;
       irc.appView.render();
       irc.chatWindows.add({name: 'status', type: 'status'});
-      status = irc.chatWindows.getByName('status');
+      chatWindow = irc.chatWindows.getByName('status');
     }
     var sender = (data.nick !== undefined) ? data.nick : 'notice';
-    console.log(status);
-    status.stream.add({sender: sender, raw: data.text, type: 'notice'});
+    console.log(chatWindow);
+    chatWindow.stream.add({sender: sender, raw: data.text, type: 'notice'});
   });
 
   // Message of the Day
