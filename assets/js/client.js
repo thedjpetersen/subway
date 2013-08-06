@@ -433,7 +433,13 @@ $(function() {
       irc.socket.emit('part', args[0]);
       irc.appView.channelList.channelTabs[0].setActive();
     } else {
-      irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
+      var chatWindow = irc.chatWindows.getActive();
+      if (chatWindow.get('type') === 'channel') {
+        irc.socket.emit('part', irc.chatWindows.getActive().get('name'));
+      }
+      else {
+        chatWindow.destroy();
+      }
       irc.appView.channelList.channelTabs[0].setActive();
     }
   });
@@ -491,4 +497,3 @@ $(function() {
   });
 
 });
-
