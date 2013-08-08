@@ -3,6 +3,7 @@
 //= require 'libs/backbone-min.js'
 //= require 'libs/ICanHaz.min.js'
 //= require 'libs/bootstrap.min.js'
+//= require 'libs/ircparser.min.js'
 //= require 'utils.js'
 //= require 'models.js'
 //= require 'collections.js'
@@ -24,6 +25,7 @@ window.unity = {
 $(function() {
   // window.app = new ChatApplicationRouter;
   irc.appView = new ChatApplicationView();
+  irc.parser = new IrcParser();
 
   try {
     window.unity.api = external.getUnityObject(1.0);
