@@ -88,10 +88,11 @@ var ChatView = Backbone.View.extend({
             }
             $(this).val('');
             $('#chat-button').addClass('disabled');
-          } else if (event.keyCode == 9) {
+          } else if (event.keyCode == 9 &&
+                     (channel = irc.chatWindows.getActive()) &&
+                     channel.userList) {
             var searchRe;
             var match = false;
-            var channel = irc.chatWindows.getActive();
             var sentence = $('#chat-input').val().trim().split(' ');
             var partialMatch = sentence.pop();
             var users = channel.userList.getUsers();
