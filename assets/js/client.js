@@ -306,6 +306,10 @@ $(function() {
     }
   });
 
+  irc.socket.on('connect_error', function(data) {
+    irc.appView.showError(data.message);
+  });
+
   irc.socket.on('login_error', function(data) {
     irc.appView.showError(data.message);
   });
