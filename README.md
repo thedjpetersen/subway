@@ -45,6 +45,26 @@ Discussion about the client takes place on the freenode channel **#subway**, and
 this repository's [Issues](https://github.com/thedjpetersen/subway/issues) page.
 Contributors are welcome and greatly appreciated.
 
+Configuration
+-------------
+
+### Client Port
+
+You can set which port will be listened on the socket side with the
+`client_port` setting.
+
+### Long Polling
+
+If for some reasons you can't establish websockets, (e.g. Heroku, browser
+compatibility) specify the `use_polling` config for your app
+and it will use xhr-polling instead.
+
+### Heroku
+
+Set the following environment vars to your app: 
+
+* USE\_POLLING=1
+* CLIENT\_PORT=80
 
 History
 -------
