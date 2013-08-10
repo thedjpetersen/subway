@@ -34,6 +34,8 @@ module.exports = {
     client_port: 80 // Websockets talk on port 80 on Nodester, regardless of listen port
   },
 
+  use_polling: process.env.USE_POLLING || false, // Use polling if websockets aren't supported
+
   // limit each user's connection log to this amount of messages (***not implemented yet***)
   max_log_size: 4096
 };
