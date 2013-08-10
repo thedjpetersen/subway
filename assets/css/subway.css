@@ -430,6 +430,7 @@ div.embed-toggle {
   position: absolute;
   top: 34px;
   bottom: 0;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
