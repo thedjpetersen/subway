@@ -6,6 +6,10 @@ module.exports = {
   // any connections with 'keep alive' selected should be reconnected on subway start
   restore_connections: true,
 
+  // Servers to which the client is allowed to connect to, restrict all the others
+  // server_whitelist: ["irc.freenode.net"],
+  server_whitelist: false,
+
   /* not implemented yet */
   guest_access: {
     enabled: false,                 // allow guests to use this instance (no account mode)
