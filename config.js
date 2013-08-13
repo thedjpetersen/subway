@@ -1,7 +1,12 @@
 module.exports = {
   debug: true,
 
-  sqlite_path: process.env.DB_PATH || 'subway.db',
+  dbadapter: 'sqlite3',
+  dbname: process.env.DB_PATH || 'subway.db',
+  dbusername: '',
+  dbpassword: '',
+  dbhost: '',
+  dbport: '',
 
   // any connections with 'keep alive' selected should be reconnected on subway start
   restore_connections: true,
