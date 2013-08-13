@@ -72,6 +72,7 @@ var OverviewView = Backbone.View.extend({
     selfSigned = $('#connect-selfSigned').is(':checked'),
     password = $('#connect-password').val(),
     encoding = $('#connect-encoding').val(),
+    stripColors = $('#connect-stripColors').is(':checked'),
     keepAlive = false;
     
     if (!server) {
@@ -100,6 +101,7 @@ var OverviewView = Backbone.View.extend({
         realName: realName,
         password: password,
         encoding: encoding,
+        stripColors: stripColors,
         keepAlive: keepAlive
       };
 

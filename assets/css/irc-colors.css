@@ -1,0 +1,33 @@
+.irc-00 { color: white }
+.irc-01 { color: black }
+.irc-02 { color: navy }
+.irc-03 { color: green }
+.irc-04 { color: red }
+.irc-05 { color: brown }
+.irc-06 { color: purple }
+.irc-07 { color: olive }
+.irc-08 { color: #C8C800 }
+.irc-09 { color: #00C800 }
+.irc-10 { color: teal }
+.irc-11 { color: #00C3C3 }
+.irc-12 { color: blue }
+.irc-13 { color: #FF4D6C }
+.irc-14 { color: #555 }
+.irc-15 { color: #777 }
+
+.irc-bg00 { border: 1px dotted white }
+.irc-bg01 { border: 1px dotted black }
+.irc-bg02 { border: 1px dotted navy }
+.irc-bg03 { border: 1px dotted green }
+.irc-bg04 { border: 1px dotted red }
+.irc-bg05 { border: 1px dotted brown }
+.irc-bg06 { border: 1px dotted purple }
+.irc-bg07 { border: 1px dotted olive }
+.irc-bg08 { border: 1px dotted #C8C800 }
+.irc-bg09 { border: 1px dotted #00C800 }
+.irc-bg10 { border: 1px dotted teal }
+.irc-bg11 { border: 1px dotted #00C3C3 }
+.irc-bg12 { border: 1px dotted blue }
+.irc-bg13 { border: 1px dotted #FF4D6C }
+.irc-bg14 { border: 1px dotted #555 }
+.irc-bg15 { border: 1px dotted #777 }

@@ -89,6 +89,9 @@ script(id="overview_connection", type="text/html")
           option(value="CP1251") CP1251 (Cyrillic)
           option(value="CP1256") CP1256 (Arabic)
           option(value="CP1257") CP1257 (baltic)
+      .control-group
+        label(for="connect-stripColors") No Colors
+        input#connect-stripColors(type="checkbox")
     .control-group
       {{#loggedIn}}
       label.checkbox(for="connect-keep-alive", style="width:100%") Keep connection alive after browser closed

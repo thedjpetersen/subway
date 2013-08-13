@@ -26,6 +26,11 @@ var MessageView = Backbone.View.extend({
         content: this.model.get('text'),
         renderedTime: utils.formatDate(Date.now())
       }, true);
+
+      if (!irc.me.get('stripColors')) {
+        html = irc.parser.parse(html);
+      }
+
       html = this.model.parse(html);
     }
 
