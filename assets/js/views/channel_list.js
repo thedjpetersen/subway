@@ -22,7 +22,7 @@ var ChannelListView = Backbone.View.extend({
     $el.append(view.render().el);
 
     var name = chatWindow.get('name');
-    if(name[0] === '#' || name === 'status'){
+    if(utils.isChannel(name[0]) || name === 'status'){
       view.setActive();
 
       if ($el.css('position') == 'fixed' && !(chatWindow.get('initial'))) {

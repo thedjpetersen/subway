@@ -34,7 +34,7 @@ var WindowList = Backbone.Collection.extend({
   setActive: function(selected) {
     //This is here for private messages
     var name = selected.get('name');
-    if((name[0] !== '#' && name !== 'status') && selected.stream.models.length < 1){
+    if((!utils.isChannel(name) && name !== 'status') && selected.stream.models.length < 1){
       selected.set({active: false});
       return;
     }

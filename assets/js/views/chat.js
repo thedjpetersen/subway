@@ -192,7 +192,7 @@ var ChatView = Backbone.View.extend({
         windowName = irc.chatWindows.getActive().get('name'),
         target;
 
-        if(windowName[0] == '#'){
+        if(utils.isChannel(windowName)){
           target = windowName;
         } else {
           var userName = irc.me.get('nick');

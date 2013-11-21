@@ -67,6 +67,9 @@ window.utils = {
       return '<span class="mention">' + nick + '</span>';
     });
     return parsed;
-  }
+  },
 
+  isChannel: function(name) {
+    return ['#','&'].indexOf(name[0]) >= 0;
+  }
 };

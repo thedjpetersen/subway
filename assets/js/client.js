@@ -94,7 +94,7 @@ $(function() {
     irc.chatWindows.add({name: 'status', type: 'status'});
     $.each(data.channels, function(key, value){
       var chanName = value.serverName.toLowerCase();
-      if(chanName[0] == '#'){
+      if(utils.isChannel(chanName)){
         irc.chatWindows.add({name: chanName, initial: true});
       } else {
         irc.chatWindows.add({name: chanName, type: 'pm', initial: true});
@@ -108,7 +108,7 @@ $(function() {
         unreadMentions: value.unread_mentions
       });
       channelTab.updateUnreadCounts();
-      if(chanName[0] == '#'){
+      if(utils.isChannel(chanName)){
         channel.userList = new UserList(channel);
         $.each(value.users, function(user, role) {
           channel.userList.add({nick: user, role: role, idle:0, user_status: 'idle', activity: ''});
@@ -168,7 +168,7 @@ $(function() {
     var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
     var type = 'message';
     // Only handle channel messages here; PMs handled separately
-    if (data.to.substr(0, 1) === '#') {
+    if (utils.isChannel(data.to)) {
       chatWindow.stream.add({sender: data.from, raw: data.text, type: type});
     } else if(data.to !== irc.me.get('nick')) {
       // Handle PMs intiated by me
@@ -461,7 +461,7 @@ $(function() {
 
   irc.commands.add('topic', function(args){
     // If args[0] starts with # or &, a topic name has been provided
-    if (args[0].indexOf('#') === 0 || args[0].indexOf('&') === 0) {
+    if (utils.isChannel(args)) {
       irc.socket.emit('topic', {name: args.shift(), topic: args.join(' ')});
     } else { // Otherwise, assume we're changing the current channel's topic
       irc.socket.emit('topic', {name: irc.chatWindows.getActive().get('name'),
