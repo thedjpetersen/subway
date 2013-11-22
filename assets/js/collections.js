@@ -25,6 +25,19 @@ var WindowList = Backbone.Collection.extend({
     });
   },
 
+  getStatus: function() {
+    var statusWindow = this.getByName('status');
+
+    if(statusWindow === undefined){
+      irc.connected = true;
+      irc.appView.render();
+      this.add({name: 'status', type: 'status'});
+      statusWindow = this.getByName('status');
+    }
+
+    return statusWindow;
+  },
+
   getActive: function() {
     return this.find(function(chat) {
       return chat.get('active') === true;

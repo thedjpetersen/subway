@@ -125,15 +125,8 @@ $(function() {
 
   irc.socket.on('notice', function(data) {
     var chatWindow = irc.chatWindows.getByName(data.to.toLowerCase());
-    chatWindow = chatWindow || irc.chatWindows.getByName('status');
-    if(chatWindow === undefined){
-      irc.connected = true;
-      irc.appView.render();
-      irc.chatWindows.add({name: 'status', type: 'status'});
-      chatWindow = irc.chatWindows.getByName('status');
-    }
+    chatWindow = chatWindow || irc.chatWindows.getStatus();
     var sender = (data.nick !== undefined) ? data.nick : 'notice';
-    console.log(chatWindow);
     chatWindow.stream.add({sender: sender, raw: data.text, type: 'notice'});
   });
 
@@ -227,6 +220,37 @@ $(function() {
       channel.userList.add({nick: data.nick, role: data.role, idle:0, user_status: 'idle', activity: ''});
       var joinMessage = new Message({type: 'join', nick: data.nick});
       channel.stream.add(joinMessage);
+    }
+  });
+
+  irc.socket.on('channellist', function(data) {
+    var maxListChannels = 50,
+        popChannelList = function(channelList) {
+          if (channelInfo = channelList.shift()) {
+            irc.chatWindows.getStatus().stream.add({
+              sender: channelInfo.name + ' (' + channelInfo.users + ')',
+              raw: channelInfo.topic,
+              type: 'notice'
+            });
+
+            setTimeout(function() { popChannelList(channelList) }, 300);
+          }
+        };
+
+    if (data.channelList.length > maxListChannels) {
+      irc.chatWindows.getStatus().stream.add({
+        sender: 'notice',
+        raw: 'There are ' + data.channelList.length + ' channels. Only '
+             + maxListChannels + ' will be listed!',
+        type: 'notice'
+      });
+
+      setTimeout(function() {
+        popChannelList(data.channelList.splice(0, maxListChannels))
+      }, 5000);
+    }
+    else {
+      popChannelList(data.channelList);
     }
   });
 
@@ -433,6 +457,10 @@ $(function() {
     }
 
     irc.socket.emit('join', connect);
+  });
+
+  irc.commands.add('list', function(args){
+    irc.socket.emit('list', args);
   });
 
   irc.commands.add('part', function(args){
