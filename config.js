@@ -1,5 +1,5 @@
 module.exports = {
-  debug: true,
+  debug: false,
 
   dbadapter: 'sqlite3',
   dbname: process.env.DB_PATH || 'subway.db',
