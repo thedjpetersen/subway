@@ -46,8 +46,9 @@ $(function() {
 
   // **TODO**: is there a better place for this to go?
   $(window).bind('beforeunload', function() {
-    if(!window.irc.connected || window.irc.loggedIn) { return null; }
-    return "If you leave, you'll be signed out of Subway.";
+    if(window.irc.connected && window.irc.loggedIn) { 
+      return "If you leave, you'll be signed out of Subway.";
+    }
   });
 
   // Registration (server joined)
@@ -76,6 +77,7 @@ $(function() {
   });
 
   irc.socket.on('disconnect', function() {
+    irc.connected = false;
     alert('You were disconnected from the server.');
     $('.container-fluid').css('opacity', '0.5');
   });
