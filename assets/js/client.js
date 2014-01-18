@@ -11,7 +11,7 @@
 
 
 window.irc = {
-  socket: io.connect(null, {port: PORT}),
+  socket: io.connect(null, {port: document.location.port}),
   chatWindows: new WindowList(),
   connected: false,
   loggedIn: false
