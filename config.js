@@ -23,13 +23,11 @@ module.exports = {
   },
 
   dev: {
-    port: process.env.PORT || 3000,
-    client_port: process.env.CLIENT_PORT || process.env.PORT || 3000
+    port: process.env.PORT || 3000
   },
 
   prod: {
-      port: process.env.PORT || 14858, // Nodester port
-    client_port: 80 // Websockets talk on port 80 on Nodester, regardless of listen port
+    port: process.env.PORT || 14858 // Nodester port
   },
 
   use_polling: process.env.USE_POLLING || false, // Use polling if websockets aren't supported
