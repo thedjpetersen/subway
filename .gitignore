@@ -5,3 +5,4 @@ run.sh
 .sass-cache
 .DS_Store
 subway.db
+.idea
