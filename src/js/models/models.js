@@ -12,12 +12,15 @@ app.models.Connection = Backbone.Model.extend({
   },
 
   addChannel: function (channel) {
-    if (_.isEmpty(this.get("channels").where({name: channel}))) {
+    if (this.get("channels").get(channel) === undefined) {
       this.get("channels").add({name: channel});
     }
   },
 
   addMessage: function(channel, message) {
+    // If the channel doesn't exist this will add it
+    this.addChannel(channel);
+
     this.get("channels").get(channel).get("messages").add(message);
   }
 

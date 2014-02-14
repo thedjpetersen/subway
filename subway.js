@@ -44,11 +44,30 @@ suspend(function*() {
 
     socket.on("command", function(data) {
       var client = clients[data.server];
-      client[data.command].apply(this, data.args);
+      var args = data.command.split(" ");
+
+      switch (args[0].toLowerCase()) {
+        case "join":
+          client.join(args[1]);
+          break;
+
+        case "me":
+          // Send a sentence
+          client.action(data.target, args.slice(1).join(" "));
+          break;
+
+        case "msg":
+          client.say(args[1], args.slice(2).join(" "));
+          break;
+
+        default:
+          break;
+      }
     });
 
     socket.on("raw", function(data) {
       var client = clients[data.server];
+      client.send.apply(this, data.args);
     });
   });
 

@@ -25,7 +25,7 @@ app.io.on("raw", function(message) {
     // We ignore PING messages - in the future
     // maybe we these are important for timeout purposes?
     case "PING":
-      return;
+      break;
 
     case "NOTICE":
       // If our app is not initialized we need to start it now
@@ -49,35 +49,41 @@ app.io.on("raw", function(message) {
       } else {
         server.addMessage("status", {from: "", text: message.args[1]});
       }
-      return;
+      break;
 
     case "PRIVMSG":
-      server.addMessage(message.args[0], {from: message.nick, text: message.args[1], timestamp: Date.now()});
-      return;
+      // If we have a message addressed to a server
+      if (message.args[0][0] === "#") {
+        server.addMessage(message.args[0], {from: message.nick, text: message.args[1], timestamp: Date.now()});
+      } else {
+        // Deal with a private message
+        server.addMessage(message.nick, {from: message.nick, text: message.args[1], timestamp: Date.now()});
+      }
+      break;
 
     case "JOIN":
       // The first argument is the name of the channel
       server.addChannel(message.args[0]);
-      return;
+      break;
 
     case "001":
       server.set({nick: _.first(message.args)});
       server.addMessage("status", {text: message.args[1]});
-      return;
+      break;
 
     case "002":
       server.addMessage("status", {text: message.args.join(" ")});
-      return;
+      break;
 
     case "372":
       server.addMessage("status", {text: message.args[1]});
-      return;
+      break;
 
     case "433":
       server.addMessage("status", {text: "Error " + message.args.join(" ")});
-      return;
+      break;
 
     default:
-      return;
+      break;
   }
 });
