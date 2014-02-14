@@ -1,0 +1,52 @@
+main, .app
+  height: 100%
+
+.app
+  display: flex
+
+.chat
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  flex: 1
+
+.titlebar
+  display: flex
+  padding: 10px
+  color: white
+  background: #434950
+
+
+.messages
+  flex: 1
+  overflow: auto
+
+.messageInput
+  display: flex
+  padding: 10px
+  border-top: 1px solid #DDD
+  input
+    flex: 1
+    margin-right: 10px
+
+.userList
+  width: 250px
+  border-left: 1px solid #DDD
+
+.message
+  display: flex
+  border-bottom: 1px solid #DDD
+  & > div
+    padding: 7px
+
+.messageAuthor
+  width: 100px
+
+.messageText
+  flex: 1
+  border-left: 1px solid #DDD
+  border-right: 1px solid #DDD
+
+.messageTimestamp
+  width: 100px
+  color: #AAA
