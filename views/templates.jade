@@ -110,26 +110,38 @@ script(id="overview_settings", type="text/html")
 script(id="overview_login", type="text/html")
   #home_parent
     a.overview_button#home Home
-  form.form-inline
+  form.form-horizontal
     .control-group
-      label(for="login-username") Username
-      input#login-username(type="text")
+      label.control-label(for="login-username") Username
+      .controls
+        input#login-username(type="text")
+        span.help-inline(style="display:none") Please enter your username
     .control-group
-      label(for="login-password") Password
-      input#login-password(type="password")
-    a(id="login-button", class="btn btn-primary", type="submit") Login
+      label.control-label(for="login-password") Password
+      .controls
+        input#login-password(type="password")
+        span.help-inline(style="display:none") Plase enter a password
+    .control-group
+      .controls
+        a(id="login-button", class="btn btn-primary", type="submit") Login
 
 script(id="overview_register", type="text/html")
   #home_parent
     a.overview_button#home Home
-  form.form-inline
+  form.form-horizontal
     .control-group
-      label(for="register-username") Username
-      input#register-username(type="text")
+      label.control-label(for="register-username") Username
+      .controls
+        input#register-username(type="text")
+        span.help-inline(style="display:none") Please enter your username
     .control-group
-      label(for="register-password") Password
-      input#register-password(type="password")
-    a(id="register-button", class="btn btn-primary", type="button") Register
+      label.control-label(for="register-password") Password
+      .controls
+        input#register-password(type="password")
+        span.help-inline(style="display:none") Please enter a password
+    .control-group
+      .controls
+        a(id="register-button", class="btn btn-primary", type="button") Register
 
 script(id="titlebar", type="text/html")
   .titlebar
