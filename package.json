@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "connect": "2.x.x",
-    "irc": "0.3.x",
+    "irc": "git+ssh://git@github.com:thedjpetersen/node-irc.git#master",
     "socket.io": "0.9.x",
     "bcrypt-nodejs": "0.0.x",
     "jugglingdb": "0.2.x",
