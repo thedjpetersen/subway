@@ -37,8 +37,6 @@ var ChatApplicationView = Backbone.View.extend({
       clearTimeout(blurTimer);
       if(activeChat && activeChat.set) { activeChat.set('active', true); }
     });
-
-    this.render();
   },
 
   overview: null,
