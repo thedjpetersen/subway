@@ -75,6 +75,24 @@ app.io.on("raw", function(message) {
       server.addMessage("status", {text: message.args.join(" ")});
       break;
 
+    case "332":
+      server.get("channels").get(message.args[1]).set("topic", message.args[2]);
+      break;
+
+    case "333":
+      // This has the topic user and the topic creation date
+      // args 0: user 1: channel 2: user who set topic 3: topic timestamp
+      break;
+
+    case "353":
+      var usernames = message.args[3].split(" ");
+      usernames = _.map(usernames, function(u) {
+        return {nick: u, type: message.args[1]};
+      });
+      console.log(usernames);
+      server.addUser(message.args[2], usernames);
+      break;
+
     case "372":
       server.addMessage("status", {text: message.args[1]});
       break;

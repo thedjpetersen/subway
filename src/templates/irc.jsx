@@ -1,11 +1,23 @@
 /** @jsx React.DOM */
 
 app.components.irc = function() {
+  var User = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className="user">
+          <span>{this.getModel().get("nick")}</span>
+        </div>
+      )
+    }
+  });
+  
   var UserList = React.createBackboneClass({
     render: function() {
       return (
         <div className="userList">
-          <span>User List</span>
+          {this.getModel().map(function(user) {
+            return <User model={user} />
+          })}
         </div>
       );
     }
@@ -124,7 +136,7 @@ app.components.irc = function() {
       return (
         <div className="app">
           <Chat model={this.getChannel()} />
-          <UserList model={this.getChannel()} />
+          <UserList model={this.getChannel().get("users")} />
         </div>
       );
     }

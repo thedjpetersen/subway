@@ -22,6 +22,10 @@ app.models.Connection = Backbone.Model.extend({
     this.addChannel(channel);
 
     this.get("channels").get(channel).get("messages").add(message);
+  },
+
+  addUser: function(channel, user) {
+    this.get("channels").get(channel).get("users").add(user);
   }
 
 });
@@ -43,6 +47,7 @@ app.models.Channel = Backbone.Model.extend({
 
   initialize: function() {
     this.attributes.messages = new app.collections.Messages();
+    this.attributes.users = new app.collections.Users();
   }
 });
 
@@ -55,4 +60,12 @@ app.models.Message = Backbone.Model.extend({
 
 app.collections.Messages = Backbone.Collection.extend({
   model: app.models.Message
+});
+
+app.models.User = Backbone.Model.extend({
+  idAttribute: "nick"
+});
+
+app.collections.Users = Backbone.Collection.extend({
+  model: app.models.User
 });
