@@ -57,11 +57,16 @@ var ChannelTabView = Backbone.View.extend({
 
   close: function(e) {
     e.stopPropagation();
-    if (this.model.get('type') === 'channel')
-      irc.socket.emit('part', this.model.get('name'));
-    else
+    if (this.model.get('type') === 'channel') {
+      var response = confirm("Are you sure you want to leave " + this.model.get('name') + "?");
+      if (response) {
+        irc.socket.emit('part', this.model.get('name'));
+      }
+    }
+    else {
       irc.socket.emit('part_pm', this.model.get('name'));
       this.model.destroy();
+    }
   },
 
   switchAndRemove: function() {

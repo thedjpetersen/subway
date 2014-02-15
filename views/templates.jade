@@ -156,7 +156,7 @@ script(id="chat", type="text/html")
 script(id="channel", type="text/html")
   span(class="channel-name") {{name}}
   {{#notStatus}}
-  .close-button ×
+  .close-button(title="Leave {{name}}") ×
   span(class="unread", title="Unread Messages") {{unread}}
   span(class="unread-mentions", title="Mentions in channel") {{unread_mentions}}
   {{/notStatus}}
@@ -166,7 +166,7 @@ script(id="user_box", type="text/html")
     i(class="icon-user icon-white spacing-right")
     {{nick}}
   div.user_box_element
-    .close-button ×
+    .close-button(title="Close connection to {{server}}") ×
     i(class="icon-asterisk icon-white spacing-right")
     {{server}}
 
