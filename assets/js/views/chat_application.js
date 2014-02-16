@@ -7,9 +7,33 @@ var ChatApplicationView = Backbone.View.extend({
       .bind('change:unreadMentions', this.showUnread, this)
       .bind('forMe', this.playSound, this);
     
-    // Chrome Desktop Notification support
-    if (window.webkitNotifications) {
-      irc.chatWindows.bind('messageNotification', this.chromeNotification, this);
+    // Notifications.
+    // Firefox notifications is the first check, chrome the other.
+    if (("Notification" in window && "get" in window.Notification) ||
+        "webkitNotifications" in window) {
+      // build title and body for the notification saying subway has notifications
+      var title = 'Notifications from Subway';
+      var body = 'Subway will display notifications like this for this session';
+
+      // We display a notification saying that subway will use notifications.
+      // On Chrome this is also a way of requesting permission to display notifications.
+      if (("Notification" in window && "get" in window.Notification) &&
+          Notification.permission !== 'denied') {
+        // We have to bind the function to `this` to be able to access this.displayNotification
+        Notification.requestPermission(_.bind(function (permission) {
+          if(permission === 'granted') {
+            if (!('permission' in Notification)) {
+              Notification.permission = permission;
+            }
+            this.displayNotification(title, body);
+          }
+        }, this));
+      } else {
+        this.displayNotification(title, body);
+      }
+      
+      irc.chatWindows.bind('messageNotification', this.desktopNotification,
+        this);
     }
 
 
@@ -125,34 +149,40 @@ var ChatApplicationView = Backbone.View.extend({
       return 'mp3'
   },
 
-  // Chrome Desktop Notfication support.
-  // TODO: Setting to adjust time the notification shows.
-  chromeNotification: function(msg) {
+  // Desktop notifications when the user is highlighted
+  desktopNotification: function(msg) {
+    // Only show notifications if the tab or window is in the background/unfocused
+    if (document.webkitHidden === true || document.webkitHidden === undefined) {
+      // Build the title and body for the notification
+      var title = _.isEqual(msg.get('type'), "pm") ? "PM from " : "Mention in ";
+      title += msg.collection.channel.get('name');
+      var body = msg.get('sender') + ' says: ' + msg.get('text');
 
-    // Only send notification if Chrome supports it,
-    // and the page is hidden (to prevent annoyingness)
-    // Permissions should be granted in the settings window @ home
-    // This should be done only once per domain
-    if ((document.webkitHidden === true || document.webkitHidden === undefined) 
-        && window.webkitNotifications.checkPermission() == 0) {
+      this.displayNotification(title, body);
+    }
+  },
 
-      // This builds the message title, according to the type of message.
-      var messageTitle = _.isEqual(msg.get('type'), "pm") ? "PM from " : "Mention in ";
-      messageTitle += msg.collection.channel.get('name');
-
-      // Create a webkit notification, with the subway logo,
-      // the above generated message title and
-      // the actual message send to the user
+  // Display a desktop notification. 
+  displayNotification: function(title, body) {
+    var icon = '/assets/images/subway.png';
+    // Firefox:
+    if ("Notification" in window && "get" in window.Notification) {
+      if (Notification.permission === 'granted') {
+        // Firefox's API doesn't need a call to a method to show the notification.
+        new Notification(title, {body: body, icon: icon});
+      }
+    }
+    // Chrome:
+    else if ("webkitNotifications" in window && 
+        window.webkitNotifications.checkPermission() === 0) {
       var notification = window.webkitNotifications.createNotification(
-        '/assets/images/subway.png',
-        messageTitle,
-        msg.get('sender') + " says " + msg.get('text')
+        icon, title, body
       );
-
-      // Notifications API requires an explicit show to show a notification
+      // Chrome's API need a call to .show() to show the notification.
       notification.show();
 
-      // Close the notification after 5 seconds.
+      // After 5 seconds we close the notification
+      // TODO - configure the time it takes before the notification is closed?
       setTimeout(function() {
         notification.close();
       }, 5000);
