@@ -4,6 +4,7 @@
 //= require 'libs/ICanHaz.min.js'
 //= require 'libs/bootstrap.min.js'
 //= require 'libs/ircparser.min.js'
+//= require 'libs/jquery.cookie.min.js'
 //= require 'utils.js'
 //= require 'models.js'
 //= require 'collections.js'
@@ -51,6 +52,14 @@ $(function() {
     }
   });
 
+  irc.delete_session = function() {
+    // Deletes the session cookie at both server and client side
+    if ($.cookie('auth_token')) {
+      irc.socket.emit('session_delete', { auth_token: $.cookie('auth_token') });
+      $.removeCookie('auth_token');
+    }
+  }
+
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
     var window = irc.chatWindows.getByName('status');
@@ -69,6 +78,9 @@ $(function() {
 
   irc.socket.on('login_success', function(data) {
     window.irc.loggedIn = true;
+
+    $.cookie('auth_token', data.auth_token, { expires: 7 });
+
     if(data.exists){
       irc.socket.emit('connect', {});
     } else {
@@ -77,7 +89,9 @@ $(function() {
   });
 
   irc.socket.on('disconnect', function() {
+    // The server probably went down.
     irc.connected = false;
+    irc.delete_session();
     alert('You were disconnected from the server.');
     $('.container-fluid').css('opacity', '0.5');
   });
@@ -85,7 +99,16 @@ $(function() {
 
   irc.socket.on('register_success', function(data) {
     window.irc.loggedIn = true;
+    $.cookie('auth_token', data.auth_token, { expires: 7 });
     irc.appView.overview.render({currentTarget: {id: "connection"}});
+  });
+
+  irc.socket.on('session_not_found', function(data) {
+    // The client has a session cookie, but it is not found server-side.
+    // Delete it at the client, as something is not in sync, and render the overview page.
+    console.log("A session was found at client, but not in the server.");
+    irc.delete_session();
+    irc.appView.overview.render();
   });
 
   irc.socket.on('restore_connection', function(data) {
@@ -283,6 +306,7 @@ $(function() {
         channel.stream.add(quitMessage);
       }
     }
+    irc.delete_session();
   });
 
   irc.socket.on('names', function(data) {
@@ -347,6 +371,7 @@ $(function() {
   });
 
   irc.socket.on('reset', function(data) {
+    irc.delete_session();
     irc.chatWindows = new WindowList();
     irc.connected = false;
     irc.loggedIn = false;

@@ -1,6 +1,14 @@
 var OverviewView = Backbone.View.extend({
   initialize: function() {
-    this.render();
+    // Check if we are logged in with a cookie.
+    if ($.cookie('auth_token')){
+      irc.socket.emit('session_check', {
+        auth_token: $.cookie('auth_token'),
+      });
+    } else {
+      // If not, we render the overview page.
+      this.render();
+    }
   },
 
   events: {
