@@ -464,6 +464,7 @@ $(function() {
 
     irc.socket.emit('join', connect);
   });
+  irc.commands.alias('j', 'join');
 
   irc.commands.add('list', function(args){
     irc.socket.emit('list', args);
@@ -502,6 +503,7 @@ $(function() {
         topic: args.join(' ')});
     }
   });
+  irc.commands.alias("t", "topic");
 
   irc.commands.add('whois', function(args){
     if (args[0]){
@@ -530,6 +532,7 @@ $(function() {
   });
   irc.commands.alias('msg', 'query');
   irc.commands.alias('privmsg', 'query');
+  irc.commands.alias('q', 'query');
 
   irc.commands.add('default', function(args, command){
     command = command.substr(1).toUpperCase();
