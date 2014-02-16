@@ -341,6 +341,10 @@ $(function() {
   irc.socket.on('login_error', function(data) {
     irc.appView.showError(data.message);
   });
+  
+  irc.socket.on('register_error', function(data) {
+    irc.appView.showError(data.message);
+  });
 
   irc.socket.on('reset', function(data) {
     irc.chatWindows = new WindowList();
