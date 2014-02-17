@@ -162,7 +162,8 @@ html { overflow: hidden; }
   width: 100%;
 }
 
-#channels > .channel {
+#channels > .channel,
+#add-channel-button {
   padding: 5% 5% 5% 20%;
   color: #333333;
   border-bottom: 1px solid #CCCCCC;
@@ -241,6 +242,14 @@ html { overflow: hidden; }
 
 #logo > img {
   margin-top: 10px;
+}
+
+#add-channel-button #channelname {
+  width: 110px;
+  margin: 0;
+  font-size: 12px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 /* Here are the styles for the chat window */

@@ -9,7 +9,15 @@ script(id="chat_application", type="text/html")
     #channels
       #slide-prev.slide
       #slide-next.slide
+    #add-channel-button
   .content
+
+script(id="add_new_channel", type="text/html")
+  i(class="icon-plus-sign spacing-right")
+  Add new channel 
+
+script(id="add_new_channel_form", type="text/html")
+  input#channelname(type="text", placeholder="#channelname")
 
 script(id="load_image", type="text/html")
   img(id="loading_image", src="/assets/images/loading.gif")
