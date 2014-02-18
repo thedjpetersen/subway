@@ -1,12 +1,11 @@
 var AddChannelView = Backbone.View.extend({
   el: '#add-channel-button',
-
-  inputOn: false,
+  inputId: '#channelname',
 
   events: {
     'click': 'enableButtonInput',
     'keyup :input': 'processKey',
-    'blur :input': 'disableButtonInput',
+    'blur :input': 'render',
   },
 
   initialize: function() {
@@ -14,17 +13,9 @@ var AddChannelView = Backbone.View.extend({
   },
 
   enableButtonInput: function() {
-    if (!this.inputOn) {
+    if (!$(this.inputId).is(":focus")){
       $(this.el).html(ich.add_new_channel_form());
-      this.inputOn = true;
-    }
-  },
-
-  disableButtonInput: function() {
-    if (this.inputOn) {
-      this.render();
-      this.inputOn = false;
-    }
+    } 
   },
 
   processKey: function (event) {
