@@ -61,9 +61,8 @@ html { overflow: hidden; }
   border: 2px solid #DDD;
 }
 
-#overview label { width: 70px; }
-#overview .controls { margin-left: 90px; }
-#overview button { margin-left: 90px; }
+#overview label { width: 100px; text-align: left}
+#overview .controls { margin-left: 100px; }
 
 #overview ul li {
   display: inline-block;
@@ -93,16 +92,13 @@ html { overflow: hidden; }
   width: 100%;
 }
 
-#overview #home {
-  color: black;
-  font-weight: bold;
-  float: right;
-  cursor: pointer;
-}
-
 #overview form #loading_image{
   position: fixed;
   margin-left: 10px;
+}
+
+#chrome-notifications-allow-button {
+  white-space: normal;
 }
 
 #user-box {
