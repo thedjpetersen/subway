@@ -52,23 +52,43 @@ app.io.on("raw", function(message) {
 
         irc.show();
       } else {
-        server.addMessage("status", {from: "", text: message.args[1]});
+        server.addMessage("status", {from: "", text: message.args[1], type: "NOTICE"});
       }
       break;
 
     case "PRIVMSG":
       // If we have a message addressed to a server
       if (message.args[0][0] === "#") {
-        server.addMessage(message.args[0], {from: message.nick, text: message.args[1], timestamp: Date.now()});
+        server.addMessage(message.args[0], {from: message.nick, text: message.args[1], type: "PRIVMSG"});
       } else {
         // Deal with a private message
-        server.addMessage(message.nick, {from: message.nick, text: message.args[1], timestamp: Date.now()});
+        server.addMessage(message.nick, {from: message.nick, text: message.args[1], type: "PRIVMSG"});
       }
       break;
 
     case "JOIN":
       // The first argument is the name of the channel
-      server.addChannel(message.args[0]);
+      if(message.nick === app.irc.connections.getActiveNick()) {
+        server.addChannel(message.args[0]);
+      } else {
+        server.addMessage(message.args[0], {type: "JOIN", nick: message.nick});
+        var channel = server.get("channels").get(message.args[0]);
+        channel.get("users").add({nick: message.nick});
+      }
+      break;
+
+    case "PART":
+      server.addMessage(message.args[0], {type: "PART", nick: message.nick, text: message.args[1]});
+
+      var channel = server.get("channels").get(message.args[0]);
+      channel.get("users").remove(message.nick);
+      break;
+
+    case "TOPIC":
+      server.addMessage(message.args[0], {type: "TOPIC", nick: message.nick, text: message.args[1]});
+
+      var channel = server.get("channels").get(message.args[0]);
+      channel.set("topic", message.args[1]);
       break;
 
     case "001":

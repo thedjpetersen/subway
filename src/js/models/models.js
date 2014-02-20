@@ -95,6 +95,10 @@ app.collections.Channels = Backbone.Collection.extend({
 });
 
 app.models.Message = Backbone.Model.extend({
+  initialize: function() {
+    this.set("timestamp", Date.now());
+  },
+
   getClass: function() {
     var classList = "message";
     if (this.get("from") === app.irc.connections.getActiveNick()) {

@@ -41,6 +41,36 @@ app.components.irc = function() {
     }
   });
 
+  var PartMessage = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className={this.getModel().getClass()}>
+          <div><i className="fa fa-sign-out"></i><strong>{this.getModel().get("nick")}</strong> has left ({this.getModel().get("text")})</div>
+        </div>
+      );
+    }
+  });
+
+  var JoinMessage = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className={this.getModel().getClass()}>
+          <div><i className="fa fa-sign-in"></i><strong>{this.getModel().get("nick")}</strong> has joined</div>
+        </div>
+      );
+    }
+  });
+
+  var TopicMessage = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className={this.getModel().getClass()}>
+          <div><i className="fa fa-info-circle"></i><strong>{this.getModel().get("nick")}</strong> has changed the topic to "{this.getModel().get("text")}"</div>
+        </div>
+      );
+    }
+  });
+
   var Message = React.createBackboneClass({
     render: function() {
       return (
@@ -51,12 +81,7 @@ app.components.irc = function() {
           <div className="messageText" dangerouslySetInnerHTML={{__html: this.getModel().getText()}}>
           </div>
           <div className="messageTimestamp">
-            {function(ctx) {
-              var pad = function(str) { return ("0" + str).substr(-2) };
-              var format = new Date(ctx.getModel().get("timestamp"));
-              var output = pad(format.getHours()) + ":" + pad(format.getMinutes());
-              return ctx.getModel().get("timestamp") ? output : "";
-            }(this)}
+            {this.getModel().get("timestamp") ? moment(this.getModel().get("timestamp")).format(app.settings.time_format) : ""}
           </div>
         </div>
       );
@@ -81,7 +106,18 @@ app.components.irc = function() {
       return (
         <div className="messages">
           {this.getModel().map(function(message) {
-            return <Message model={message} />
+            switch (message.get("type")) {
+              case "PRIVMSG":
+                return <Message model={message} />
+              case "NOTICE":
+                return <Message model={message} />
+              case "PART":
+                return <PartMessage model={message} />
+              case "JOIN":
+                return <JoinMessage model={message} />
+              case "TOPIC":
+                return <TopicMessage model={message} />
+            }
           })}
         </div>
       );
@@ -102,7 +138,7 @@ app.components.irc = function() {
           app.io.emit("command", {server: server.get("name"), target: target, command: output.substring(1)});
         } else {
           app.io.emit("say", {text: output, server: server.get("name"), target: target});
-          server.addMessage(target, {from: server.get("nick"), text: output, timestamp: Date.now()});
+          server.addMessage(target, {from: server.get("nick"), text: output, type: "PRIVMSG"});
         }
         $(ev.target).val("");
       }

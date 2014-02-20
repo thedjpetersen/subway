@@ -9,4 +9,6 @@ settings.highlights = [
   }
 ];
 
+settings.time_format = "HH:MM";
+
 module.exports = settings;
