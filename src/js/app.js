@@ -11,6 +11,11 @@ menu.show();
 
 app.irc.connections = new app.collections.Connections();
 
+app.io.on("settings", function(settings) {
+  app.settings = settings;
+  util.highlightCss();
+});
+
 app.io.on("raw", function(message) {
   // Alias the long namespace
   var conn = app.irc.connections;
@@ -81,15 +86,15 @@ app.io.on("raw", function(message) {
 
     case "333":
       // This has the topic user and the topic creation date
-      // args 0: user 1: channel 2: user who set topic 3: topic timestamp
+      // args [0: user 1: channel 2: user who set topic 3: topic timestamp]
       break;
 
     case "353":
-      var usernames = message.args[3].split(" ");
+      // We have to trim for leading and trailing whitespace
+      var usernames = message.args[3].trim().split(" ");
       usernames = _.map(usernames, function(u) {
-        return {nick: u, type: message.args[1]};
+        return {nick: u};
       });
-      console.log(usernames);
       server.addUser(message.args[2], usernames);
       break;
 

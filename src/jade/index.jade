@@ -6,8 +6,10 @@ html
     title Subway IRC client
     meta(name='description', content='The Subway IRC client')
     meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800" rel="stylesheet" type="text/css")
     each file in css_output
       link(rel="stylesheet", href="#{file}")
+
   body
     .mainMenu
     //if lt IE 8

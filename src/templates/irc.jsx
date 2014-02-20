@@ -5,7 +5,11 @@ app.components.irc = function() {
     render: function() {
       return (
         <div className="user">
-          <span>{this.getModel().get("nick")}</span>
+          <span className={this.getModel().isActive()}>
+            <i className="fa fa-circle"></i>
+          </span>
+          <span>{this.getModel().get("type")}{this.getModel().get("nick")}</span>
+          <span className="lastActive">{this.getModel().getActive()}</span>
         </div>
       )
     }
@@ -15,7 +19,10 @@ app.components.irc = function() {
     render: function() {
       return (
         <div className="userList">
-          {this.getModel().map(function(user) {
+          <div className="titlebar">
+            <strong>User List</strong>
+          </div>
+          {this.getModel().sortAll().map(function(user) {
             return <User model={user} />
           })}
         </div>
@@ -37,12 +44,11 @@ app.components.irc = function() {
   var Message = React.createBackboneClass({
     render: function() {
       return (
-        <div className="message">
+        <div className={this.getModel().getClass()}>
           <div className="messageAuthor">
             {this.getModel().get("from")}
           </div>
-          <div className="messageText">
-            {this.getModel().get("text")}
+          <div className="messageText" dangerouslySetInnerHTML={{__html: this.getModel().getText()}}>
           </div>
           <div className="messageTimestamp">
             {function(ctx) {
@@ -153,7 +159,11 @@ app.components.irc = function() {
     setActive: function(event) {
       var connections = this.getModel().collection;
       connections.active_server = this.getModel().get("name");
-      connections.active_channel = $(event.target).attr("data-channel");
+      connections.active_channel = $(event.target).closest("li").attr("data-channel");
+
+      // Clear notifications highlights and unreads
+      this.getModel().get("channels").get(connections.active_channel).clearNotifications();
+
       connections.trigger("sort");
     },
 
@@ -169,7 +179,25 @@ app.components.irc = function() {
           </div>
           <ul>
             {this.getModel().get("channels").map(function(chan) {
-              return <li data-channel={chan.get("name")} onClick={_this.setActive} className={_this.isActive(chan) ? "active" : "" }>{chan.get("name")}</li>
+              return (
+                <li data-channel={chan.get("name")} onClick={_this.setActive} className={_this.isActive(chan) ? "active" : "" }>
+                  {chan.get("name")}
+                  {function() {
+                    if (chan.get("unread")) {
+                      return (
+                        <span className="unread">{chan.get("unread")}</span>
+                      )
+                    }
+                  }()}
+                  {app.settings.highlights.map(function(highlight) {
+                    if (chan.get(highlight.name)) {
+                      return (
+                        <span className={"unread_" + highlight.name + " unread_highlight" }>{chan.get(highlight.name)}</span>
+                      )
+                    }
+                  })}
+                </li>
+              )
             })}
           </ul>
         </div>

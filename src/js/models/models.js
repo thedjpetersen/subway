@@ -17,17 +17,43 @@ app.models.Connection = Backbone.Model.extend({
     }
   },
 
-  addMessage: function(channel, message) {
+  addMessage: function(channelName, message) {
     // If the channel doesn't exist this will add it
-    this.addChannel(channel);
+    this.addChannel(channelName);
+    var channel = this.get("channels").get(channelName);
 
-    this.get("channels").get(channel).get("messages").add(message);
+    // Set message and activity
+    var added_message = channel.get("messages").add(message);
+
+    var user = channel.get("users").get(message.from);
+
+    // If the user exists we need to set the users activty back to its
+    // initial state
+    if (user !== undefined) {
+      user.resetActive();
+      if (channel.get("name") === app.irc.connections.active_channel) {
+        // Redraw the server list
+        user.collection.trigger("add");
+      }
+    }
+
+    // If we are not idling on the active channel we want to 
+    // increment the number of unread messages in the server
+    if(channel.get("name") !== app.irc.connections.active_channel) {
+      if (!channel.get("unread")) {
+        channel.set("unread", 0);
+      }
+
+      var unread = channel.get("unread");
+      channel.set("unread", ++unread);
+
+      util.checkHighlights(added_message, channel, this);
+    }
   },
 
   addUser: function(channel, user) {
     this.get("channels").get(channel).get("users").add(user);
   }
-
 });
 
 app.collections.Connections = Backbone.Collection.extend({
@@ -39,6 +65,11 @@ app.collections.Connections = Backbone.Collection.extend({
     if (_.isEmpty(this.where({name: server}))) {
       this.add({name: server});
     }
+  },
+
+  getActiveNick: function() {
+    var active_connection = this.get(this.active_server);
+    return active_connection.get("nick");
   }
 });
 
@@ -48,6 +79,14 @@ app.models.Channel = Backbone.Model.extend({
   initialize: function() {
     this.attributes.messages = new app.collections.Messages();
     this.attributes.users = new app.collections.Users();
+  },
+
+  clearNotifications: function() {
+    this.set("unread", 0);
+    var _this = this;
+    _.each(app.settings.highlights, function(highlight, index, highlights) {
+      _this.set(highlight.name, 0);
+    });
   }
 });
 
@@ -56,6 +95,17 @@ app.collections.Channels = Backbone.Collection.extend({
 });
 
 app.models.Message = Backbone.Model.extend({
+  getClass: function() {
+    var classList = "message";
+    if (this.get("from") === app.irc.connections.getActiveNick()) {
+      classList = classList + " isMe";
+    }
+    return classList;
+  },
+
+  getText: function() {
+    return util.highlightText(this);
+  }
 });
 
 app.collections.Messages = Backbone.Collection.extend({
@@ -63,9 +113,59 @@ app.collections.Messages = Backbone.Collection.extend({
 });
 
 app.models.User = Backbone.Model.extend({
-  idAttribute: "nick"
+  idAttribute: "nick",
+
+  initialize: function() {
+    // If the user is the an admin we want to indicate it with the type
+    if (this.get("nick").indexOf("@") !== -1) {
+      this.set("nick", this.get("nick").substring(1));
+      this.set("type", "@");
+    } else {
+      this.set("type", "");
+    }
+  },
+
+  resetActive: function() {
+    // Get rid of any existing counters we have
+    clearInterval(this.active_counter);
+
+    // Set active to 0
+    this.set("last_active", 0);
+
+    var _this = this;
+    this.active_counter = setInterval(function() {
+      var active = _this.get("last_active");
+
+      // If we are past an hour we set the user to idle
+      if(active > 60) {
+        _this.set("last_active", undefined);
+        clearInterval(_this.active_counter);
+      } else {
+        _this.set("last_active", active+1);
+      }
+    }, 60000);
+  },
+
+  isActive: function() {
+    return this.get("last_active") < 60 ? "activeUser" : "notActiveUser";
+  },
+
+  getActive: function() {
+    var active = this.get("last_active");
+    return active < 60 ? "(" + active + "m)" : "";
+  }
 });
 
 app.collections.Users = Backbone.Collection.extend({
-  model: app.models.User
+  model: app.models.User,
+
+  comparator: function(user) {
+    return [user.get("last_active")*-1, user.get("nick")];
+  },
+
+  sortAll: function() {
+    return _.sortBy(this.sortBy("nick"), function(user) {
+      return user.get("last_active");
+    });
+  }
 });
