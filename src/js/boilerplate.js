@@ -3,7 +3,8 @@ window.app = {
   collections: {},
   components: {},
   settings: {
-    highlights: []
+    highlights: [],
+    time_format: "HH:MM"
   },
   irc: {
   }

@@ -52,6 +52,10 @@ app.io.on("raw", function(message) {
 
         irc.show();
       } else {
+        if(conn.get(message.client_server) === undefined) {
+          conn.addServer(message.client_server);
+          server = conn.get(message.client_server);
+        }
         server.addMessage("status", {from: "", text: message.args[1], type: "NOTICE"});
       }
       break;
@@ -70,6 +74,8 @@ app.io.on("raw", function(message) {
       // The first argument is the name of the channel
       if(message.nick === app.irc.connections.getActiveNick()) {
         server.addChannel(message.args[0]);
+        conn.active_channel = message.args[0];
+        conn.trigger("sort");
       } else {
         server.addMessage(message.args[0], {type: "JOIN", nick: message.nick});
         var channel = server.get("channels").get(message.args[0]);
@@ -78,10 +84,15 @@ app.io.on("raw", function(message) {
       break;
 
     case "PART":
-      server.addMessage(message.args[0], {type: "PART", nick: message.nick, text: message.args[1]});
-
-      var channel = server.get("channels").get(message.args[0]);
-      channel.get("users").remove(message.nick);
+      if(message.nick === server.get("nick")) {
+        server.get("channels").remove(message.args[0]);
+        conn.active_channel = "status";
+        conn.trigger("sort");
+      } else {
+        var channel = server.get("channels").get(message.args[0]);
+        server.addMessage(message.args[0], {type: "PART", nick: message.nick, text: message.args[1]});
+        channel.get("users").remove(message.nick);
+      }
       break;
 
     case "TOPIC":
@@ -91,13 +102,23 @@ app.io.on("raw", function(message) {
       channel.set("topic", message.args[1]);
       break;
 
+    case "NICK":
+      server.get("channels").map(function(channel) {
+        var user = channel.get("users").get(message.nick);
+        if (channel.get("users").get(message.nick)){
+          user.set("nick", message.args[0]);
+          server.addMessage(channel.get("name"), {type: "NICK", nick: message.nick, text: message.args[0]});
+        }
+      });
+      break;
+
     case "001":
       server.set({nick: _.first(message.args)});
-      server.addMessage("status", {text: message.args[1]});
+      server.addMessage("status", {text: message.args[1], type: "NOTICE"});
       break;
 
     case "002":
-      server.addMessage("status", {text: message.args.join(" ")});
+      server.addMessage("status", {text: message.args.join(" "), type: "NOTICE"});
       break;
 
     case "332":

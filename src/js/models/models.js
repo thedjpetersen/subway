@@ -22,9 +22,14 @@ app.models.Connection = Backbone.Model.extend({
     this.addChannel(channelName);
     var channel = this.get("channels").get(channelName);
 
+    // Handle action messages
+    if(message.text.indexOf("ACTION ") === 1 ) {
+      message.text = message.text.substring(8);
+      message.type = "ACTION";
+    }
+
     // Set message and activity
     var added_message = channel.get("messages").add(message);
-
     var user = channel.get("users").get(message.from);
 
     // If the user exists we need to set the users activty back to its
@@ -39,7 +44,7 @@ app.models.Connection = Backbone.Model.extend({
 
     // If we are not idling on the active channel we want to 
     // increment the number of unread messages in the server
-    if(channel.get("name") !== app.irc.connections.active_channel) {
+    if(channel.get("name") !== app.irc.connections.active_channel && _.contains(["PRIVMSG"], message.type)) {
       if (!channel.get("unread")) {
         channel.set("unread", 0);
       }
@@ -96,7 +101,14 @@ app.collections.Channels = Backbone.Collection.extend({
 
 app.models.Message = Backbone.Model.extend({
   initialize: function() {
-    this.set("timestamp", Date.now());
+    var default_props = {
+      timestamp: Date.now()
+    };
+    if (this.get("type") === undefined) {
+      default_props.type = "PRIVMSG";
+    }
+
+    this.set(default_props);
   },
 
   getClass: function() {
@@ -122,10 +134,16 @@ app.models.User = Backbone.Model.extend({
   initialize: function() {
     // If the user is the an admin we want to indicate it with the type
     if (this.get("nick").indexOf("@") !== -1) {
-      this.set("nick", this.get("nick").substring(1));
-      this.set("type", "@");
+      this.set({
+        nick: this.get("nick").substring(1),
+        type: "@",
+        updated: Date.now()
+      });
     } else {
-      this.set("type", "");
+      this.set({
+        type: "",
+        updated: Date.now()
+      });
     }
   },
 
@@ -134,7 +152,10 @@ app.models.User = Backbone.Model.extend({
     clearInterval(this.active_counter);
 
     // Set active to 0
-    this.set("last_active", 0);
+    this.set({
+      last_active: 0,
+      updated: Date.now()
+    });
 
     var _this = this;
     this.active_counter = setInterval(function() {
@@ -169,7 +190,7 @@ app.collections.Users = Backbone.Collection.extend({
 
   sortAll: function() {
     return _.sortBy(this.sortBy("nick"), function(user) {
-      return user.get("last_active");
+      return user.get("updated")*-1;
     });
   }
 });
