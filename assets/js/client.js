@@ -14,7 +14,8 @@ window.irc = {
   socket: io.connect(null, {port: document.location.port}),
   chatWindows: new WindowList(),
   connected: false,
-  loggedIn: false
+  loggedIn: false,
+  presets: false
 };
 
 window.unity = {
@@ -51,6 +52,11 @@ $(function() {
     }
   });
 
+  irc.socket.on('initialized', function(data) {
+    irc.presets = data.presets;
+    irc.appView.render();
+  });
+
   // Registration (server joined)
   irc.socket.on('registered', function(data) {
     var window = irc.chatWindows.getByName('status');
@@ -65,11 +71,19 @@ $(function() {
 
     // Will reflect modified nick, if chosen nick was taken already
     irc.me.set('nick', data.message.args[0]);
+
+    // Join preset channels
+    $.each(irc.presets.channels, function(key, value){
+      irc.socket.emit('join', value);
+    });
   });
 
   irc.socket.on('login_success', function(data) {
     window.irc.loggedIn = true;
+
     if(data.exists){
+      irc.me = new User(data);
+      irc.me.on('change:nick', irc.appView.renderUserBox);
       irc.socket.emit('connect', {});
     } else {
       irc.appView.overview.render({currentTarget: {id: "connection"}});
@@ -85,11 +99,31 @@ $(function() {
 
   irc.socket.on('register_success', function(data) {
     window.irc.loggedIn = true;
-    irc.appView.overview.render({currentTarget: {id: "connection"}});
+
+    if(irc.presets){
+      var connectInfo = {
+        nick: data.username,
+        server: irc.presets.server,
+        port: irc.presets.port,
+        secure: irc.presets.secure,
+        selfSigned: irc.presets.selfSigned,
+        away: irc.presets.away,
+        encoding: irc.presets.encoding,
+        stripColors: irc.presets.stripColors,
+        keepAlive: irc.presets.keepAlive
+      };
+
+      irc.me = new User(connectInfo);
+      irc.me.on('change:nick', irc.appView.renderUserBox);
+      irc.socket.emit('connect', connectInfo);
+    } else {
+      irc.appView.overview.render({currentTarget: {id: "connection"}});
+    }
   });
 
   irc.socket.on('restore_connection', function(data) {
     irc.me = new User({nick: data.nick, server: data.server});
+    irc.me.on('change:nick', irc.appView.renderUserBox);
     irc.connected = true;
     irc.appView.render();
     irc.appView.renderUserBox();

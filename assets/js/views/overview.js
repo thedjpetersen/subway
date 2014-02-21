@@ -19,10 +19,13 @@ var OverviewView = Backbone.View.extend({
 
     // Navigation to different overview panes
     if (event === undefined) {
-      $('#overview').html(ich.overview_home());
+      $('#overview').html(ich.overview_home({'presets': irc.presets}));
     } else {
       var func = ich['overview_' + event.currentTarget.id];
-      $('#overview').html(func({'loggedIn': irc.loggedIn}));
+      $('#overview').html(func({
+        'presets': irc.presets,
+        'loggedIn': irc.loggedIn
+      }));
     }
 
     $('.overview_button').bind('click', $.proxy(this.render, this));

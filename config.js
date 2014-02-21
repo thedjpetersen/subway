@@ -15,6 +15,23 @@ module.exports = {
   // server_whitelist: ["irc.freenode.net"],
   server_whitelist: false,
 
+  // If enabled, prevent creation of new accounts or editing settings.  These presets
+  // are used for all new user accounts.
+  presets: false,
+  /*
+  presets: {
+    server: "chat.freenode.net",
+    port: 6667,
+    secure: false,
+    selfSigned: false,
+    away: "AKF",
+    encoding: null,
+    stripColors: false,
+    keepAlive: true,
+    channels: ["#subway"],
+  },
+  */
+
   /* not implemented yet */
   user_access: {
       users_enabled: true,            // show and allow logins
