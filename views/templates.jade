@@ -193,9 +193,8 @@ script(id="user_box", type="text/html")
 script(id="userlist_user", type="text/html")
   div(class="userlist_user_activity")
     img(src="/assets/images/{{user_status}}.png")
-    span(class="userlist_user_{{user_stats}}")
   div(class="userlist_user_info")
-    div(class="userlist_user_name") {{role}}{{nick}}
+    div(class="userlist_user_name userlist_user_{{user_status}}") {{role}}{{nick}}
       span(class="userlist_user_time") {{activity}}
 
 script(id="link", type="text/html")
