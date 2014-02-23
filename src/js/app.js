@@ -174,6 +174,10 @@ app.io.on("raw", function(message) {
       break;
 
     default:
+      // Generic handler for irc errors
+      if (message.commandType === "irc_error") {
+        server.addMessage("status", {text: message.args.join(" - ")});
+      }
       break;
   }
 });
