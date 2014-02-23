@@ -13,6 +13,11 @@ app.components.message_input = function() {
         if (output[0] === "/" && output.indexOf("/me") !== 0) {
           // Stript the slash but emit the rest as a command
           app.io.emit("command", {server: server.get("name"), target: target, command: output.substring(1)});
+          if (output.indexOf("/msg") === 0 ) {
+            var new_channel = output.split(" ")[1];
+            server.addChannel(new_channel);
+            server.addMessage(new_channel, {from: server.get("nick"), text: output.split(" ").splice(2).join(" ")});
+          }
         } else {
           output = output.replace("/me", '\u0001ACTION');
           app.io.emit("say", {text: output, server: server.get("name"), target: target});
