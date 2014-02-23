@@ -75,6 +75,9 @@ app.io.on("raw", function(message) {
       }
       break;
 
+    case "MODE":
+      break;
+
     case "JOIN":
       // The first argument is the name of the channel
       if(message.nick === app.irc.connections.getActiveNick()) {
@@ -99,6 +102,20 @@ app.io.on("raw", function(message) {
         channel.get("users").remove(message.nick);
       }
       break;
+
+    case "KICK":
+      if(message.args[1] === server.get("nick")) {
+        server.get("channels").remove(message.args[0]);
+        conn.active_channel = "status";
+        server.addMessage('status', {type: "KICK", nick: message.nick, text: message.args[1], reason: message.args[2]});
+        conn.trigger("sort");
+      } else {
+        var channel = server.get("channels").get(message.args[0]);
+        server.addMessage(message.args[0], {type: "KICK", nick: message.nick, text: message.args[1], reason: message.args[2]});
+        channel.get("users").remove(message.nick);
+      }
+      break;
+
 
     case "TOPIC":
       server.addMessage(message.args[0], {type: "TOPIC", nick: message.nick, text: message.args[1]});
@@ -150,6 +167,10 @@ app.io.on("raw", function(message) {
 
     case "433":
       server.addMessage("status", {text: "Error " + message.args.join(" ")});
+      break;
+
+    case "474":
+      server.addMessage("status", {text: message.args[1] + " " + message.args[2]});
       break;
 
     default:

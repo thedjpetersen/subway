@@ -57,7 +57,12 @@ app.models.Connection = Backbone.Model.extend({
   },
 
   addUser: function(channel, user) {
-    this.get("channels").get(channel).get("users").add(user);
+    var users = this.get("channels").get(channel).get("users");
+
+    // If the user already exists we don't want to add them
+    if (!users.get(user)) {
+      users.add(user);
+    }
   }
 });
 

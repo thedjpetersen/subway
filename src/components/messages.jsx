@@ -1,6 +1,16 @@
 /** @jsx React.DOM */
 
 app.components.messages = function() {
+  var KickMessage = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className={this.getModel().getClass()}>
+          <div>* <strong>{this.getModel().get("from")}</strong> has kicked <strong>{this.getModel().get("text") + " "}</strong><em>**{this.getModel().get("reason")}**</em></div>
+        </div>
+      );
+    }
+  });
+
   var ActionMessage = React.createBackboneClass({
     render: function() {
       return (
@@ -93,6 +103,8 @@ app.components.messages = function() {
                 return <Message model={message} />
               case "PART":
                 return <PartMessage model={message} />
+              case "KICK":
+                return <KickMessage model={message} />
               case "JOIN":
                 return <JoinMessage model={message} />
               case "TOPIC":
