@@ -120,7 +120,12 @@ app.models.Message = Backbone.Model.extend({
   },
 
   getText: function() {
-    return util.highlightText(this);
+    // Highlight any mentions or other regexes
+    var text = util.highlightText(this);
+
+    // Apply any loaded plugins to the message
+    text = util.applyPlugins(text);
+    return text;
   }
 });
 

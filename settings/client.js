@@ -9,6 +9,11 @@ settings.highlights = [
   }
 ];
 
+settings.plugins = [
+  // Youtube embed
+  "thedjpetersen/9140203"
+];
+
 settings.time_format = "HH:MM";
 
 module.exports = settings;

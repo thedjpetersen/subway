@@ -14,6 +14,7 @@ app.irc.connections = new app.collections.Connections();
 app.io.on("settings", function(settings) {
   app.settings = settings;
   util.highlightCss();
+  util.loadPlugins(settings.plugins);
 });
 
 app.io.on("raw", function(message) {

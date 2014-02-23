@@ -11,9 +11,11 @@
     "subway": "./subway"
   },
   "engines": {
-    "node": ">=0.11.2"
+    "node": ">=0.10.2"
   },
   "dependencies": {
+    "async": "0.2.x",
+    "request": "2.33.x",
     "connect": "2.x.x",
     "irc": "git+ssh://git@github.com:thedjpetersen/node-irc.git#master",
     "socket.io": "0.9.x",
