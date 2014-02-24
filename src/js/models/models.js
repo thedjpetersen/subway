@@ -44,7 +44,7 @@ app.models.Connection = Backbone.Model.extend({
 
     // If we are not idling on the active channel we want to 
     // increment the number of unread messages in the server
-    if(channel.get("name") !== app.irc.connections.active_channel && _.contains(["PRIVMSG"], message.type)) {
+    if(channel.get("name") !== app.irc.connections.active_channel && _.contains(["PRIVMSG"], added_message.get("type"))) {
       if (!channel.get("unread")) {
         channel.set("unread", 0);
       }
