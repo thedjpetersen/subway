@@ -38,13 +38,13 @@ app.components.message_input = function() {
 
       if (ev.keyCode === 38) {
         // handle up key
+        $(ev.target).val(channel.getNextHistory());
       }
 
       if (ev.keyCode === 40) {
         // handle down key
+        $(ev.target).val(channel.getPrevHistory());
       }
-
-      console.log(ev.keyCode);
     },
 
     render: function() {

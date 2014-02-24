@@ -93,6 +93,32 @@ app.models.Channel = Backbone.Model.extend({
     this.attributes.history_offset = 0;
   },
 
+  getNextHistory: function() {
+    var history = this.attributes.history;
+    var offset = this.attributes.history_offset;
+    var entry = history[offset];
+
+    if(offset === history.length) {
+      this.attributes.history_offset = 0;
+    } else  {
+      this.attributes.history_offset = offset+1;
+    }
+    return entry;
+  },
+
+  getPrevHistory: function() {
+    var history = this.attributes.history;
+    var offset = this.attributes.history_offset;
+    var entry = history[offset];
+
+    if(offset === 0) {
+      this.attributes.history_offset = history.length;
+    } else  {
+      this.attributes.history_offset = offset-1;
+    }
+    return entry;
+  },
+
   clearNotifications: function() {
     this.set("unread", 0);
     var _this = this;
@@ -149,12 +175,10 @@ app.models.User = Backbone.Model.extend({
       this.set({
         nick: this.get("nick").substring(1),
         type: "@",
-        updated: Date.now()
       });
     } else {
       this.set({
         type: "",
-        updated: Date.now()
       });
     }
   },
@@ -201,8 +225,18 @@ app.collections.Users = Backbone.Collection.extend({
   },
 
   sortAll: function() {
-    return _.sortBy(this.sortBy("nick"), function(user) {
+    // Sort users alphabetically
+    var users = this.sortBy("nick");
+
+    // Sort users by whether or not they are an operator
+    users = _.sortBy(users, function(user) {
+      return user.get("type") === "@" ? -1 : 1;
+    });
+
+    // Sort users by whether by when they were updated
+    users = _.sortBy(users, function(user) {
       return user.get("updated")*-1;
     });
+    return users;
   }
 });

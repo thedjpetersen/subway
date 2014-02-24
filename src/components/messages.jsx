@@ -31,6 +31,16 @@ app.components.messages = function() {
     }
   });
 
+  var QuitMessage = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className={this.getModel().getClass()}>
+          <div><i className="fa fa-sign-out"></i><strong>{this.getModel().get("nick")}</strong> has quit ({this.getModel().get("text")})</div>
+        </div>
+      );
+    }
+  });
+
   var JoinMessage = React.createBackboneClass({
     render: function() {
       return (
@@ -103,6 +113,8 @@ app.components.messages = function() {
                 return <Message model={message} />
               case "PART":
                 return <PartMessage model={message} />
+              case "QUIT":
+                return <QuitMessage model={message} />
               case "KICK":
                 return <KickMessage model={message} />
               case "JOIN":

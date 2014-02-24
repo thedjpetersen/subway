@@ -103,6 +103,15 @@ app.io.on("raw", function(message) {
       }
       break;
 
+    case "QUIT":
+      server.get("channels").map(function(channel) {
+        if (channel.get("users").get(message.nick)) {
+          server.addMessage(channel.get("name"), {type: "QUIT", nick: message.nick, text: message.args[0]});
+          channel.get("users").remove(message.nick);
+        }
+      });
+      break;
+
     case "KICK":
       if(message.args[1] === server.get("nick")) {
         server.get("channels").remove(message.args[0]);
@@ -112,7 +121,7 @@ app.io.on("raw", function(message) {
       } else {
         var channel = server.get("channels").get(message.args[0]);
         server.addMessage(message.args[0], {type: "KICK", nick: message.nick, text: message.args[1], reason: message.args[2]});
-        channel.get("users").remove(message.args[1]);
+        channel.get("users").remove(message.nick);
       }
       break;
 
@@ -125,11 +134,23 @@ app.io.on("raw", function(message) {
       break;
 
     case "NICK":
+      var isMe = false;
+      // If it was us that changed our nick we want to change it here
+      if (server.get("nick") === message.nick) {
+        server.set("nick", message.args[0]);
+        isMe = true;
+        server.addMessage("status", {type: "NICK", nick: message.nick, text: message.args[0]});
+      }
+
+      // for each channel we are in
+      // we want to change the nick of the user that has the new nick
       server.get("channels").map(function(channel) {
         var user = channel.get("users").get(message.nick);
         if (channel.get("users").get(message.nick)){
           user.set("nick", message.args[0]);
-          server.addMessage(channel.get("name"), {type: "NICK", nick: message.nick, text: message.args[0]});
+          if (!isMe) {
+            server.addMessage(channel.get("name"), {type: "NICK", nick: message.nick, text: message.args[0]});
+          }
         }
       });
       break;
