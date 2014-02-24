@@ -112,7 +112,7 @@ app.io.on("raw", function(message) {
       } else {
         var channel = server.get("channels").get(message.args[0]);
         server.addMessage(message.args[0], {type: "KICK", nick: message.nick, text: message.args[1], reason: message.args[2]});
-        channel.get("users").remove(message.nick);
+        channel.get("users").remove(message.args[1]);
       }
       break;
 

@@ -5,7 +5,7 @@ app.components.messages = function() {
     render: function() {
       return (
         <div className={this.getModel().getClass()}>
-          <div>* <strong>{this.getModel().get("from")}</strong> has kicked <strong>{this.getModel().get("text") + " "}</strong><em>**{this.getModel().get("reason")}**</em></div>
+          <div>* <strong>{this.getModel().get("nick")}</strong> has kicked <strong>{this.getModel().get("text") + " "}</strong><em>**{this.getModel().get("reason")}**</em></div>
         </div>
       );
     }

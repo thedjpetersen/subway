@@ -23,7 +23,7 @@ app.models.Connection = Backbone.Model.extend({
     var channel = this.get("channels").get(channelName);
 
     // Handle action messages
-    if(message.text.indexOf("ACTION ") === 1 ) {
+    if(message.text && message.text.indexOf("ACTION ") === 1 ) {
       message.text = message.text.substring(8);
       message.type = "ACTION";
     }
@@ -89,6 +89,8 @@ app.models.Channel = Backbone.Model.extend({
   initialize: function() {
     this.attributes.messages = new app.collections.Messages();
     this.attributes.users = new app.collections.Users();
+    this.attributes.history = [];
+    this.attributes.history_offset = 0;
   },
 
   clearNotifications: function() {
