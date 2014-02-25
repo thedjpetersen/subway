@@ -175,10 +175,12 @@ app.models.User = Backbone.Model.extend({
       this.set({
         nick: this.get("nick").substring(1),
         type: "@",
+        updated: Date.now()-3600000
       });
     } else {
       this.set({
         type: "",
+        updated: Date.now()-3600000
       });
     }
   },
@@ -237,6 +239,7 @@ app.collections.Users = Backbone.Collection.extend({
     users = _.sortBy(users, function(user) {
       return user.get("updated")*-1;
     });
+
     return users;
   }
 });

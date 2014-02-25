@@ -164,6 +164,15 @@ app.io.on("raw", function(message) {
       server.addMessage("status", {text: message.args.join(" "), type: "NOTICE"});
       break;
 
+    case "256":
+    case "257":
+    case "258":
+    case "259":
+    case "371":
+      server.addMessage("status", {text: message.args[1], type: "NOTICE"});
+      break;
+
+    // Set the topic
     case "332":
       server.get("channels").get(message.args[1]).set("topic", message.args[2]);
       break;

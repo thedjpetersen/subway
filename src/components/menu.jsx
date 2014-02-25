@@ -10,7 +10,7 @@ app.components.startMenu = function() {
     render: function() {
       return (
         <div>
-          <a onClick={this.props.back}>Back</a>
+          <a className="pointer" onClick={this.props.back}>Back</a>
           <form>
             <div>
               <input placeholder="Server" ref="server" />
@@ -46,13 +46,23 @@ app.components.startMenu = function() {
 
     render: function() {
       return (
-        <ul>
-          <li className="connect" onClick={this.connect}>
+        <ul className="menuList">
+          <li className="faux_a" onClick={this.connect}>
+            <span className="menuIcon"><i className="fa fa-bolt"></i></span>
             Connect
           </li>
-          <li className="login" onClick={this.login}>Login</li>
-          <li className="register" onClick={this.register}>Register</li>
-          <li className="settings" onClick={this.settings}>Settings</li>
+          <li className="faux_a" onClick={this.login}>
+            <span className="menuIcon"><i className="fa fa-lock"></i></span>
+            Login
+          </li>
+          <li className="faux_a" onClick={this.register}>
+            <span className="menuIcon"><i className="fa fa-users"></i></span>
+            Register
+          </li>
+          <li className="faux_a" onClick={this.settings}>
+            <span className="menuIcon"><i className="fa fa-gear"></i></span>
+            Settings
+          </li>
         </ul>
       );
     }
