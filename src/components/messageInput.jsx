@@ -51,7 +51,6 @@ app.components.message_input = function() {
       return (
         <div className="messageInput">
           <input onKeyUp={this.handleInput} />
-          <a className="button">Send</a>
         </div>
       );
     }
