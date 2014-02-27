@@ -65,6 +65,13 @@ app.components.irc = function() {
       connections.trigger("sort");
     },
 
+    close: function(event) {
+      var target_channel = $(event.target).closest("li").attr("data-channel");
+
+      // Clear notifications highlights and unreads
+      this.getModel().get("channels").remove(target_channel);
+    },
+
     render: function() {
       var _this = this;
       return (
@@ -94,6 +101,7 @@ app.components.irc = function() {
                       )
                     }
                   })}
+                  <i className="fa fa-x" onClick={this.close}></i>
                 </li>
               )
             })}

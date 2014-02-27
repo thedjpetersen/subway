@@ -73,6 +73,10 @@ app.components.startMenu = function() {
   }
 
   this.show = function() {
-    return React.renderComponent(new Menu(), $(".mainMenu").get(0));
+    React.renderComponent(new Menu(), $(".mainMenu").get(0));
+
+    $("nav img").click(function() {
+      $(".mainMenu").toggleClass("hide");
+    });
   }
 }

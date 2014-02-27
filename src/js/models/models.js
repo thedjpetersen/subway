@@ -144,6 +144,10 @@ app.models.Message = Backbone.Model.extend({
     this.set(default_props);
   },
 
+  getAuthor: function() {
+    return this.get("from");
+  },
+
   getClass: function() {
     var classList = "message";
     if (this.get("from") === app.irc.connections.getActiveNick()) {

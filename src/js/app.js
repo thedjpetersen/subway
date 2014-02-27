@@ -76,6 +76,19 @@ app.io.on("raw", function(message) {
       break;
 
     case "MODE":
+      var channel = server.get("channels").get(message.args[0]);
+      server.addMessage(channel.get("name"), {from: message.nick, text: message.args[2], mode: message.args[1], type: "MODE"});
+      switch (message.args[1]) {
+        case "+o":
+          channel.get("users").get(message.args[2]).set("type", "@");
+          break;
+        case "-o":
+          channel.get("users").get(message.args[2]).set("type", "");
+          break;
+        default:
+          break;
+      }
+
       break;
 
     case "JOIN":

@@ -35,11 +35,24 @@ window.util = {
   },
 
   applyPlugins: function(text) {
+    var listeners = [];
     // Iterate over all the plugins and apply them to the text
     _.each(app.plugins, function(pluginMethod, pluginName, plugins) {
-      text = pluginMethod(text);
+      var args = pluginMethod(text);
+
+      if (typeof args === "string") {
+        text = args;
+      } else {
+        // Set our text the text after it is processed by the plugin
+        text = args.text;
+      }
+
+      if (args.listener) {
+        listeners.push(args.listener);
+      }
+
     });
-    return text;
+    return {text: text, listeners: listeners};
   },
 
   loadPlugin: function(plugin) {

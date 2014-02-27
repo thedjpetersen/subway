@@ -61,24 +61,44 @@ app.components.messages = function() {
     }
   });
 
-  var NickMessage = React.createBackboneClass({
+  var ModeMessage = React.createBackboneClass({
     render: function() {
       return (
         <div className={this.getModel().getClass()}>
-          <div><i className="fa fa-info-circle"></i><strong>{this.getModel().get("nick")}</strong> is now known as <strong>{this.getModel().get("text")}</strong></div>
+          <div>Mode ["{this.getModel().get("mode")}" <strong>{this.getModel().get("text")}</strong>] by <strong>{this.getModel().get("from")}</strong></div>
         </div>
       );
     }
   });
 
   var Message = React.createBackboneClass({
+    attachListeners: function() {
+      var _this = this;
+      this.processedText.listeners.map(function(listener) {
+        if (listener) {
+          listener.call(_this);
+        }
+      });
+    },
+
+    componentDidUpdate: function() {
+      this.attachListeners();
+    },
+
+    componentDidMount: function() {
+      this.attachListeners();
+    },
+
     render: function() {
+      this.processedText = this.getModel().getText();
+
       return (
         <div className={this.getModel().getClass()}>
           <div className="messageAuthor">
             {this.getModel().get("from")}
           </div>
-          <div className="messageText" dangerouslySetInnerHTML={{__html: this.getModel().getText()}}>
+          <div className="messageText" dangerouslySetInnerHTML={{__html: this.processedText.text}}>
+          {this.isMounted() ? this.attachListeners() : undefined}
           </div>
           <div className="messageTimestamp">
             {this.getModel().get("timestamp") ? moment(this.getModel().get("timestamp")).format(app.settings.time_format) : ""}
@@ -111,6 +131,8 @@ app.components.messages = function() {
                 return <Message model={message} />
               case "NOTICE":
                 return <Message model={message} />
+              case "MODE":
+                return <ModeMessage model={message} />
               case "PART":
                 return <PartMessage model={message} />
               case "QUIT":

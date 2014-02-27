@@ -1,3 +1,26 @@
+.messages
+  flex: 1
+  overflow: auto
+
+.message
+  display: flex
+  border-bottom: 1px solid #EEE
+  padding: 5px 0
+  & > div
+    padding: 7px
+
+.messageAuthor
+  width: 100px
+  overflow: hidden
+  text-overflow: ellipsis
+
+.messageText
+  flex: 1
+
+.messageTimestamp
+  width: 100px
+
+  color: #AAA
 .isMe
   background: #ECECF5
 
@@ -20,3 +43,4 @@
 
 .message > div > .fa-sign-circle
   color: #2C7BAF
+
