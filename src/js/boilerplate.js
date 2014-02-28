@@ -56,7 +56,8 @@ window.util = {
   },
 
   loadPlugin: function(plugin) {
-    var base_url = "plugin_cache/" + plugin + "/";
+    var gist_id = plugin.split("/")[1];
+    var base_url = "plugin_cache/" + gist_id + "/";
     $.get(base_url + "plugin.json", function(data) {
       util.embedJs(base_url + "plugin.js");
       util.embedCss(base_url + "plugin.css");

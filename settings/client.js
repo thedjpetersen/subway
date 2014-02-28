@@ -11,7 +11,8 @@ settings.highlights = [
 
 settings.plugins = [
   // Youtube embed
-  "9140203"
+  "thedjpetersen/9140203",
+  "thedjpetersen/9265479"
 ];
 
 settings.time_format = "HH:MM";
