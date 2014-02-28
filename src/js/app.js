@@ -12,7 +12,8 @@ menu.show();
 app.irc.connections = new app.collections.Connections();
 
 app.io.on("settings", function(settings) {
-  app.settings = settings;
+  // Add new settings and override default ones
+  app.settings = _.extend(app.settings, settings);
   util.highlightCss();
   util.loadPlugins(settings.plugins);
 });
