@@ -65,11 +65,11 @@ app.components.irc = function() {
       connections.trigger("sort");
     },
 
-    close: function(event) {
+    leave: function(event) {
       var target_channel = $(event.target).closest("li").attr("data-channel");
 
-      // Clear notifications highlights and unreads
-      this.getModel().get("channels").remove(target_channel);
+      // Leave channel
+      app.io.emit("command", {server: this.getModel().get("name"), target: target_channel, command: "leave"});
     },
 
     render: function() {
@@ -101,7 +101,7 @@ app.components.irc = function() {
                       )
                     }
                   })}
-                  <i className="fa fa-x" onClick={this.close}></i>
+                  <i className="fa fa-times" onClick={_this.leave}></i>
                 </li>
               )
             })}
@@ -112,22 +112,54 @@ app.components.irc = function() {
   });
 
   var SideNav = React.createBackboneClass({
+    componentDidUpdate: function() {
+      showNavigation();
+    },
+
     render: function() {
       return (
-        <div>
+        <div className="sideNav">
+          <div className="sideNavUp">
+            <span className="spacing-right">More</span> 
+            <i className="fa fa-level-up"></i>
+          </div>
           {this.getModel().map(function(conn) {
             return <Connection model={conn} />
           })}
+          <div className="sideNavDown">
+            <span className="spacing-right">More</span> 
+            <i className="fa fa-level-down"></i>
+          </div>
         </div>
       );
     }
   });
+
+  var showNavigation = function() {
+    var element = $(".nav-area").get(0);
+    // Show an indicator that there are more channels and info above
+    // if the user scrolls from the top
+    if (element.scrollTop !== 0) {
+      $(".sideNavUp").css("left", "0");
+    } else {
+      $(".sideNavUp").css("left", "-195px");
+    }
+
+    // Show an indicator that there are more channels and info below
+    if (element.scrollHeight === $(element).height() || $(element).height() + element.scrollTop === element.scrollHeight - 1 ) {
+      $(".sideNavDown").css("left", "-195px");
+    } else {
+      $(".sideNavDown").css("left", "0");
+    }
+  }
 
   this.show = function() {
     var nav = SideNav({
       model: window.app.irc.connections
     });
     React.renderComponent(nav, $(".nav-area").get(0))
+
+    $(".nav-area").scroll(showNavigation);
 
     var app = App({
       model: window.app.irc.connections

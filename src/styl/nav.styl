@@ -21,9 +21,20 @@ nav
     &:hover
       cursor: pointer
       background: #A7DBD8
+      i
+        display: inline-block
+        opacity: 0.6
+        margin-right: 10px
+        &:hover
+          opacity: 1
+          cursor: pointer
     &.active:hover
       background: #315857
       cursor: default
+    
+    i
+      display: none
+      float: right
 
 .active
   background: #315857
@@ -45,6 +56,18 @@ nav
   color: whiteSmoke
   border-radius: 4px
   margin-left: 5px
+
+.sideNavUp, .sideNavDown
+  width: 195px
+  background: orange
+  color: white
+  padding: 10px 0px 10px 40px
+  position: fixed
+  transition: left 300ms ease-in-out
+  left: -195px
+
+.sideNavDown
+  bottom: 0
 
 .unread
   background: #980000
