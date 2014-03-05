@@ -30,12 +30,14 @@ script(id="overview_home", type="text/html")
     li.overview_button#settings
       img(src="/assets/images/settings.svg")
       span Settings
+    {{^loggedIn}}
     li.overview_button#login
       img(src="/assets/images/login.svg")
       span Login
     li.overview_button#register
       img(src="/assets/images/register.svg")
       span Register
+    {{/loggedIn}}
 
 script(id="overview", type="text/html")
   #overview
