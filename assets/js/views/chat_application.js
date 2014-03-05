@@ -184,7 +184,7 @@ var ChatApplicationView = Backbone.View.extend({
       // After 5 seconds we close the notification
       // TODO - configure the time it takes before the notification is closed?
       setTimeout(function() {
-        notification.close();
+        notification.cancel();
       }, 5000);
     }
   }
