@@ -2,6 +2,13 @@
 
 app.components.message_input = function() {
   var MessageInput = React.createBackboneClass({
+    keyDown: function(ev) {
+      if (ev.keyCode === 9) {
+        // handle tab complete
+        event.preventDefault();
+      }
+    },
+
     handleInput: function(ev) {
       // If the user pushed enter
       var server = app.irc.connections.get(app.irc.connections.active_server);
@@ -14,6 +21,7 @@ app.components.message_input = function() {
         var target = app.irc.connections.active_channel;
 
         var input = $(ev.target).val();
+
         // If the first character is a slash
         if (input[0] === "/" && input.indexOf("/me") !== 0) {
           // Stript the slash but emit the rest as a command
@@ -33,7 +41,47 @@ app.components.message_input = function() {
       }
 
       if (ev.keyCode === 9) {
-        // handle tab complete
+        var sentence = input.split(" ");
+
+        // Variable to keep track of 
+        if(!this.tabMode) {
+          this.tabMode = true;
+          this.userOffset = 0;
+          this.partialMatch = new RegExp(sentence.pop(), "i");
+        } else {
+          // Remove last unsuccessful match
+          // increment our user count
+          if (sentence.length === 2 && sentence[1] !== "") {
+            sentence = [];
+          } else {
+            sentence.pop();
+          }
+        }
+
+        // Filter our channels users to the ones that start with our
+        // partial match
+        var _this = this;
+        var users = channel.get("users").filter(function(user) {
+          return (user.get("nick").search(_this.partialMatch) === 0 &&
+                  user.get("nick") !== server.get("nick"));
+        });
+
+        if (this.userOffset >= users.length) {
+          this.userOffset = 0;
+        }
+
+        if (users.length) {
+          sentence.push(users[this.userOffset].get('nick'));
+          if (sentence.length === 1) {
+            $(ev.target).val(sentence.join(' ') + ": ");
+          } else {
+            $(ev.target).val(sentence.join(' '));
+          }
+        }
+
+        ++this.userOffset;
+      } else {
+        this.tabMode = false;
       }
 
       if (ev.keyCode === 38) {
@@ -50,7 +98,7 @@ app.components.message_input = function() {
     render: function() {
       return (
         <div className="messageInput">
-          <input onKeyUp={this.handleInput} />
+          <input onKeyDown={this.keyDown} onKeyUp={this.handleInput} />
         </div>
       );
     }

@@ -9,13 +9,18 @@ html, body
   font-size: 14px
   color: #333333
 
-input
+textarea, input
   font-size: 0.9em
   background: #FFF
   border: 1px solid #DBDFE5
   border-radius: 3px
   padding: 10px 15px
   -webkit-font-smoothing: antialiased
+
+input[type="color"]
+  height: 38px
+  padding: 3px 5px
+  vertical-align: bottom
 
 strong
   font-weight: 600
@@ -29,7 +34,7 @@ main
   flex: 1
 
 .hide
-  display: none
+  display: none !important
 
 .pointer
   cursor: pointer
@@ -41,3 +46,5 @@ main
 .spacing-right
   margin-right: 5px
 
+.error
+  border: 1px solid #FFC5C5

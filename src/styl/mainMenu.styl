@@ -1,30 +1,78 @@
 .mainMenu
   position: absolute
-  top: 30%
-  left: 0
+  top: 0
+  left: 14em
   right: 0
-  margin: 0 auto
-  min-width: 300px
-  padding: 20px
-  border: 1px solid #CCC
+  height: 100%
   background: #EEE
-  width: 400px
+  z-index: 1000
+  display: inline-block
 
   input
-    width: 100%
     margin-bottom: 10px
 
+  .fullWidth
+    width: 100%
+
+  h1
+    margin: 0
+
+  .highlightEditor
+    margin-top: 10px
+    height: 200px
+
+.menuContainer
+  display: flex
+  height: 100%
+
+.menuArea
+  flex: 1
+  display: inline-block
+  padding: 20px 40px
+  overflow: scroll
+
 .menuList
+  display: inline-block
+  background: #333
   list-style: none
+  width: 170px
+  margin: 0
+  padding: 20px 0
   li
-    display: inline-block
-    margin: 0 40px
-    width: 60px
-    text-align: center
+    padding: 15px 15px 15px 25px
+    color: #C2C2C2
+
+  span
+    margin-right: 5px
     &:hover
       cursor: pointer
 
-.menuIcon
-  display: block
-  text-align: center
-  font-size: 2.5em
+li.activeMenuItem
+  background: #272727
+  color: white
+  font-weight: 600
+
+.navBar
+  list-style: none
+  color: #585858
+  border: 1px solid #CCC;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0;
+
+  .navActive
+    background: #CCC
+
+  li
+    display: inline-block;
+    margin: 0;
+    padding: 10px;
+    border-right: 1px solid #CCC;
+
+  li:last-child
+    border-right: none
+
+  li:not(.navActive):hover
+    cursor: pointer
+    color: #888
+

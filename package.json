@@ -21,6 +21,7 @@
     "socket.io": "0.9.x",
     "bcrypt-nodejs": "0.0.x",
     "jugglingdb": "0.2.x",
+    "jugglingdb-sqlite3": "0.0.x",
     "bower": "1.2.x",
     "suspend": "0.4.x",
     "glob": "3.2.8",

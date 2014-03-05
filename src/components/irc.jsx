@@ -56,11 +56,21 @@ app.components.irc = function() {
 
     setActive: function(event) {
       var connections = this.getModel().collection;
-      connections.active_server = this.getModel().get("name");
-      connections.active_channel = $(event.target).closest("li").attr("data-channel");
+      var new_server = this.getModel().get("name");
+      var new_channel = $(event.target).closest("li").attr("data-channel");
 
-      // Clear notifications highlights and unreads
-      this.getModel().get("channels").get(connections.active_channel).clearNotifications();
+      // If we are just closing a channel
+      if ($(event.target).hasClass("fa-times")) {
+        if (new_server === connections.active_server &&
+            new_channel === connections.active_channel)
+        connections.active_channel = "status";
+      } else {
+        connections.active_server = new_server;
+        connections.active_channel = new_channel;
+
+        // Clear notifications highlights and unreads
+        this.getModel().get("channels").get(connections.active_channel).clearNotifications();
+      }
 
       connections.trigger("sort");
     },
@@ -68,8 +78,12 @@ app.components.irc = function() {
     leave: function(event) {
       var target_channel = $(event.target).closest("li").attr("data-channel");
 
-      // Leave channel
-      app.io.emit("command", {server: this.getModel().get("name"), target: target_channel, command: "leave"});
+      if (target_channel.indexOf("#") === -1) {
+        this.getModel().get("channels").remove(target_channel);
+      } else {
+        // Leave channel
+        app.io.emit("command", {server: this.getModel().get("name"), target: target_channel, command: "leave"});
+      }
     },
 
     render: function() {

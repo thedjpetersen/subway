@@ -13,13 +13,15 @@ window.app = {
 };
 
 window.util = {
-  // The raw argument is optional
-  embedCss: function(css, isRaw) {
+  // The raw argument and class argument are optional
+  embedCss: function(css, isRaw, cssClass) {
     var output_css = "";
+    cssClass = cssClass || "";
+
     if(isRaw) {
-      output_css = '<style type="text/css">' + css + "</style>";
+      output_css = '<style type="text/css" class="' + cssClass + '">' + css + "</style>";
     } else {
-      output_css = '<style type="text/css" href="' + css + '"></style>';
+      output_css = '<style type="text/css" href="' + css + '" class="' + cssClass + '"></style>';
     }
     $("head").append(output_css);
   },
@@ -73,6 +75,7 @@ window.util = {
   },
 
   // Check for highlights and set the text
+  // Takes a message as an argument and returns HTML
   highlightText: function(message) {
     var connection = app.irc.connections.get(app.irc.connections.active_server);
 
@@ -107,6 +110,11 @@ window.util = {
   },
 
   highlightCss: function() {
+    // Remove any old css styles
+    if ($(".highlightCss").length) {
+      $(".highlightCss").remove();
+    }
+
     var template = _.template(".highlight_<%= name %> { font-weight: bold; color: <%= color %>; }\n.unread_<%= name %> { background: <%= color %>; }\n");
     var output_css = "";
     _.each(app.settings.highlights, function(highlight, index, highlights) {
@@ -115,7 +123,7 @@ window.util = {
       }
       output_css = output_css + template(highlight);
     });
-    util.embedCss(output_css, true);
+    util.embedCss(output_css, true, "highlightCss");
   }
 };
 
