@@ -152,7 +152,9 @@ var ChatApplicationView = Backbone.View.extend({
   // Desktop notifications when the user is highlighted
   desktopNotification: function(msg) {
     // Only show notifications if the tab or window is in the background/unfocused
-    if (document.webkitHidden === true || document.webkitHidden === undefined) {
+    // or if the current user was mentioned
+    if (document.webkitHidden === true || document.webkitHidden === undefined
+      || msg.get('text').indexOf(irc.me.get('nick')) > -1 ) {
       // Build the title and body for the notification
       var title = _.isEqual(msg.get('type'), "pm") ? "PM from " : "Mention in ";
       title += msg.collection.channel.get('name');
