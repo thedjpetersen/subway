@@ -8,14 +8,24 @@
   z-index: 1000
   display: inline-block
 
+  h1
+    margin: 0
+
   input
     margin-bottom: 10px
 
   .fullWidth
     width: 100%
 
-  h1
-    margin: 0
+  .fa-question-circle
+    font-size: 1.3em
+    vertical-align: top
+    margin-left: 10px
+    opacity: 0.6
+    color: #333
+
+    &:hover
+      opacity: 1.0
 
   .highlightEditor
     margin-top: 10px
@@ -76,3 +86,29 @@ li.activeMenuItem
     cursor: pointer
     color: #888
 
+.menuHighlight
+  border-top: 1px solid #CCC
+  margin-top: 10px
+  padding-top: 10px
+
+.menuPlugins
+  padding: 20px
+  background: #FFF
+  border-radius: 4px
+  margin-top: 10px
+  max-height: 400px
+  overflow: scroll
+
+  .menuPlugin
+    border-bottom: 1px solid #CCC
+    margin-bottom: 10px
+
+    &:last-child
+      border-bottom: none
+
+    &:hover .pluginButtons
+      display: block
+
+.pluginButtons
+  display: none
+  float: right

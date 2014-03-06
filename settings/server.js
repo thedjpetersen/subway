@@ -1,4 +1,4 @@
-// Cache the plugin directory for a month
-settings.plugin_directory_expiry = 2629743;
+// Cache the plugin directory for a week
+settings.plugin_directory_expiry = 604800;
 
 module.exports = settings;

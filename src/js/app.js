@@ -18,10 +18,6 @@ app.io.on("settings", function(settings) {
   util.loadPlugins(settings.plugins);
 });
 
-app.io.on("plugin_added", function(data) {
-  util.loadPlugin(data.plugin);
-});
-
 app.io.on("raw", function(message) {
   // Alias the long namespace
   var conn = app.irc.connections;

@@ -2,21 +2,32 @@
 
 app.components.highlight = function() {
   var Highlight = React.createClass({
+    updateName: function(event) {
+      this.props.highlight.name = event.target.value;
+      this.forceUpdate();
+    },
+
+    updateRegex: function(event) {
+      this.props.highlight.regex = event.target.value;
+      this.forceUpdate();
+    },
+
     updateColor: function(event) {
       this.props.highlight.color = event.target.value;
+      $(this.getDOMNode()).find("input[name='color']").val(event.target.value);
       this.forceUpdate();
     },
 
     render: function() {
       return (
-        <div>
+        <div className="menuHighlight">
           <div>
             <label>Name</label>
-            <input name="regex" className="fullWidth" defaultValue={this.props.highlight.name} />
+            <input name="regex" className="fullWidth" defaultValue={this.props.highlight.name} onChange={this.updateName} />
           </div>
           <div>
             <label>Regex</label>
-            <input name="regex" className="fullWidth" defaultValue={this.props.highlight.regex} />
+            <input name="regex" className="fullWidth" defaultValue={this.props.highlight.regex} onChange={this.updateRegex} />
           </div>
           <div>
             <div>

@@ -70,6 +70,9 @@ app.components.irc = function() {
 
         // Clear notifications highlights and unreads
         this.getModel().get("channels").get(connections.active_channel).clearNotifications();
+
+        // If the our menu is not hidden we hide it now
+        $(".mainMenu").addClass("hide");
       }
 
       connections.trigger("sort");

@@ -14,7 +14,10 @@ app.components.general = function() {
           <label>Time Format</label>
           <div>
             <input data-setting="time_format" defaultValue={this.props.settings.time_format} onChange={this.updateSetting} />
-            <span>e.g. {moment().format(this.props.settings.time_format)}</span>
+            <a target="_blank" href="http://momentjs.com/docs/#/displaying/format/"><i className="fa fa-question-circle"></i></a>
+            <div>
+              <span>e.g. {moment().format(this.props.settings.time_format)}</span>
+            </div>
           </div>
         </div>
       )

@@ -3,10 +3,13 @@ window.app = {
   collections: {},
   components: {},
   plugins: {},
+  plugin_data: {},
+  plugin_registry: {},
   settings: {
     highlights: [],
     time_format: "HH:MM",
-    plugin_data: {}
+    active_plugins: [
+    ]
   },
   irc: {
   }
@@ -39,7 +42,8 @@ window.util = {
   applyPlugins: function(text) {
     var listeners = [];
     // Iterate over all the plugins and apply them to the text
-    _.each(app.plugins, function(pluginMethod, pluginName, plugins) {
+    _.each(app.settings.active_plugins, function(pluginName) {
+      var pluginMethod = app.plugins[pluginName];
       var args = pluginMethod(text);
 
       if (typeof args === "string") {
@@ -57,18 +61,27 @@ window.util = {
     return {text: text, listeners: listeners};
   },
 
-  loadPlugin: function(plugin) {
+  loadPlugin: function(plugin, cb) {
     var gist_id = plugin.split("/")[1];
     var base_url = "plugin_cache/" + gist_id + "/";
     $.get(base_url + "plugin.json", function(data) {
       util.embedJs(base_url + "plugin.js");
       util.embedCss(base_url + "plugin.css");
-      app.settings.plugin_data[data.pluginId] = data;
-    });
+      app.plugin_data[data.pluginId] = data;
+      app.settings.active_plugins.push(data.pluginId);
 
+      if (cb) {
+        cb.call(this);
+      }
+    });
   },
 
   loadPlugins: function(plugins) {
+    // We also want to load our plugin registry at the same time
+    $.getJSON("plugin_cache/plugins.json", function(data) {
+      app.plugin_registry = data;
+    });
+
     plugins.map(function(plugin) {
       util.loadPlugin(plugin);
     });
@@ -96,7 +109,7 @@ window.util = {
     var text = message.get("text");
 
     _.each(app.settings.highlights, function(highlight, index, highlights) {
-      if(highlight.name === undefined) {
+      if(!highlight.name || !highlight.regex) {
         return;
       }
 
@@ -118,7 +131,8 @@ window.util = {
     var template = _.template(".highlight_<%= name %> { font-weight: bold; color: <%= color %>; }\n.unread_<%= name %> { background: <%= color %>; }\n");
     var output_css = "";
     _.each(app.settings.highlights, function(highlight, index, highlights) {
-      if(highlight.name === undefined) {
+      // If the highlight name is
+      if(!highlight.name) {
         return;
       }
       output_css = output_css + template(highlight);
