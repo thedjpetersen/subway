@@ -160,17 +160,17 @@ app.components.plugins = function() {
 
       // Filter base on search terms
       return _.filter(plugins, function(plugin) { 
-        var matched = false;
+        var matched = true;
         // We see if any of the search terms match the id or description of
         // the plugin 
         _.each(search_terms, function(st) {
           st = new RegExp(st, "ig");
           var name = plugin.name || plugin.pluginId;
 
-          if(name.match(st) !== null ||
-             plugin.description.match(st) !== null ||
-               plugin.author.match(st) !==null) {
-            matched = true;
+          if(name.match(st) === null &&
+             plugin.description.match(st) === null &&
+               plugin.author.match(st) === null) {
+            matched = false;
           }
         });
 
