@@ -10,10 +10,12 @@
 // easily(just update the bower.json file). The async module manages our flow -
 // instead of nesting callbacks we try to follow the waterfall pattern
 // to have at least the appearance of synchronous code. This aids our readabilty.
-var connect = require("connect"),
+var express = require("express"),
        http = require("http"),
       bower = require("bower"),
       async = require("async");
+
+var server_settings = require("./settings/server");
 
 // These are our local lib files. The initialize function in our plugin module
 // fetches the different plugins(github gists) we have and downloads them to 
@@ -39,6 +41,9 @@ async.waterfall([
     // This method fetches different plugins from the github gists
     // and saves them to the plugin_cache directory
     console.log("Fetching Subway plugins...");
+    // TODO
+    // resolve Fatal error: getaddrinfo ENOTFOUND
+    // when we don't have active internet connection
     init_plugins(callback);
   },
   function(callback) {
@@ -53,6 +58,7 @@ async.waterfall([
   function(results, callback) {
     // We compile any preprocessed code that we need to like React components
     // and Stylus stylesheets
+    console.log("Compiling static resources...");
     static(function() {
       callback(null);
     });
@@ -60,12 +66,15 @@ async.waterfall([
 ], function(err, result) {
   // All static content is placed in the tmp ./tmp directory
   // we use this directory as the root of our server
-  var app = connect().use(connect.static(cwd + "/tmp"));
+  var app = express()
+            .use(express.urlencoded())
+            .use(express.cookieParser(server_settings.cookie_secret || "subway_secret"))
+            .use(express.static(cwd + "/tmp"));
 
   var server = http.createServer(app).listen(3000);
   var io = require("socket.io").listen(server);
 
   // We pass off our socket.io listener to the connection module
   // so it can handle incoming events and emit different actions
-  connection(io);
+  connection(io, app);
 });

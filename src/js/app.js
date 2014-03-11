@@ -1,6 +1,12 @@
 // Initial state of our app
 app.initialized = false;
 
+app.irc.connections = new app.collections.Connections();
+
+app.irc.connections.on("change", function() {
+  app.irc.connections.sync();
+});
+
 // Display startup menu
 // TODO if the user is already logged in we need to connect them directly
 // their session
@@ -8,14 +14,49 @@ app.initialized = false;
 // we need to immediately go into the connecting mode
 var menu = new app.components.startMenu();
 menu.show();
+app.io.on("connect", function() {
+  $.post("is_logged_in/", {socketid: app.io.socket.sessionid}, function(data) {
+    if(data.logged_in) {
+      app.user = new app.models.SubwayUser({
+        username: data.username
+      });
+      menu.render();
+    }
 
-app.irc.connections = new app.collections.Connections();
+    if (data.logged_in && data.client_length !== 0 ) {
+      $(".mainMenu").addClass("hide");
+    }
+  });
+});
 
 app.io.on("settings", function(settings) {
   // Add new settings and override default ones
   app.settings = _.extend(app.settings, settings);
   util.highlightCss();
   util.loadPlugins(settings.plugins);
+});
+
+app.io.on("connection_removed", function(data) {
+  app.irc.connections.remove(data.connection);
+});
+
+app.io.on("restore_connection", function(data) {
+  console.log(data);
+  var conn = app.irc.connections;
+
+  app.initialized = true;
+
+  conn.reset(JSON.parse(data));
+
+  conn.active_server = conn.first().get("name");
+  conn.active_channel = "status";
+
+  var irc = new app.components.irc({
+    collection: conn
+  });
+
+  irc.show();
+  $(".mainMenu").addClass("hide");
 });
 
 app.io.on("raw", function(message) {
@@ -73,19 +114,24 @@ app.io.on("raw", function(message) {
       break;
 
     case "MODE":
-      var channel = server.get("channels").get(message.args[0]);
-      server.addMessage(channel.get("name"), {from: message.nick, text: message.args[2], mode: message.args[1], type: "MODE"});
-      switch (message.args[1]) {
-        case "+o":
-          channel.get("users").get(message.args[2]).set("type", "@");
-          break;
-        case "-o":
-          channel.get("users").get(message.args[2]).set("type", "");
-          break;
-        default:
-          break;
-      }
+      if (message.args[0].indexOf("#") === 0) {
+        var channel = server.get("channels").get(message.args[0]);
+        server.addMessage(channel.get("name"), {from: message.nick, text: message.args[2], mode: message.args[1], type: "MODE"});
+        switch (message.args[1]) {
+          case "+o":
+            channel.get("users").get(message.args[2]).set("type", "@");
+            break;
+          case "-o":
+            channel.get("users").get(message.args[2]).set("type", "");
+            break;
+          default:
+            break;
+        }
+      } else {
+        //user mode message
+        var user = message.args[0];
 
+      }
       break;
 
     case "JOIN":
@@ -99,6 +145,7 @@ app.io.on("raw", function(message) {
         var channel = server.get("channels").get(message.args[0]);
         channel.get("users").add({nick: message.nick});
       }
+      app.irc.connections.sync();
       break;
 
     case "PART":
@@ -111,6 +158,7 @@ app.io.on("raw", function(message) {
         server.addMessage(message.args[0], {type: "PART", nick: message.nick, text: message.args[1]});
         channel.get("users").remove(message.nick);
       }
+      app.irc.connections.sync();
       break;
 
     case "QUIT":
@@ -120,6 +168,7 @@ app.io.on("raw", function(message) {
           channel.get("users").remove(message.nick);
         }
       });
+      app.irc.connections.sync();
       break;
 
     case "KICK":
@@ -133,6 +182,7 @@ app.io.on("raw", function(message) {
         server.addMessage(message.args[0], {type: "KICK", nick: message.nick, text: message.args[1], reason: message.args[2]});
         channel.get("users").remove(message.nick);
       }
+      app.irc.connections.sync();
       break;
 
 
@@ -163,6 +213,7 @@ app.io.on("raw", function(message) {
           }
         }
       });
+      app.irc.connections.sync();
       break;
 
     case "001":

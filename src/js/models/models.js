@@ -1,8 +1,8 @@
 app.models.Connection = Backbone.Model.extend({
   idAttribute: "name",
 
-  initialize: function() {
-    this.attributes.channels = new app.collections.Channels();
+  initialize: function(attrs, opts) {
+    this.attributes.channels = new app.collections.Channels(attrs.channels || []);
 
     // When we have an update on the model we want to bubble the change
     // on up to the connection
@@ -80,15 +80,27 @@ app.collections.Connections = Backbone.Collection.extend({
   getActiveNick: function() {
     var active_connection = this.get(this.active_server);
     return active_connection.get("nick");
+  },
+
+  sync: function() {
+    if (app.user) {
+      app.io.emit("sync_connections", this.toJSON());
+    }
   }
+
 });
 
 app.models.Channel = Backbone.Model.extend({
   idAttribute: "name",
 
-  initialize: function() {
-    this.attributes.messages = new app.collections.Messages();
-    this.attributes.users = new app.collections.Users();
+  // we don't want to return the messages with our json
+  toJSON: function () {
+    return _.omit(this.attributes, "messages");
+  },
+
+  initialize: function(attrs, opts) {
+    this.attributes.messages = new app.collections.Messages(attrs.messages || []);
+    this.attributes.users = new app.collections.Users(attrs.users || []);
     this.attributes.history = [];
     this.attributes.history_offset = 0;
   },
@@ -173,18 +185,20 @@ app.collections.Messages = Backbone.Collection.extend({
 app.models.User = Backbone.Model.extend({
   idAttribute: "nick",
 
-  initialize: function() {
+  initialize: function(attrs, options) {
     // If the user is the an admin we want to indicate it with the type
     if (this.get("nick").indexOf("@") !== -1) {
       this.set({
         nick: this.get("nick").substring(1),
         type: "@",
-        updated: Date.now()-3600000
+        updated: attrs.updated || Date.now()-3600000,
+        last_active: attrs.updated ? (Date.now()-attrs.updated)/60000 : undefined
       });
     } else {
       this.set({
         type: "",
-        updated: Date.now()-3600000
+        updated: attrs.updated || Date.now()-3600000,
+        last_active: attrs.updated ? (Date.now()-attrs.updated)/60000 : undefined
       });
     }
   },
@@ -246,4 +260,7 @@ app.collections.Users = Backbone.Collection.extend({
 
     return users;
   }
+});
+
+app.models.SubwayUser = Backbone.Model.extend({
 });

@@ -32,11 +32,19 @@ app.components.irc = function() {
     getChannel: function() {
       var connections = this.getModel();
       var server = connections.get(connections.active_server);
+
+      if (server === undefined) { return false; }
+
       var channel = server.get("channels").get(connections.active_channel);
       return channel;
     },
 
     render: function() {
+      var channel = this.getChannel();
+
+      // If we don't currently have a channel
+      if (!channel) { return <div></div> }
+
       return (
         <div className="app">
           <Chat model={this.getChannel()} />

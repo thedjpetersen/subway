@@ -21,6 +21,16 @@ app.components.messages = function() {
     }
   });
 
+  var NickMessage = React.createBackboneClass({
+    render: function() {
+      return (
+        <div className={this.getModel().getClass()}>
+          <div><strong>{this.getModel().get("nick")}</strong> is now known as {this.getModel().get("text")}</div>
+        </div>
+      );
+    }
+  });
+
   var PartMessage = React.createBackboneClass({
     render: function() {
       return (

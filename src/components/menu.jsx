@@ -47,6 +47,38 @@ app.components.startMenu = function() {
     }
   });
 
+  var ListConnections = React.createBackboneClass({
+    disconnect: function(ev) {
+      var conn = $(ev.target).attr("data-connection");
+      app.io.emit("remove_connection", {
+        connection: conn
+      });
+    },
+
+    render: function() {
+      var _this = this;
+
+      return (
+        <div className="activeConnections">
+          {function(cxt) {
+            if(cxt.getModel().length) {
+              return <h3>Active Connections</h3>;
+            }
+          }(this)}
+          {this.getModel().map(function(conn) {
+            return (
+              <div>
+                <i className="fa fa-minus-circle pointer" onClick={_this.disconnect} data-connection={conn.get("name")}></i>
+                <strong>{conn.get("name")}</strong>
+                <span>{conn.get("nick")}</span>
+              </div>
+            );
+          })}
+        </div>
+      )
+    }
+  });
+
   var Connect = React.createClass({
     connect: function() {
       var form_data = _.parseForm(this.refs);
@@ -64,7 +96,77 @@ app.components.startMenu = function() {
             <div>
               <input className="fullWidth" placeholder="Nick" ref="nick" />
             </div>
-            <a className="button pointer" onClick={this.connect}>Login</a>
+            <a className="button pointer" onClick={this.connect}>Connect</a>
+          </form>
+          <ListConnections model={app.irc.connections}/>
+        </div>
+      )
+    }
+  })
+
+  var Login = React.createClass({
+    redirectConnection: function() {
+    },
+
+    login: function() {
+      var _this = this;
+      var form_data = _.parseForm(this.refs);
+      form_data.socketid = app.io.socket.sessionid;
+      $.post("login/", form_data, function(data) {
+
+        // Notify server of login
+        app.io.emit("logged_in", {username: data.username});
+
+        if(data.status === "success") {
+          app.user = new app.models.SubwayUser({
+            username: data.username
+          });
+
+          _this.props.connect();
+
+          if (data.has_connection) {
+            $(".mainMenu").toggleClass("hide")
+          }
+        }
+      });
+    },
+
+    render: function() {
+      return (
+        <div>
+          <h1>Login</h1>
+          <form>
+            <div>
+              <input className="fullWidth" placeholder="username" ref="username" />
+            </div>
+            <div>
+              <input className="fullWidth" placeholder="password" ref="password" type="password" />
+            </div>
+            <a className="button pointer" onClick={this.login}>Login</a>
+          </form>
+        </div>
+      )
+    }
+  })
+
+  var Register = React.createClass({
+    register: function() {
+      var form_data = _.parseForm(this.refs);
+      app.io.emit("register", form_data);
+    },
+
+    render: function() {
+      return (
+        <div>
+          <h1>Register</h1>
+          <form>
+            <div>
+              <input className="fullWidth" placeholder="username" ref="username" />
+            </div>
+            <div>
+              <input className="fullWidth" placeholder="password" ref="password" type="password" />
+            </div>
+            <a className="button pointer" onClick={this.register}>Register</a>
           </form>
         </div>
       )
@@ -78,9 +180,15 @@ app.components.startMenu = function() {
     },
 
     login: function(event) {
+      this.setState({activeItem: "login"});
     },
 
     register: function(event) {
+      this.setState({activeItem: "register"});
+    },
+
+    user: function(event) {
+      this.setState({activeItem: "user"});
     },
 
     settings: function(event) {
@@ -99,14 +207,29 @@ app.components.startMenu = function() {
               <span className="menuIcon"><i className="fa fa-bolt"></i></span>
               Connect
             </li>
-            <li className={this.state.activeItem === 'login' ? 'activeMenuItem' : '' } onClick={this.login}>
-              <span className="menuIcon"><i className="fa fa-lock"></i></span>
-              Login
-            </li>
-            <li className={this.state.activeItem === 'register' ? 'activeMenuItem' : '' } onClick={this.register}>
-              <span className="menuIcon"><i className="fa fa-users"></i></span>
-              Register
-            </li>
+            {function(cxt) {
+              if(app.user) {
+                return (
+                  <li className={cxt.state.activeItem === 'user' ? 'activeMenuItem' : '' } onClick={cxt.user}>
+                    <span className="menuIcon"><i className="fa fa-user"></i></span>
+                    {app.user.get("username")}
+                  </li>
+                )
+              } else {
+                return (
+                  <div>
+                    <li className={cxt.state.activeItem === 'login' ? 'activeMenuItem' : '' } onClick={cxt.login}>
+                      <span className="menuIcon"><i className="fa fa-lock"></i></span>
+                      Login
+                    </li>
+                    <li className={cxt.state.activeItem === 'register' ? 'activeMenuItem' : '' } onClick={cxt.register}>
+                      <span className="menuIcon"><i className="fa fa-users"></i></span>
+                      Register
+                    </li>
+                  </div>
+                )
+              }
+            }(this)}
             <li className={this.state.activeItem === 'settings' ? 'activeMenuItem' : '' } onClick={this.settings}>
               <span className="menuIcon"><i className="fa fa-gear"></i></span>
               Settings
@@ -118,6 +241,10 @@ app.components.startMenu = function() {
                 return <Connect />
               case "settings":
                 return <Settings />
+              case "login":
+                return <Login connect={cxt.connect} />
+              case "register":
+                return <Register />
             }}(this)}
           </div>
         </div>
@@ -130,10 +257,14 @@ app.components.startMenu = function() {
   }
 
   this.show = function() {
-    React.renderComponent(new Menu(), $(".mainMenu").get(0));
+    this.menu = React.renderComponent(new Menu(), $(".mainMenu").get(0));
 
     $("nav img").click(function() {
       $(".mainMenu").toggleClass("hide");
     });
+  }
+
+  this.render = function() {
+    this.menu.forceUpdate();
   }
 }
