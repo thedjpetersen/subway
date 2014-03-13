@@ -15,6 +15,22 @@ settings.plugins = [
   "thedjpetersen/9265479"
 ];
 
-settings.time_format = "HH:MM";
+settings.time_format = "HH:mm";
+
+// If you don't 
+settings.enabled_types = [
+  "PRIVMSG",
+  "NOTICE",
+  "MODE",
+  "PART",
+  "QUIT",
+  "KICK",
+  "JOIN",
+  "TOPIC",
+  "NICK",
+  "ACTION"
+];
+
+settings.disabled_types = [];
 
 module.exports = settings;

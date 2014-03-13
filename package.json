@@ -27,7 +27,8 @@
     "suspend": "0.4.x",
     "glob": "3.2.8",
     "gaze": "0.4.x",
-    "underscore" : "",
+    "backbone": "1.1.2",
+    "underscore" : "1.6.0",
     "rework-importer": "git+ssh://git@github.com:thedjpetersen/rework-importer.git#master",
 
     "grunt-react": "0.6.x",

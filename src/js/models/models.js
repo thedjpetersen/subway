@@ -1,3 +1,8 @@
+var Backbone = typeof Backbone !== 'undefined' ? Backbone : require("backbone");
+var _ = typeof _ !== 'undefined' ? _ : require("underscore");
+
+var app = typeof app !== 'undefined' ? app : {models: {}, collections: {}, irc: {}};
+
 app.models.Connection = Backbone.Model.extend({
   idAttribute: "name",
 
@@ -52,7 +57,9 @@ app.models.Connection = Backbone.Model.extend({
       var unread = channel.get("unread");
       channel.set("unread", ++unread);
 
-      util.checkHighlights(added_message, channel, this);
+      if (typeof util !== "undefined") {
+        util.checkHighlights(added_message, channel, this);
+      }
     }
   },
 
@@ -81,12 +88,6 @@ app.collections.Connections = Backbone.Collection.extend({
     var active_connection = this.get(this.active_server);
     return active_connection.get("nick");
   },
-
-  sync: function() {
-    if (app.user) {
-      app.io.emit("sync_connections", this.toJSON());
-    }
-  }
 
 });
 
@@ -264,3 +265,8 @@ app.collections.Users = Backbone.Collection.extend({
 
 app.models.SubwayUser = Backbone.Model.extend({
 });
+
+// to export our models code to work server side
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = app;
+}

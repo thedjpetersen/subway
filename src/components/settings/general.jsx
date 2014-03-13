@@ -19,6 +19,17 @@ app.components.general = function() {
               <span>e.g. {moment().format(this.props.settings.time_format)}</span>
             </div>
           </div>
+          <hr />
+          <label>Display Types</label>
+          <div>
+          {this.props.settings.enabled_types.map(function(type) {
+            return (
+              <div>
+                <span>{type}</span>
+              </div>
+            );
+          })}
+          </div>
         </div>
       )
     }

@@ -136,6 +136,10 @@ app.components.messages = function() {
       return (
         <div className="messages">
           {this.getModel().map(function(message) {
+            if (!(_.contains(app.settings.enabled_types, message.get("type")))) {
+              return;
+            }
+
             switch (message.get("type")) {
               case "PRIVMSG":
                 return <Message model={message} />
