@@ -1,0 +1,85 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          subway
+# Required-Start:    $local_fs $remote_fs $network $time $named
+# Required-Stop:     $local_fs $remote_fs $network $time $named
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: Subway Web IRC
+# Description:       A JS based web IRC
+### END INIT INFO
+
+NAME="subway"
+SCRIPTNAME="/etc/init.d/$NAME"
+PREFIX="/home/znc/$NAME"
+USER="znc"
+PID="/var/run/subway.pid"
+LOG="/var/log/subway.log"
+
+if [ `id -u` -ne 0 ]; then
+  echo "The $NAME init script can only be run as root"
+  exit 1
+fi
+
+SCRIPT="$PREFIX/$NAME"
+
+do_start()
+{
+  su - "$USER" -c "$SCRIPT" > "$LOG" 2>&1 &
+  echo $! > "$PID"
+  echo "Started: `cat "$PID"`"
+}
+
+do_stop()
+{
+  if [ -e "$PID" ]
+  then
+    kill -INT `cat "$PID"`
+    rm "$PID"
+    echo "Stopped"
+  else
+    echo "Not running."
+  fi
+}
+
+do_status()
+{
+  if [ -e "$PID" ]
+  then 
+    if kill -0 `cat "$PID"`
+    then
+       echo "Running: `cat $PID`"
+    else
+      echo "Crashed!"
+    fi
+  else
+    echo "Not running."
+  fi
+}
+
+do_restart()
+{
+  do_stop
+  do_start
+}
+
+case "$1" in
+  start)
+    do_start
+    ;;
+  stop)
+    do_stop
+    ;;
+  status)
+    do_status
+    ;;
+  restart|force-reload)
+    do_restart
+    ;;
+  *)
+    echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+    exit 3
+    ;;
+esac
+
+exit 0
