@@ -119,13 +119,10 @@ app.components.messages = function() {
   });
 
   var Messages = React.createBackboneClass({
-
-    componentWillUpdate: function() {
-      var node = this.getDOMNode();
-      this.shouldScrollBottom = node.scrollTop + node.offsetHeight === node.scrollHeight;
-    },
-
     componentDidUpdate: function() {
+      var node = this.getDOMNode();
+      this.shouldScrollBottom = node.scrollTop + node.offsetHeight < node.scrollHeight;
+
       if (this.shouldScrollBottom) {
         var node = this.getDOMNode();
         $(node).animate({scrollTop: node.scrollHeight}, 750);

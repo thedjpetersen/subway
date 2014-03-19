@@ -31,11 +31,11 @@ app.components.irc = function() {
   var App = React.createBackboneClass({
     getChannel: function() {
       var connections = this.getModel();
-      var server = connections.get(connections.active_server);
+      var server = app.irc.getActiveServer();
 
       if (server === undefined) { return false; }
 
-      var channel = server.get("channels").get(connections.active_channel);
+      var channel = app.irc.getActiveChannel();
       return channel;
     },
 
@@ -58,8 +58,8 @@ app.components.irc = function() {
     isActive: function(chan) {
       var connections = this.getModel().collection;
       // Check to see if the channel is currently the active one
-      return (connections.active_server === this.getModel().get("name") &&
-              connections.active_channel === chan.get("name"))
+      return (app.irc.get("active_server") === this.getModel().get("name") &&
+              app.irc.get("active_channel") === chan.get("name"))
     },
 
     setActive: function(event) {
@@ -69,15 +69,23 @@ app.components.irc = function() {
 
       // If we are just closing a channel
       if ($(event.target).hasClass("fa-times")) {
-        if (new_server === connections.active_server &&
-            new_channel === connections.active_channel)
-        connections.active_channel = "status";
+        if (new_server === app.irc.get("active_server") &&
+            new_channel === app.irc.get("active_channel"))
+        app.irc.set("active_channel", "status");
       } else {
-        connections.active_server = new_server;
-        connections.active_channel = new_channel;
+        // Otherwise set the active server and channel
+        app.irc.set("active_server", new_server);
+        app.irc.set("active_channel", new_channel);
 
         // Clear notifications highlights and unreads
-        this.getModel().get("channels").get(connections.active_channel).clearNotifications();
+        app.irc.getActiveChannel().clearNotifications();
+
+        if (typeof app.user !== "undefined") {
+          app.io.emit("set_active", {
+            active_server: new_server,
+            active_channel: new_channel
+          })
+        }
 
         // If the our menu is not hidden we hide it now
         $(".mainMenu").addClass("hide");
@@ -180,14 +188,14 @@ app.components.irc = function() {
 
   this.show = function() {
     var nav = SideNav({
-      model: window.app.irc.connections
+      model: window.app.irc.get("connections")
     });
     React.renderComponent(nav, $(".nav-area").get(0))
 
     $(".nav-area").scroll(showNavigation);
 
     var app = App({
-      model: window.app.irc.connections
+      model: window.app.irc.get("connections")
     });
     React.renderComponent(app, $("main").get(0))
   };

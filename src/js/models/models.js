@@ -1,7 +1,30 @@
 var Backbone = typeof Backbone !== 'undefined' ? Backbone : require("backbone");
 var _ = typeof _ !== 'undefined' ? _ : require("underscore");
 
-var app = typeof app !== 'undefined' ? app : {models: {}, collections: {}, irc: {}};
+var app = typeof app !== 'undefined' ? app : {models: {}, collections: {}};
+
+app.models.App = Backbone.Model.extend({
+  initialize: function(attrs, opts) {
+    attrs = attrs || {};
+    this.attributes.connections = new app.collections.Connections(attrs.connections || []);
+  },
+
+  getActiveServer: function() {
+    return this.get("connections").get(this.get("active_server"));
+  },
+
+  getActiveChannel: function() {
+    if (this.get("connections").length === 0) {
+      debugger;
+    }
+    return this.getActiveServer().get("channels").get(this.get("active_channel"));
+  },
+
+  getActiveNick: function() {
+    return this.getActiveServer().get("nick");
+  },
+
+});
 
 app.models.Connection = Backbone.Model.extend({
   idAttribute: "name",
@@ -41,7 +64,7 @@ app.models.Connection = Backbone.Model.extend({
     // initial state
     if (user !== undefined) {
       user.resetActive();
-      if (channel.get("name") === app.irc.connections.active_channel) {
+      if (channel.get("name") === app.irc.get("connections").get("active_channel")) {
         // Redraw the server list
         user.collection.trigger("add");
       }
@@ -49,7 +72,7 @@ app.models.Connection = Backbone.Model.extend({
 
     // If we are not idling on the active channel we want to 
     // increment the number of unread messages in the server
-    if(channel.get("name") !== app.irc.connections.active_channel && _.contains(["PRIVMSG"], added_message.get("type"))) {
+    if(channel.get("name") !== app.irc.getActiveChannel().get("name") && _.contains(["PRIVMSG"], added_message.get("type"))) {
       if (!channel.get("unread")) {
         channel.set("unread", 0);
       }
@@ -82,21 +105,19 @@ app.collections.Connections = Backbone.Collection.extend({
     if (_.isEmpty(this.where({name: server}))) {
       this.add({name: server});
     }
-  },
-
-  getActiveNick: function() {
-    var active_connection = this.get(this.active_server);
-    return active_connection.get("nick");
-  },
-
+  }
 });
+
 
 app.models.Channel = Backbone.Model.extend({
   idAttribute: "name",
 
   // we don't want to return the messages with our json
   toJSON: function () {
-    return _.omit(this.attributes, "messages");
+    var ret_obj = _.extend({}, this.attributes);
+    // Only save 25 messages
+    ret_obj.messages.slice(0,24);
+    return ret_obj;
   },
 
   initialize: function(attrs, opts) {
@@ -135,9 +156,25 @@ app.models.Channel = Backbone.Model.extend({
   clearNotifications: function() {
     this.set("unread", 0);
     var _this = this;
-    _.each(app.settings.highlights, function(highlight, index, highlights) {
-      _this.set(highlight.name, 0);
-    });
+    if (typeof app.settings !== "undefined") {
+      _.each(app.settings.highlights, function(highlight, index, highlights) {
+        _this.set(highlight.name, 0);
+      });
+    } else {
+      _.each(this.attributes, function(val, key) {
+        // Set any highlights to 0 as well
+        if (typeof val === "number" && val > 0) {
+          _this.set(key, 0);
+        }
+      });
+    }
+
+    if (typeof app.user !== 'undefined') {
+      app.io.emit("clearnotifications", {
+        server: app.irc.getActiveServer(),
+        channel: this.get("name")
+      });
+    }
   }
 });
 
@@ -146,9 +183,9 @@ app.collections.Channels = Backbone.Collection.extend({
 });
 
 app.models.Message = Backbone.Model.extend({
-  initialize: function() {
+  initialize: function(attrs, options) {
     var default_props = {
-      timestamp: Date.now()
+      timestamp: attrs.timestamp || Date.now()
     };
     if (this.get("type") === undefined) {
       default_props.type = "PRIVMSG";
@@ -163,7 +200,7 @@ app.models.Message = Backbone.Model.extend({
 
   getClass: function() {
     var classList = "message";
-    if (this.get("from") === app.irc.connections.getActiveNick()) {
+    if (this.get("from") === app.irc.getActiveNick()) {
       classList = classList + " isMe";
     }
     return classList;
@@ -188,18 +225,16 @@ app.models.User = Backbone.Model.extend({
 
   initialize: function(attrs, options) {
     // If the user is the an admin we want to indicate it with the type
-    if (this.get("nick").indexOf("@") !== -1) {
+    if (this.get("nick").indexOf("@") !== -1 || attrs.type === "@") {
       this.set({
-        nick: this.get("nick").substring(1),
+        nick: this.get("nick").replace("@", ""),
         type: "@",
         updated: attrs.updated || Date.now()-3600000,
-        last_active: attrs.updated ? (Date.now()-attrs.updated)/60000 : undefined
       });
     } else {
       this.set({
         type: "",
         updated: attrs.updated || Date.now()-3600000,
-        last_active: attrs.updated ? (Date.now()-attrs.updated)/60000 : undefined
       });
     }
   },

@@ -1,8 +1,9 @@
 var _ = typeof _ !== 'undefined' ? _ : require("underscore");
 var util = typeof util !== 'undefined' ? util : {};
 
-util.handle_irc = function(message, conn, app_ref) {
+util.handle_irc = function(message, irc, app_ref) {
   var app = typeof window !== 'undefined' ? window.app : app_ref;
+  var conn = irc.get("connections");
 
   // Alias the long namespace
   var server = conn.get(message.client_server);
@@ -23,8 +24,10 @@ util.handle_irc = function(message, conn, app_ref) {
       if (!app.initialized && message.client_server) {
         app.initialized = true;
 
-        conn.active_server = message.client_server;
-        conn.active_channel = "status";
+        app.irc.set({
+          active_server: message.client_server,
+          active_channel: "status"
+        });
 
         conn.addServer(message.client_server);
 
@@ -44,6 +47,10 @@ util.handle_irc = function(message, conn, app_ref) {
         if(conn.get(message.client_server) === undefined) {
           conn.addServer(message.client_server);
           server = conn.get(message.client_server);
+          app.irc.set({
+            active_server: message.client_server,
+            active_channel: "status"
+          });
         }
         server.addMessage("status", {from: "", text: message.args[1], type: "NOTICE"});
       }
@@ -82,9 +89,9 @@ util.handle_irc = function(message, conn, app_ref) {
 
     case "JOIN":
       // The first argument is the name of the channel
-      if(message.nick === app.irc.connections.getActiveNick()) {
+      if(message.nick === app.irc.getActiveNick()) {
         server.addChannel(message.args[0]);
-        conn.active_channel = message.args[0];
+        app.irc.set("active_channel", message.args[0]);
         conn.trigger("sort");
       } else {
         server.addMessage(message.args[0], {type: "JOIN", nick: message.nick});
@@ -96,7 +103,7 @@ util.handle_irc = function(message, conn, app_ref) {
     case "PART":
       if(message.nick === server.get("nick")) {
         server.get("channels").remove(message.args[0]);
-        conn.active_channel = "status";
+        app.irc.set("active_channel", "status");
         conn.trigger("sort");
       } else {
         var channel = server.get("channels").get(message.args[0]);
@@ -117,7 +124,7 @@ util.handle_irc = function(message, conn, app_ref) {
     case "KICK":
       if(message.args[1] === server.get("nick")) {
         server.get("channels").remove(message.args[0]);
-        conn.active_channel = "status";
+        app.irc.set("active_channel", "status");
         server.addMessage('status', {type: "KICK", nick: message.nick, text: message.args[1], reason: message.args[2]});
         conn.trigger("sort");
       } else {

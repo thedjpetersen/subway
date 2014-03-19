@@ -98,7 +98,7 @@ app.components.startMenu = function() {
             </div>
             <a className="button pointer" onClick={this.connect}>Connect</a>
           </form>
-          <ListConnections model={app.irc.connections}/>
+          <ListConnections model={app.irc.get("connections")}/>
         </div>
       )
     }

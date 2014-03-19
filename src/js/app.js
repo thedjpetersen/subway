@@ -1,7 +1,7 @@
 // Initial state of our app
 app.initialized = false;
 
-app.irc.connections = new app.collections.Connections();
+app.irc = new app.models.App();
 
 // Display startup menu
 // TODO if the user is already logged in we need to connect them directly
@@ -34,27 +34,31 @@ app.io.on("settings", function(settings) {
 });
 
 app.io.on("connection_removed", function(data) {
-  app.irc.connections.remove(data.connection);
+  app.irc.get("connections").remove(data.connection);
 });
 
 app.io.on("restore_connection", function(data) {
-  var conn = app.irc.connections;
-
   app.initialized = true;
 
-  conn.reset(data);
+  app.irc.set(_.omit(data, "connections"));
 
-  conn.active_server = conn.first().get("name");
-  conn.active_channel = "status";
+  app.irc.set({
+    connections: new app.collections.Connections(data.connections)
+  });
+
+  var conn = app.irc.get("connections");
 
   var irc = new app.components.irc({
     collection: conn
   });
 
   irc.show();
-  $(".mainMenu").addClass("hide");
+
+  if(data.connections.length > 0) {
+    $(".mainMenu").addClass("hide");
+  }
 });
 
 app.io.on("raw", function(message) {
-  util.handle_irc(message, app.irc.connections);
+  util.handle_irc(message, app.irc);
 });

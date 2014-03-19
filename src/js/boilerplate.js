@@ -11,8 +11,6 @@ window.app = {
     active_plugins: [
     ]
   },
-  irc: {
-  }
 };
 
 window.util = {
@@ -90,7 +88,7 @@ window.util = {
   // Check for highlights and set the text
   // Takes a message as an argument and returns HTML
   highlightText: function(message) {
-    var connection = app.irc.connections.get(app.irc.connections.active_server);
+    var connection = app.irc.getActiveServer();
 
     var text = _.escape(message.get("text"));
     var template = _.template("<span class=\"highlight highlight_<%= name %>\">$&</span>");

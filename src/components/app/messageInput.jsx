@@ -11,15 +11,13 @@ app.components.message_input = function() {
 
     handleInput: function(ev) {
       // If the user pushed enter
-      var server = app.irc.connections.get(app.irc.connections.active_server);
-      var target = app.irc.connections.active_channel;
-      var channel = server.get("channels").get(target);
+      var server = app.irc.getActiveServer();
+      var channel = app.irc.getActiveChannel();
+      var target = channel.get("name");
+
       var input = $(ev.target).val();
 
       if (ev.keyCode === 13) {
-        var server = app.irc.connections.get(app.irc.connections.active_server);
-        var target = app.irc.connections.active_channel;
-
         var input = $(ev.target).val();
 
         // If the first character is a slash
