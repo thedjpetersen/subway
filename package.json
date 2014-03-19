@@ -17,7 +17,7 @@
     "async": "0.2.x",
     "request": "2.33.x",
     "express": "3.5.x",
-    "irc": "git+ssh://git@github.com:thedjpetersen/node-irc.git#master",
+    "irc": "git://github.com/thedjpetersen/node-irc.git",
     "socket.io": "0.9.x",
     "bcrypt-nodejs": "0.0.x",
     "jugglingdb": "0.2.x",
@@ -29,7 +29,7 @@
     "gaze": "0.4.x",
     "backbone": "1.1.2",
     "underscore" : "1.6.0",
-    "rework-importer": "git+ssh://git@github.com:thedjpetersen/rework-importer.git#master",
+    "rework-importer": "git://github.com/thedjpetersen/rework-importer.git",
 
     "grunt-react": "0.6.x",
     "grunt-styl": "0.3.x",
