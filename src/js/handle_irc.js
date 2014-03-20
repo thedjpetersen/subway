@@ -167,6 +167,12 @@ util.handle_irc = function(message, irc, app_ref) {
     case "001":
       server.set({nick: _.first(message.args)});
       server.addMessage("status", {text: message.args[1], type: "NOTICE"});
+
+      server.get("channels").each(function(channel) {
+        if (channel.get("name").indexOf("#") !== -1) {
+          server.get("channels").remove(channel.get("name"));
+        }
+      });
       break;
 
     case "002":
