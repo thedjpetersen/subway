@@ -119,13 +119,23 @@ app.components.messages = function() {
   });
 
   var Messages = React.createBackboneClass({
+    componentWillUpdate: function() {
+      this.model_length = this.getModel().length;
+    },
+
     componentDidUpdate: function() {
       var node = this.getDOMNode();
-      this.shouldScrollBottom = node.scrollTop + node.offsetHeight < node.scrollHeight;
+      this.shouldScrollBottom = node.scrollTop + node.offsetHeight > node.scrollHeight-200;
 
-      if (this.shouldScrollBottom) {
+      var same_window = this.model_length === this.getModel().length;
+
+      if (this.shouldScrollBottom && same_window) {
         var node = this.getDOMNode();
         $(node).animate({scrollTop: node.scrollHeight}, 750);
+      }
+
+      if (!same_window) {
+        node.scrollTop = node.scrollHeight;
       }
     },
 
