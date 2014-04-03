@@ -3,6 +3,12 @@ var _ = typeof _ !== 'undefined' ? _ : require("underscore");
 
 var app = typeof app !== 'undefined' ? app : {models: {}, collections: {}};
 
+var isNode = false;
+
+if (typeof module !== 'undefined' && module.exports) {
+  isNode = true;
+}
+
 app.models.App = Backbone.Model.extend({
   initialize: function(attrs, opts) {
     attrs = attrs || {};
@@ -60,6 +66,10 @@ app.models.Connection = Backbone.Model.extend({
     var added_message = channel.get("messages").add(message);
     var user = channel.get("users").get(message.from);
 
+    if (isNode) {
+      app.logMessage(this.get("name"), channelName, added_message.attributes, app.username);
+    }
+
     // If the user exists we need to set the users activty back to its
     // initial state
     if (user !== undefined) {
@@ -84,6 +94,7 @@ app.models.Connection = Backbone.Model.extend({
         util.checkHighlights(added_message, channel, this);
       }
     }
+
   },
 
   addUser: function(channel, user) {
@@ -302,6 +313,6 @@ app.models.SubwayUser = Backbone.Model.extend({
 });
 
 // to export our models code to work server side
-if (typeof module !== 'undefined' && module.exports) {
+if (isNode) {
   module.exports = app;
 }

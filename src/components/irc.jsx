@@ -17,11 +17,36 @@ app.components.irc = function() {
   });
 
   var Chat = React.createBackboneClass({
+    fetchHistory: function() {
+      var channel = this.getModel();
+      var messages = channel.get("messages");
+
+      if(app.user && channel.get("name") !== "status" && !(messages.fetched) && !(messages.all_fetched)) {
+        var channelName = channel.get("name");
+
+        if (channelName.indexOf("#") !== 0) {
+          channelName = [channel.get("name"), app.irc.getActiveServer().get("nick")].sort().join("#");
+        }
+
+        var data = {
+          server: app.irc.getActiveServer().get("name"),
+          channel: channelName,
+          timestamp: messages.length ? messages.first().get("timestamp") : Date.now()
+        }
+
+        app.io.emit("loadHistory", data);
+
+        messages.fetched = true;
+      }
+    },
+
     render: function() {
+      this.fetchHistory();
+
       return (
         <div className="chat">
           <TitleBar model={this.getModel()} />
-          <Messages model={this.getModel().get("messages")} />
+          <Messages model={this.getModel().get("messages")} fetchHistory={this.fetchHistory} />
           <MessageInput />
         </div>
       )
@@ -98,6 +123,9 @@ app.components.irc = function() {
       var target_channel = $(event.target).closest("li").attr("data-channel");
 
       if (target_channel.indexOf("#") === -1) {
+        if(typeof app.user !== "undefined") {
+          app.io.emit("closeChannel", {server: this.getModel().get("name"), target: target_channel});
+        }
         this.getModel().get("channels").remove(target_channel);
       } else {
         // Leave channel

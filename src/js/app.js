@@ -62,3 +62,20 @@ app.io.on("restore_connection", function(data) {
 app.io.on("raw", function(message) {
   util.handle_irc(message, app.irc);
 });
+
+app.io.on("history", function(data) {
+  var server = app.irc.get("connections").get(data.server);
+  var channel;
+  if(data.channel.indexOf("#") === 0) {
+    channel = server.get("channels").get(data.channel);
+  } else {
+    // For private messages
+    channel = server.get("channels").get(data.channel.replace(server.get("nick"), "").replace("#", ""));
+  }
+  var messages = channel.get("messages");
+  messages.add(data.messages, {at: 0});
+
+  if (data.messages.length < 25) {
+    messages.all_fetched = true;
+  }
+});

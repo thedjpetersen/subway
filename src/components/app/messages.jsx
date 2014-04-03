@@ -119,6 +119,13 @@ app.components.messages = function() {
   });
 
   var Messages = React.createBackboneClass({
+    checkScroll: function() {
+      if(this.getDOMNode().scrollTop < 100) {
+        this.getModel().fetched = false;
+        this.props.fetchHistory();
+      }
+    },
+
     componentWillUpdate: function() {
       this.model_length = this.getModel().length;
     },
@@ -141,7 +148,7 @@ app.components.messages = function() {
 
     render: function() {
       return (
-        <div className="messages">
+        <div className="messages" onScroll={this.checkScroll}>
           {this.getModel().map(function(message) {
             if (!(_.contains(app.settings.enabled_types, message.get("type")))) {
               return;
