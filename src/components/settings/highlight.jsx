@@ -69,6 +69,8 @@ app.components.highlight = function() {
 
         // Remove any existing errors
         $(this.getDOMNode()).find("textarea").removeClass("error")
+
+        app.io.emit("saveSettings", app.settings);
       } catch (e) {
         // Add error
         $(this.getDOMNode()).find("textarea").addClass("error")
@@ -81,6 +83,7 @@ app.components.highlight = function() {
         regex: "",
         color: ""
       });
+      app.io.emit("saveSettings", app.settings);
       this.forceUpdate();
     },
 

@@ -19,13 +19,9 @@ app.io.on("connect", function() {
   if (app.irc.get("connections").length > 0) {
     $(".mainMenu").addClass("hide");
   }
-});
 
-app.io.on("settings", function(settings) {
-  // Add new settings and override default ones
-  app.settings = _.extend(app.settings, settings);
+  util.loadPlugins(app.settings.plugins);
   util.highlightCss();
-  util.loadPlugins(settings.plugins);
 });
 
 app.io.on("connection_removed", function(data) {

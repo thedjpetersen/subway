@@ -2,15 +2,19 @@
 
 app.components.general = function() {
   var General = React.createClass({
-    updateSetting: function(ev) {
-      var setting = ev.target.getAttribute("data-setting");
-      app.settings[setting] = ev.target.value;
-
+    saveSettings: function() {
       if (typeof app.user !== "undefined") {
         app.io.emit("saveSettings", app.settings);
       }
 
       this.forceUpdate();
+    },
+
+    updateSetting: function(ev) {
+      var setting = ev.target.getAttribute("data-setting");
+      app.settings[setting] = ev.target.value;
+
+      this.saveSettings();
     },
 
     toggleMessageType: function(ev) {
@@ -26,7 +30,7 @@ app.components.general = function() {
         this.props.settings.enabled_types.push(type);
       }
 
-      this.forceUpdate();
+      this.saveSettings();
     },
 
     render: function() {

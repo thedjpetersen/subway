@@ -23,8 +23,9 @@ html
       main
     each file in js_output
       script(src="#{file}")
-    | <% if (user) { %>
     | <script>
+    | <% if (user) { %>
     | app.user = new app.models.SubwayUser({username: "<%= user.username %>" });
-    | </script>
     | <% } %>
+    | app.settings = _.extend(app.settings, <%- settings %>);
+    | </script>

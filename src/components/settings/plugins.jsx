@@ -73,6 +73,7 @@ app.components.plugins = function() {
     updateSettings: function(ev) {
       try {
         this.props.plugin.settings = JSON.parse(ev.target.value);
+        app.io.emit("saveSettings", app.settings);
       } catch(e) {
         return;
       }
