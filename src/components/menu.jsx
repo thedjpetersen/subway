@@ -102,7 +102,30 @@ app.components.startMenu = function() {
         </div>
       )
     }
-  })
+  });
+
+  var User = React.createBackboneClass({
+    logout: function() {
+      var _this = this;
+      $.post('/logout/', function(data) {
+        if(data.success) {
+          delete app.user;
+          app.irc.get("connections").reset();
+          _this.props.login();
+        }
+      });
+    },
+
+    render: function() {
+      return (
+        <div>
+          <h1>User Details</h1>
+          <p>{this.getModel().get("username")}</p>
+          <a className="button pointer" onClick={this.logout}>Logout</a>
+        </div>
+      )
+    }
+  });
 
   var Login = React.createClass({
     redirectConnection: function() {
@@ -124,6 +147,7 @@ app.components.startMenu = function() {
 
           _this.props.connect();
 
+          console.log(data);
           if (data.has_connection) {
             $(".mainMenu").toggleClass("hide")
           }
@@ -241,6 +265,8 @@ app.components.startMenu = function() {
                 return <Connect />
               case "settings":
                 return <Settings />
+              case "user":
+                return <User model={app.user} login={cxt.login} />
               case "login":
                 return <Login connect={cxt.connect} />
               case "register":

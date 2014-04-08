@@ -17,7 +17,7 @@ app.components.irc = function() {
   });
 
   var Chat = React.createBackboneClass({
-    fetchHistory: function() {
+    fetchHistory: _.throttle(function() {
       var channel = this.getModel();
       var messages = channel.get("messages");
 
@@ -38,7 +38,7 @@ app.components.irc = function() {
 
         messages.fetched = true;
       }
-    },
+    }, 1000),
 
     render: function() {
       this.fetchHistory();

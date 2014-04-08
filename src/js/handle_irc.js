@@ -35,7 +35,7 @@ util.handle_irc = function(message, irc, app_ref) {
         conn.first().addChannel("status");
 
         if (typeof module === 'undefined') {
-          menu.hide();
+          $(".mainMenu").addClass("hide");
 
           var irc = new app.components.irc({
             collection: conn

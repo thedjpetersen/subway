@@ -5,6 +5,11 @@ app.components.general = function() {
     updateSetting: function(ev) {
       var setting = ev.target.getAttribute("data-setting");
       app.settings[setting] = ev.target.value;
+
+      if (typeof app.user !== "undefined") {
+        app.io.emit("saveSettings", app.settings);
+      }
+
       this.forceUpdate();
     },
 

@@ -120,7 +120,7 @@ app.components.messages = function() {
 
   var Messages = React.createBackboneClass({
     checkScroll: function() {
-      if(this.getDOMNode().scrollTop < 100) {
+      if(this.getDOMNode().scrollTop === 0) {
         this.getModel().fetched = false;
         this.props.fetchHistory();
       }
@@ -128,6 +128,7 @@ app.components.messages = function() {
 
     componentWillUpdate: function() {
       this.model_length = this.getModel().length;
+      this.children_length = this.getDOMNode().children.length;
     },
 
     componentDidUpdate: function() {
@@ -139,6 +140,12 @@ app.components.messages = function() {
       if (this.shouldScrollBottom && same_window) {
         var node = this.getDOMNode();
         $(node).animate({scrollTop: node.scrollHeight}, 750);
+      }
+
+      if (same_window && this.model_length > this.children_length) {
+        // This craziness maintains the scroll position as we load more models
+        // when history is fetched
+        this.getDOMNode().scrollTop = this.getDOMNode().children[this.model_length-this.children_length-1].offsetTop;
       }
 
       if (!same_window) {

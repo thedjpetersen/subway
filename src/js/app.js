@@ -8,22 +8,17 @@ app.irc = new app.models.App();
 // their session
 // Or if in the server settings they are to be connected directly to a channel
 // we need to immediately go into the connecting mode
-var menu = new app.components.startMenu();
-menu.show();
-
 app.io.on("connect", function() {
-  $.post("is_logged_in/", {socketid: app.io.socket.sessionid}, function(data) {
-    if(data.logged_in) {
-      app.user = new app.models.SubwayUser({
-        username: data.username
-      });
-      menu.render();
-    }
+  var menu = new app.components.startMenu();
+  menu.show();
 
-    if (data.logged_in && data.client_length !== 0 ) {
-      $(".mainMenu").addClass("hide");
-    }
-  });
+  if(app.user) {
+    $.post('restore_connection/', {socketid: app.io.socket.sessionid});
+  }
+
+  if (app.irc.get("connections").length > 0) {
+    $(".mainMenu").addClass("hide");
+  }
 });
 
 app.io.on("settings", function(settings) {

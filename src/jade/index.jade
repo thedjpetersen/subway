@@ -12,15 +12,6 @@ html
 
   body
     .mainMenu
-    //if lt IE 8
-      p.browsehappy
-        | You are using an
-        strong outdated
-        | browser. Please
-        a(href='http://browsehappy.com/') upgrade your browser
-        | to improve your experience.
-    //
-       Add your site or application content here 
     .container
       nav
         .text-center
@@ -32,3 +23,8 @@ html
       main
     each file in js_output
       script(src="#{file}")
+    | <% if (user) { %>
+    | <script>
+    | app.user = new app.models.SubwayUser({username: "<%= user.username %>" });
+    | </script>
+    | <% } %>

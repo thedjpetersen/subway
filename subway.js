@@ -71,6 +71,11 @@ async.waterfall([
             .use(express.cookieParser(server_settings.cookie_secret || "subway_secret"))
             .use(express.static(cwd + "/tmp"));
 
+  app.configure(function() {
+    app.set("views", __dirname + "/tmp");
+  });
+  app.engine("ejs", require("ejs").renderFile);
+
   var server = http.createServer(app).listen(3000);
   var io = require("socket.io").listen(server);
 
