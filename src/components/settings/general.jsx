@@ -45,10 +45,17 @@ app.components.general = function() {
           <label>Message Types</label>
           <ul className="messageTypes">
           {_.union(this.props.settings.enabled_types, this.props.settings.disabled_types).sort().map(function(type) {
-            var active = _.contains(_this.props.settings.enabled_types, type) ? "active pointer" : "pointer";
-            return (
-              <li className={active} onClick={_this.toggleMessageType} data-type={type}>{type}</li>
-            );
+            var is_active = _.contains(_this.props.settings.enabled_types, type);
+            var active = is_active ? "active pointer" : "pointer";
+            if (is_active) {
+              return (
+                <li className={active} onClick={_this.toggleMessageType} data-type={type}>{type}<i className="fa fa-check right"></i></li>
+              );
+            } else {
+              return (
+                <li className={active} onClick={_this.toggleMessageType} data-type={type}>{type}</li>
+              );
+            }
           })}
           </ul>
         </div>
