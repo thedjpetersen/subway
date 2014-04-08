@@ -147,7 +147,6 @@ app.components.startMenu = function() {
 
           _this.props.connect();
 
-          console.log(data);
           if (data.has_connection) {
             $(".mainMenu").toggleClass("hide")
           }
