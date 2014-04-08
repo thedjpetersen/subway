@@ -13,7 +13,24 @@ app.components.general = function() {
       this.forceUpdate();
     },
 
+    toggleMessageType: function(ev) {
+      var type = $(ev.target).attr("data-type");
+      var enabled_types = this.props.settings.enabled_types;
+      var disabled_types = this.props.settings.disabled_types;
+
+      if(_.contains(enabled_types, type)) {
+        this.props.settings.enabled_types = _.without(enabled_types, type);
+        this.props.settings.disabled_types.push(type);
+      } else {
+        this.props.settings.disabled_types = _.without(disabled_types, type);
+        this.props.settings.enabled_types.push(type);
+      }
+
+      this.forceUpdate();
+    },
+
     render: function() {
+      var _this = this;
       return (
         <div>
           <label>Time Format</label>
@@ -25,16 +42,15 @@ app.components.general = function() {
             </div>
           </div>
           <hr />
-          <label>Display Types</label>
-          <div>
-          {this.props.settings.enabled_types.map(function(type) {
+          <label>Message Types</label>
+          <ul className="messageTypes">
+          {_.union(this.props.settings.enabled_types, this.props.settings.disabled_types).sort().map(function(type) {
+            var active = _.contains(_this.props.settings.enabled_types, type) ? "active pointer" : "pointer";
             return (
-              <div>
-                <span>{type}</span>
-              </div>
+              <li className={active} onClick={_this.toggleMessageType} data-type={type}>{type}</li>
             );
           })}
-          </div>
+          </ul>
         </div>
       )
     }
