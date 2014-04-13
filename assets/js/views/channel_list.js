@@ -40,6 +40,10 @@ var ChannelListView = Backbone.View.extend({
     this.resetScrollbar();
   },
 
+  removeChannel: function (channelTabView) {
+    this.channelTabs.splice(this.channelTabs.indexOf(channelTabView), 1);
+  },
+
   scrollbarCreated: false,
   resetScrollbar: function () {
     var $el = $(this.el);

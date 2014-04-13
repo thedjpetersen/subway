@@ -80,6 +80,7 @@ var ChannelTabView = Backbone.View.extend({
         $nextTab = $(this.el).prev();
       }
     }
+    irc.appView.channelList.removeChannel(this);
     this.remove();
     if ($nextTab && typeof($nextTab.click) == 'function') {
       $nextTab.click();
