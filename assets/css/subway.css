@@ -154,7 +154,8 @@ html { overflow: hidden; }
 }
 
 #channels {
-  overflow: auto;
+  overflow: hidden;
+  position: relative;
   width: 100%;
 }
 
@@ -163,6 +164,10 @@ html { overflow: hidden; }
   padding: 5% 5% 5% 20%;
   color: #333333;
   border-bottom: 1px solid #CCCCCC;
+}
+
+#add-channel-button.border-top {
+  border-top: 1px solid #CCCCCC;
 }
 
 #channels > .channel .close-button {

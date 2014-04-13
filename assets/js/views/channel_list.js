@@ -9,12 +9,14 @@ var ChannelListView = Backbone.View.extend({
     'click #slide-next': 'slideNext',
   },
 
+  newChannelBtn: null,
+
   initialize: function() {
     irc.chatWindows.bind('add', this.addChannel, this);
     $('.slide').css('display', 'inline-block');
     this.channelTabs = []
-    var new_channel_btn = new AddChannelView;
-    $(this.el).after(new_channel_btn);
+    this.newChannelBtn = new AddChannelView;
+    $(this.el).after(this.newChannelBtn);
   },
 
   addChannel: function(chatWindow) {
@@ -33,6 +35,47 @@ var ChannelListView = Backbone.View.extend({
         $el.css('left', -1 * (this.channelTabs.length - 1) *
                  TAB_WIDTH + BTN_WIDTH + 'px');
       }
+    }
+
+    this.resetScrollbar();
+  },
+
+  removeChannel: function (channelTabView) {
+    this.channelTabs.splice(this.channelTabs.indexOf(channelTabView), 1);
+  },
+
+  scrollbarCreated: false,
+  resetScrollbar: function () {
+    var $el = $(this.el);
+
+    if (this.channelTabs.length === 0) {
+      return;
+    }
+
+    var maxHeight = $(window).height() - $el.offset().top - $('#add-channel-button').outerHeight();
+    var channelClassName = '.' + ChannelTabView.prototype.className;
+    var channelTabHeight = $(channelClassName).outerHeight();
+    if (this.channelTabs.length * channelTabHeight > maxHeight) {
+      $el.height(maxHeight);
+
+      if (!this.scrollbarCreated) {
+        this.scrollbarCreated = true;
+        $el.perfectScrollbar({suppressScrollX: true});
+      }
+
+      // scroll to active tab
+      var activeIndex = $(channelClassName).index($(channelClassName + '.active').get(0));
+      $el.scrollTop(channelTabHeight * activeIndex);
+      $el.perfectScrollbar('update');
+
+      $(this.newChannelBtn.el).addClass('border-top');
+    } else {
+      $el.height('auto');
+      if (this.scrollbarCreated) {
+        $el.perfectScrollbar('destroy');
+        this.scrollbarCreated = false;
+      }
+      $(this.newChannelBtn.el).removeClass('border-top');
     }
   },
 
