@@ -84,6 +84,7 @@ var ChannelTabView = Backbone.View.extend({
     if ($nextTab && typeof($nextTab.click) == 'function') {
       $nextTab.click();
     }
+    irc.appView.channelList.resetScrollbar();
   }
 
 });

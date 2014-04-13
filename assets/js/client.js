@@ -5,6 +5,7 @@
 //= require 'libs/bootstrap.min.js'
 //= require 'libs/ircparser.min.js'
 //= require 'libs/jquery.cookie.min.js'
+//= require 'libs/perfect-scrollbar.min.js'
 //= require 'utils.js'
 //= require 'models.js'
 //= require 'collections.js'
