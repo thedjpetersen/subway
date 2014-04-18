@@ -79,16 +79,44 @@ app.components.startMenu = function() {
     }
   });
 
-  var Connect = React.createClass({
+  var Connect = React.createBackboneClass({
     connect: function() {
+      var _this = this;
       var form_data = _.parseForm(this.refs);
+      $(this.getDOMNode()).find("input").prop("disabled", true);
       app.io.emit("connect", form_data);
+
+      app.io.on("connection_error", function(data) {
+        _this.props.errorMessage = "Error connecting";
+        _this.forceUpdate();
+        _this.props.errorMessage = undefined;
+      });
+    },
+
+    componentDidUpdate: function() {
+      $(this.getDOMNode()).find("input").prop("disabled", false).val("");
+    },
+
+    componentWillUnmount: function() {
+      app.io.removeAllListeners("connection_error");
     },
 
     render: function() {
       return (
         <div>
           <h1>Connect</h1>
+          {function(cxt) {
+            if(cxt.props.errorMessage) {
+              return (
+                <div className="alert error">
+                  <p>
+                    <i className="fa fa-exclamation-circle spacing-right"></i>
+                    {cxt.props.errorMessage}
+                  </p>
+                </div>
+              )
+            }
+          }(this)}
           <form>
             <div>
               <input className="fullWidth" placeholder="Server" ref="server" />
@@ -98,7 +126,7 @@ app.components.startMenu = function() {
             </div>
             <a className="button pointer" onClick={this.connect}>Connect</a>
           </form>
-          <ListConnections model={app.irc.get("connections")}/>
+          <ListConnections model={this.getModel()}/>
         </div>
       )
     }
@@ -261,7 +289,7 @@ app.components.startMenu = function() {
           <div className="menuArea">
             { function(cxt) {switch(cxt.state.activeItem) {
               case "connect":
-                return <Connect />
+                return <Connect model={app.irc.get("connections")} />
               case "settings":
                 return <Settings />
               case "user":

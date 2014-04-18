@@ -139,10 +139,10 @@ app.components.messages = function() {
 
       if (this.shouldScrollBottom && same_window) {
         var node = this.getDOMNode();
-        $(node).animate({scrollTop: node.scrollHeight}, 750);
+        $(node).stop().animate({scrollTop: node.scrollHeight}, 750);
       }
 
-      if (same_window && this.model_length > this.children_length) {
+      if (same_window && this.model_length > this.children_length + 1) {
         // This craziness maintains the scroll position as we load more models
         // when history is fetched
         this.getDOMNode().scrollTop = this.getDOMNode().children[this.model_length-this.children_length-1].offsetTop;
