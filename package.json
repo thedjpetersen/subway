@@ -37,7 +37,7 @@
     "grunt-contrib-cssmin": "0.7.x",
     "grunt-contrib-uglify": "0.3.x",
     "grunt-contrib-clean": "0.5.x",
-    "grunt-contrib-symlink": "0.2.x",
+    "grunt-contrib-symlink": "0.3.x",
     "grunt-contrib-jade": "0.9.x",
     "grunt": "0.4.x"
   },
