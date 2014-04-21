@@ -29,10 +29,9 @@ app.components.message_input = function() {
             server.addChannel(new_channel);
             server.addMessage(new_channel, {from: server.get("nick"), text: input.split(" ").splice(2).join(" ")});
           }
-        } else {
-          input = input.replace("/me", '\u0001ACTION');
-          app.io.emit("say", {text: input, server: server.get("name"), target: target});
-          server.addMessage(target, {from: server.get("nick"), text: input, type: "PRIVMSG"});
+        } else if(input.indexOf("/me") === 0) {
+          app.io.emit("command", {server: server.get("name"), target: target, command: input.substring(1)});
+          server.addMessage(target, {from: server.get("nick"), text: input.replace("/me", '\u0001ACTION'), type: "PRIVMSG"});
         }
         channel.get("history").push(input);
         $(ev.target).val("");
