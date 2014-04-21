@@ -119,12 +119,12 @@ app.components.messages = function() {
   });
 
   var Messages = React.createBackboneClass({
-    checkScroll: function() {
+    checkScroll: _.throttle(function() {
       if(this.getDOMNode().scrollTop === 0) {
         this.getModel().fetched = false;
         this.props.fetchHistory();
       }
-    },
+    }, 300),
 
     componentWillUpdate: function() {
       this.model_length = this.getModel().length;
@@ -160,6 +160,19 @@ app.components.messages = function() {
             if (!(_.contains(app.settings.enabled_types, message.get("type")))) {
               return;
             }
+
+            /* 
+             * loading message this should go in
+             * the private message before it is 
+             * to scrolled 
+            if (false) {
+              return (
+                <div className="message loading">
+                  <img src="img/bubbles.svg" />
+                </div>
+              );
+            }
+           */
 
             switch (message.get("type")) {
               case "PRIVMSG":
