@@ -32,6 +32,9 @@ app.components.message_input = function() {
         } else if(input.indexOf("/me") === 0) {
           app.io.emit("command", {server: server.get("name"), target: target, command: input.substring(1)});
           server.addMessage(target, {from: server.get("nick"), text: input.replace("/me", '\u0001ACTION'), type: "PRIVMSG"});
+        } else {
+          app.io.emit("say", {server: server.get("name"), target: target, text: input});
+          server.addMessage(target, {from: server.get("nick"), text: input, type: "PRIVMSG"});
         }
         channel.get("history").push(input);
         $(ev.target).val("");

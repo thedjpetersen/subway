@@ -80,7 +80,17 @@ app.components.startMenu = function() {
   });
 
   var Connect = React.createBackboneClass({
+    checkKey: _.throttle(function(ev) {
+      if(ev.keyCode === 13) {
+        this.connect();
+      }
+    }, 300),
+
     connect: function() {
+      if(!_.validateForm(this.refs)) {
+        return;
+      }
+
       var _this = this;
       var form_data = _.parseForm(this.refs);
       $(this.getDOMNode()).find("input").prop("disabled", true);
@@ -119,10 +129,10 @@ app.components.startMenu = function() {
           }(this)}
           <form>
             <div>
-              <input className="fullWidth" placeholder="Server" ref="server" />
+              <input className="fullWidth" placeholder="Server" ref="server" onKeyPress={this.checkKey} required />
             </div>
             <div>
-              <input className="fullWidth" placeholder="Nick" ref="nick" />
+              <input className="fullWidth" placeholder="Nick" ref="nick" onKeyPress={this.checkKey} required />
             </div>
             <a className="button pointer" onClick={this.connect}>Connect</a>
           </form>

@@ -5,4 +5,20 @@ _.parseForm = function(refs) {
     out[k] = v.getDOMNode().value.trim();
   });
   return out;
-}
+};
+
+_.validateForm = function(refs) {
+  var isValid = true;
+  _.each(refs, function(v,k) {
+    var domNode = $(v.getDOMNode());
+    var val = domNode.val();
+    if(val === "" && domNode.attr("required")) {
+      domNode.addClass("required");
+      isValid = false ;
+    } else {
+      domNode.removeClass("required");
+    }
+  });
+
+  return isValid;
+};

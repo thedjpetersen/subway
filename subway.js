@@ -44,8 +44,7 @@ async.waterfall([
     // TODO
     // resolve Fatal error: getaddrinfo ENOTFOUND
     // when we don't have active internet connection
-    //init_plugins(callback);
-    callback(null);
+    init_plugins(callback);
   },
   function(callback) {
     // We download all of our third party dependencies or upgrade any if
