@@ -207,7 +207,15 @@ util.handle_irc = function(message, irc, app_ref) {
       break;
 
     case "372":
-      server.addMessage("status", {text: message.args[1]});
+      server.set("motd", server.get("motd") + "\n" + message.args[1]);
+      break;
+
+    case "375":
+      server.set("motd", message.args[1]);
+      break;
+
+    case "376":
+      server.addMessage("status", {text: server.get("motd"), specialType: "MOTD"});
       break;
 
     case "433":

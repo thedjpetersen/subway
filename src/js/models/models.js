@@ -214,6 +214,10 @@ app.models.Message = Backbone.Model.extend({
     if (this.get("from") === app.irc.getActiveNick()) {
       classList = classList + " isMe";
     }
+
+    if (this.get("specialType") === "MOTD") {
+      classList = classList + " MOTD";
+    }
     return classList;
   },
 
