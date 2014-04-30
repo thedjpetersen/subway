@@ -80,11 +80,11 @@ app.components.startMenu = function() {
   });
 
   var Connect = React.createBackboneClass({
-    checkKey: _.throttle(function(ev) {
+    checkKey: function(ev) {
       if(ev.keyCode === 13) {
         this.connect();
       }
-    }, 300),
+    },
 
     connect: function() {
       if(!_.validateForm(this.refs)) {
@@ -166,6 +166,12 @@ app.components.startMenu = function() {
   });
 
   var Login = React.createClass({
+    checkKey: function(ev) {
+      if(ev.keyCode === 13) {
+        this.login();
+      }
+    },
+
     redirectConnection: function() {
     },
 
@@ -198,10 +204,10 @@ app.components.startMenu = function() {
           <h1>Login</h1>
           <form>
             <div>
-              <input className="fullWidth" placeholder="username" ref="username" />
+              <input className="fullWidth" placeholder="username" ref="username" onKeyPress={this.checkKey} />
             </div>
             <div>
-              <input className="fullWidth" placeholder="password" ref="password" type="password" />
+              <input className="fullWidth" placeholder="password" ref="password" type="password" onKeyPress={this.checkKey} />
             </div>
             <a className="button pointer" onClick={this.login}>Login</a>
           </form>
