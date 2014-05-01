@@ -1,8 +1,18 @@
 // Utility method to parse references from a react form and return an object
 _.parseForm = function(refs) {
   var out = {};
+  var val, node;
   _.each(refs, function(v,k) {
-    out[k] = v.getDOMNode().value.trim();
+    node = v.getDOMNode();
+    val = node.value.trim();
+
+    if (node.type && node.type === "checkbox") {
+      val = node.checked;
+    }
+
+    if (val !== "") {
+      out[k] = val;
+    }
   });
   return out;
 };

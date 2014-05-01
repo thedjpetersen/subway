@@ -17,6 +17,10 @@ app.components.message_input = function() {
 
       var input = $(ev.target).val();
 
+      if (input === "") {
+        return;
+      }
+
       if (ev.keyCode === 13) {
         var input = $(ev.target).val();
 

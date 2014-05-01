@@ -16,10 +16,6 @@ app.io.on("connect", function() {
     $.post('restore_connection/', {socketid: app.io.socket.sessionid});
   }
 
-  if (app.irc.get("connections").length > 0) {
-    $(".mainMenu").addClass("hide");
-  }
-
   util.loadPlugins(app.settings.plugins);
   util.highlightCss();
 });

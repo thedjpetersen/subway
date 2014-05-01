@@ -103,6 +103,10 @@ app.components.startMenu = function() {
       });
     },
 
+    toggleOptions: function() {
+      $(this.getDOMNode).find(".moreOptions").toggleClass("hide");
+    },
+
     componentDidUpdate: function() {
       $(this.getDOMNode()).find("input").prop("disabled", false).val("");
     },
@@ -133,6 +137,37 @@ app.components.startMenu = function() {
             </div>
             <div>
               <input className="fullWidth" placeholder="Nick" ref="nick" onKeyPress={this.checkKey} required />
+            </div>
+            <p>
+              <a className="pointer" onClick={this.toggleOptions}>More Options</a>
+            </p>
+            <div className="moreOptions hide">
+              <hr />
+              <div>
+                <input className="fullWidth" placeholder="Username" ref="userName" onKeyPress={this.checkKey} />
+              </div>
+
+              <div>
+                <input className="fullWidth" placeholder="Password" ref="password" onKeyPress={this.checkKey} />
+              </div>
+
+              <div>
+                <input className="fullWidth" placeholder="Real Name" ref="realName" onKeyPress={this.checkKey} />
+              </div>
+
+              <div>
+                <input className="fullWidth" placeholder="Port" ref="port" onKeyPress={this.checkKey} />
+              </div>
+
+              <div>
+                <input type="checkbox" ref="sasl" />
+                <label>SASL</label>
+              </div>
+              
+              <div>
+                <input type="checkbox" ref="secure" />
+                <label>SSL</label>
+              </div>
             </div>
             <a className="button pointer" onClick={this.connect}>Connect</a>
           </form>
@@ -195,6 +230,11 @@ app.components.startMenu = function() {
             $(".mainMenu").toggleClass("hide")
           }
         }
+        else if (data.status === "error") {
+          _this.props.errorMessage = data.error;
+          _this.forceUpdate();
+          _this.props.errorMessage = undefined;
+        }
       });
     },
 
@@ -202,6 +242,18 @@ app.components.startMenu = function() {
       return (
         <div>
           <h1>Login</h1>
+          {function(cxt) {
+            if(cxt.props.errorMessage) {
+              return (
+                <div className="alert error">
+                  <p>
+                    <i className="fa fa-exclamation-circle spacing-right"></i>
+                    {cxt.props.errorMessage}
+                  </p>
+                </div>
+              )
+            }
+          }(this)}
           <form>
             <div>
               <input className="fullWidth" placeholder="username" ref="username" onKeyPress={this.checkKey} />
