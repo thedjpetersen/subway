@@ -20,9 +20,6 @@ app.models.App = Backbone.Model.extend({
   },
 
   getActiveChannel: function() {
-    if (this.get("connections").length === 0) {
-      debugger;
-    }
     return this.getActiveServer().get("channels").get(this.get("active_channel"));
   },
 
@@ -216,7 +213,7 @@ app.models.Message = Backbone.Model.extend({
     }
 
     if (this.get("specialType") === "MOTD") {
-      classList = classList + " MOTD";
+      classList = classList + " motd";
     }
     return classList;
   },
