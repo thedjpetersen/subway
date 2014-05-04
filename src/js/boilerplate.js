@@ -136,6 +136,42 @@ window.util = {
       output_css = output_css + template(highlight);
     });
     util.embedCss(output_css, true, "highlightCss");
+  },
+
+  renderQueue: {
+    queue: [],
+
+    clearQueue: function() {
+      clearInterval(this.queueInt);
+      this.queueInt = undefined;
+      this.queue = [];
+    },
+
+    pushQueue: function(message) {
+      var _this = this;
+
+      this.queue.push(message);
+
+      if(this.queueInt === undefined) {
+        var x;
+        this.queueInt = setInterval(function() {
+          // Render ten messages and then wait 50 milliseconds
+          // then render ten more messages
+          // this allows us to switch channels quickly
+          for(x=0; x<10; x++) {
+            if(_this.queue.length === 0) {
+              clearInterval(this.queueInt);
+              break;
+            } else {
+              var entry = _this.queue.pop();
+              var processedText = entry.getModel().getText();
+              $(entry.getDOMNode()).find(".messageText").html(processedText.text);
+              entry.attachListeners(processedText);
+            }
+          }
+        }, 50);
+      }
+    }
   }
 };
 

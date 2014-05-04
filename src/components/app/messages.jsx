@@ -82,33 +82,35 @@ app.components.messages = function() {
   });
 
   var Message = React.createBackboneClass({
-    attachListeners: function() {
+    attachListeners: function(processedText) {
       var _this = this;
-      this.processedText.listeners.map(function(listener) {
+      processedText.listeners.map(function(listener) {
         if (listener) {
           listener.call(_this);
         }
       });
     },
 
-    componentDidUpdate: function() {
-      this.attachListeners();
+    componentDidMount: function() {
+      util.renderQueue.pushQueue(this);
     },
 
-    componentDidMount: function() {
-      this.attachListeners();
+    shouldComponentUpdate: function(changeObj) {
+      return changeObj.model.cid !== this.getModel().cid;
+    },
+
+    componentDidUpdate: function() {
+      util.renderQueue.pushQueue(this);
     },
 
     render: function() {
-      this.processedText = this.getModel().getText();
-
       return (
         <div className={this.getModel().getClass()}>
           <div className="messageAuthor">
             {this.getModel().get("from")}
           </div>
-          <div className="messageText" dangerouslySetInnerHTML={{__html: this.processedText.text}}>
-          {this.isMounted() ? this.attachListeners() : undefined}
+          <div className="messageText" >
+            {this.getModel().get("text")}
           </div>
           <div className="messageTimestamp">
             {this.getModel().get("timestamp") ? moment(this.getModel().get("timestamp")).format(app.settings.time_format) : ""}

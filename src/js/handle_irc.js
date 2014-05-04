@@ -187,6 +187,25 @@ util.handle_irc = function(message, irc, app_ref) {
       server.addMessage("status", {text: message.args[1], type: "NOTICE"});
       break;
 
+    case "321":
+      // rpl_liststart
+      // args are username/channel/usersname
+      server._list_store = [];
+      break;
+
+    case "322":
+      server._list_store.push({
+        channel: message.args[1],
+        users: message.args[2],
+        topic: message.args[3]
+      });
+      break;
+
+    case "323":
+      server.get("list").reset(server._list_store);
+      server._list_store = [];
+      break;
+
     // Set the topic
     case "332":
       server.get("channels").get(message.args[1]).set("topic", message.args[2]);

@@ -34,6 +34,7 @@ app.models.Connection = Backbone.Model.extend({
 
   initialize: function(attrs, opts) {
     this.attributes.channels = new app.collections.Channels(attrs.channels || []);
+    this.attributes.list = new app.collections.ChannelList(attrs.list || []);
 
     // When we have an update on the model we want to bubble the change
     // on up to the connection
@@ -71,7 +72,7 @@ app.models.Connection = Backbone.Model.extend({
     // initial state
     if (user !== undefined) {
       user.resetActive();
-      if (channel.get("name") === app.irc.get("connections").get("active_channel")) {
+      if (channel.get("name") === app.irc.get("active_channel")) {
         // Redraw the server list
         user.collection.trigger("add");
       }
@@ -91,7 +92,6 @@ app.models.Connection = Backbone.Model.extend({
         util.checkHighlights(added_message, channel, this);
       }
     }
-
   },
 
   addUser: function(channel, user) {
@@ -306,13 +306,14 @@ app.collections.Users = Backbone.Collection.extend({
       return user.get("updated")*-1;
     });
 
-    console.log(users);
-
     return users;
   }
 });
 
 app.models.SubwayUser = Backbone.Model.extend({
+});
+
+app.collections.ChannelList = Backbone.Collection.extend({
 });
 
 // to export our models code to work server side

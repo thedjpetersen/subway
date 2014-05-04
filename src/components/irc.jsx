@@ -92,6 +92,10 @@ app.components.irc = function() {
       var new_server = this.getModel().get("name");
       var new_channel = $(event.target).closest("li").attr("data-channel");
 
+      if (new_channel !== app.irc.getActiveChannel().get("name")) {
+        util.renderQueue.clearQueue();
+      }
+
       // If we are just closing a channel
       if ($(event.target).hasClass("fa-times")) {
         if (new_server === app.irc.get("active_server") &&
