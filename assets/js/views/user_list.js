@@ -12,7 +12,7 @@ var UserView = Backbone.View.extend({
 
   addToIdle: function() {
     var idleTime = this.user.model.get('idle') + 1;
-    if (idleTime > 60) {
+    if (idleTime > 10) {
       this.user.model.set({activity: '', user_status: 'idle'});
       clearInterval(this.intervalTimer);
     } else {
