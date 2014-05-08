@@ -24,6 +24,9 @@ app.io.on("connection_removed", function(data) {
   app.irc.get("connections").remove(data.connection);
 });
 
+app.io.on("register_success", function(data) {
+});
+
 app.io.on("restore_connection", function(data) {
   app.initialized = true;
 

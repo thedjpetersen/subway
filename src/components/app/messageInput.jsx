@@ -102,7 +102,7 @@ app.components.message_input = function() {
     render: function() {
       return (
         <div className="messageInput">
-          <input onKeyDown={this.keyDown} onKeyUp={this.handleInput} />
+          <input onKeyDown={this.keyDown} onKeyUp={this.handleInput} placeholder="You type here..."/>
         </div>
       );
     }
