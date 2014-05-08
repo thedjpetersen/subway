@@ -38,6 +38,13 @@ html { overflow: hidden; }
     background: whiteSmoke;
 }
 
+@font-face {
+  font-family: 'Cousine';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Cousine'), url(http://themes.googleusercontent.com/static/fonts/cousine/v7/S-JOYqoHekxYm2RHFzWYtgLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+}
+
 /* Shared classes
 ---------------------------------------------------------------------*/
 
@@ -297,7 +304,8 @@ html { overflow: hidden; }
   overflow-y: auto;
   overflow-x: hidden;
   background: whiteSmoke;
-  border-right: 1px solid #DDDDDD
+  border-right: 1px solid #DDDDDD;
+  font-family: 'Cousine', sans-serif;
 }
 
 #input-container {
