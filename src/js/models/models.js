@@ -13,6 +13,7 @@ app.models.App = Backbone.Model.extend({
   initialize: function(attrs, opts) {
     attrs = attrs || {};
     this.attributes.connections = new app.collections.Connections(attrs.connections || []);
+    this.attributes.notifications = 0;
   },
 
   getActiveServer: function() {
@@ -26,6 +27,21 @@ app.models.App = Backbone.Model.extend({
   getActiveNick: function() {
     return this.getActiveServer().get("nick");
   },
+
+  setNotifications: function(num) {
+    app.irc.attributes.notifications = app.irc.attributes.notifications+num;
+
+    if(app.irc.attributes.notifications < 0) {
+      app.irc.attributes.notifications = 0;
+    }
+
+    console.log(app.irc.attributes.notifications);
+    if(app.irc.attributes.notifications > 0) {
+      document.title = "(" + app.irc.attributes.notifications + ") " + util.title;
+    } else {
+      document.title = util.title;
+    }
+  }
 
 });
 
@@ -164,8 +180,11 @@ app.models.Channel = Backbone.Model.extend({
   clearNotifications: function() {
     this.set("unread", 0);
     var _this = this;
+    var count;
     if (typeof app.settings !== "undefined") {
       _.each(app.settings.highlights, function(highlight, index, highlights) {
+        count = _this.get(highlight.name) || 0;
+        app.irc.setNotifications(count*-1);
         _this.set(highlight.name, 0);
       });
     } else {

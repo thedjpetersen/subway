@@ -18,6 +18,11 @@ app.components.highlight = function() {
       this.forceUpdate();
     },
 
+    updateNotify: function(event) {
+      this.props.highlight.notify = event.target.checked;
+      this.forceUpdate();
+    },
+
     render: function() {
       return (
         <div className="menuHighlight">
@@ -39,6 +44,10 @@ app.components.highlight = function() {
                 return <input name="color" defaultValue={cxt.props.highlight.color} type="color" onChange={cxt.updateColor} />
               }
             }(this)}
+          </div>
+          <div>
+            <input type="checkbox" name="notify" checked={this.props.highlight.notify} onChange={this.updateNotify} />
+            <label>Notify</label>
           </div>
         </div>
       )

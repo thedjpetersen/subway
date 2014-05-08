@@ -14,6 +14,8 @@ window.app = {
 };
 
 window.util = {
+  title: document.title,
+
   // The raw argument and class argument are optional
   embedCss: function(css, isRaw, cssClass) {
     var output_css = "";
@@ -116,6 +118,10 @@ window.util = {
 
       if (text.search(re) !== -1) {
         channel.set(highlight.name, ++num);
+
+        if(highlight.notify) {
+          app.irc.setNotifications(1);
+        }
       }
     });
   },

@@ -5,7 +5,8 @@ settings.highlights = [
   {
     regex: "\\b(<%= connection.get(\"nick\") %>)\\b",
     color: "#0B2666",
-    name: "mentions"
+    name: "mentions",
+    notify: true
   }
 ];
 
