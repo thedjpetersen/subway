@@ -148,7 +148,7 @@ app.components.startMenu = function() {
               </div>
 
               <div>
-                <input className="fullWidth" placeholder="Password" ref="password" onKeyPress={this.checkKey} />
+                <input className="fullWidth" placeholder="Password" ref="password" type="password" onKeyPress={this.checkKey} />
               </div>
 
               <div>
