@@ -92,7 +92,7 @@ app.components.irc = function() {
       var new_server = this.getModel().get("name");
       var new_channel = $(event.target).closest("li").attr("data-channel");
 
-      if (new_channel !== app.irc.getActiveChannel().get("name")) {
+      if (new_channel !== app.irc.get("active_channel")) {
         util.renderQueue.clearQueue();
       }
 
@@ -101,6 +101,12 @@ app.components.irc = function() {
         if (new_server === app.irc.get("active_server") &&
             new_channel === app.irc.get("active_channel"))
         app.irc.set("active_channel", "status");
+        if (typeof app.user !== "undefined") {
+          app.io.emit("set_active", {
+            active_server: new_server,
+            active_channel: new_channel
+          })
+        }
       } else {
         // Otherwise set the active server and channel
         app.irc.set("active_server", new_server);
