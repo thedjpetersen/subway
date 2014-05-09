@@ -121,6 +121,8 @@ window.util = {
 
         if(highlight.notify) {
           app.irc.setNotifications(1);
+          util.displayNotification(channel.get("name"), message.get("from") + ": " + message.get("text"));
+          util.playSound("message");
         }
       }
     });
@@ -178,7 +180,91 @@ window.util = {
         }, 50);
       }
     }
-  }
+  },
+
+  // Display a desktop notification. 
+  displayNotification: function(title, body) {
+    var icon = '/img/subway.png';
+    if ("Notification" in window) {
+      if (Notification.permission === 'granted') {
+        new Notification(title, {body: body, icon: icon});
+      }
+    }
+  },
+
+  playSound: function(type) {
+    util.sounds && util.sounds[type].play();
+  },
+
+  _loadSound: function(name) {
+    var a = new Audio();
+    a.src = '/sounds/' + name + '.' + this._supportedFormat();
+    return a;
+  },
+
+  // Detect supported HTML5 audio format
+  _supportedFormat: function() {
+    var a = document.createElement('audio');
+    if (!a.canPlayType) return false;
+    else if (!!(a.canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, '')))
+      return 'ogg'
+    else if (!!(a.canPlayType('audio/mpeg;').replace(/no/, '')))
+      return 'mp3'
+  },
+
 };
+
+util.sounds = {
+  newPm: util._loadSound('new-pm'),
+  message: util._loadSound('msg')
+};
+
+// Notifications.
+// Check if the browser supports notifications
+if ("Notification" in window) {
+  // build title and body for the notification saying subway has notifications
+  var title = 'Notifications from Subway';
+  var body = 'Subway will display notifications like this for this session';
+
+  // We display a notification saying that subway will use notifications.
+  // On Chrome this is also a way of requesting permission to display notifications.
+  if (Notification.permission !== 'denied') {
+    // We have to bind the function to `this` to be able to access this.displayNotification
+    Notification.requestPermission(function (permission) {
+      if (!('permission' in Notification)) {
+        Notification.permission = permission;
+      }
+
+      if(permission === 'granted') {
+        util.displayNotification(title, body);
+      }
+    });
+  } else {
+    util.displayNotification(title, body);
+  }
+}
+
+// please note, that IE11 now returns true for window.chrome
+var isChromium = window.chrome,
+    vendorName = window.navigator.vendor;
+if(isChromium !== null && vendorName === "Google Inc." && Notification.permission !== 'granted') {
+   // is Google chrome 
+  var notif = $("<div class=\"notificationCheck\">Click to show notifications</div>")
+  .appendTo("body")
+  .click(function(ev) {
+    Notification.requestPermission(function (permission) {
+      if (!('permission' in Notification)) {
+        Notification.permission = permission;
+      }
+    });
+    $(this).remove();
+  });
+
+  setTimeout(function() {
+    notif.slideUp(400, function(){
+      $(this).remove();
+    });
+  }, 5000);
+}
 
 app.io = io.connect(null, {port: document.location.port});

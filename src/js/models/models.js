@@ -35,7 +35,6 @@ app.models.App = Backbone.Model.extend({
       app.irc.attributes.notifications = 0;
     }
 
-    console.log(app.irc.attributes.notifications);
     if(app.irc.attributes.notifications > 0) {
       document.title = "(" + app.irc.attributes.notifications + ") " + util.title;
     } else {
