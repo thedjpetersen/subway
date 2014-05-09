@@ -24,7 +24,7 @@ window.util = {
     if(isRaw) {
       output_css = '<style type="text/css" class="' + cssClass + '">' + css + "</style>";
     } else {
-      output_css = '<style type="text/css" href="' + css + '" class="' + cssClass + '"></style>';
+      output_css = '<link rel="stylesheet" href="' + css + '"></style>';
     }
     $("head").append(output_css);
   },
