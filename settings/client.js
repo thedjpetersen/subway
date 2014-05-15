@@ -34,4 +34,6 @@ settings.enabled_types = [
 
 settings.disabled_types = [];
 
+settings.notify_pm = true;
+
 module.exports = settings;

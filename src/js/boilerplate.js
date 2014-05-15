@@ -125,6 +125,11 @@ window.util = {
           util.playSound("message");
         }
       }
+
+      if (channel.get("name") !== app.irc.get("active_channel") && app.settings.notify_pm && message.pmToMe(channel)) {
+        util.displayNotification(channel.get("name") + " (pm)", message.get("text"));
+        util.playSound("newPm");
+      }
     });
   },
 

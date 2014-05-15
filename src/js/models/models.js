@@ -201,6 +201,11 @@ app.models.Channel = Backbone.Model.extend({
         channel: this.get("name")
       });
     }
+  },
+
+
+  isPm: function() {
+    return this.get("name").indexOf("#") === -1;
   }
 });
 
@@ -220,13 +225,17 @@ app.models.Message = Backbone.Model.extend({
     this.set(default_props);
   },
 
+  isMe: function() {
+    this.get("from") === app.irc.getActiveNick();
+  },
+
   getAuthor: function() {
     return this.get("from");
   },
 
   getClass: function() {
     var classList = "message";
-    if (this.get("from") === app.irc.getActiveNick()) {
+    if (this.isMe()) {
       classList = classList + " isMe";
     }
 
@@ -234,6 +243,10 @@ app.models.Message = Backbone.Model.extend({
       classList = classList + " motd";
     }
     return classList;
+  },
+
+  pmToMe: function(channel) {
+    return channel.isPm() && channel.get("name") === this.getAuthor();
   },
 
   getText: function() {
