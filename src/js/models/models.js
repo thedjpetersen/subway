@@ -226,7 +226,7 @@ app.models.Message = Backbone.Model.extend({
   },
 
   isMe: function() {
-    this.get("from") === app.irc.getActiveNick();
+    return this.get("from") === app.irc.getActiveNick();
   },
 
   getAuthor: function() {
