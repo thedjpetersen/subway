@@ -334,7 +334,8 @@ app.collections.Users = Backbone.Collection.extend({
 
     // Sort users by whether by when they were updated
     users = _.sortBy(users, function(user) {
-      return user.get("updated")*-1;
+      var active = user.get("last_active");
+      return active < 60 ? user.get("updated")*-1 : active;
     });
 
     return users;
