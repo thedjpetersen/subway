@@ -76,7 +76,8 @@ async.waterfall([
   });
   app.engine("ejs", require("ejs").renderFile);
 
-  var server = http.createServer(app).listen(3000);
+
+  var server = http.createServer(app).listen(process.env.PORT || 3000);
   var io = require("socket.io").listen(server);
 
   // We pass off our socket.io listener to the connection module
