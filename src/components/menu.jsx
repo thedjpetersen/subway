@@ -94,7 +94,7 @@ app.components.startMenu = function() {
       var _this = this;
       var form_data = _.parseForm(this.refs);
       $(this.getDOMNode()).find("input").prop("disabled", true);
-      app.io.emit("connect", form_data);
+      app.io.emit("connectirc", form_data);
 
       app.io.on("connection_error", function(data) {
         _this.props.errorMessage = "Error connecting";
