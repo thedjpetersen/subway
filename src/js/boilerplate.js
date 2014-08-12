@@ -272,4 +272,4 @@ if(isChromium !== null && vendorName === "Google Inc." && Notification.permissio
   }, 5000);
 }
 
-app.io = io.connect(null, {port: document.location.port});
+app.io = io(null, {port: document.location.port});

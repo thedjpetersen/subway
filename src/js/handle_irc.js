@@ -94,7 +94,6 @@ util.handle_irc = function(message, irc, app_ref) {
         app.irc.set("active_channel", message.args[0]);
         conn.trigger("sort");
       } else {
-        console.log(message);
         server.addMessage(message.args[0], {type: "JOIN", nick: message.nick});
         var channel = server.get("channels").get(message.args[0]);
         channel.get("users").add({nick: message.nick});

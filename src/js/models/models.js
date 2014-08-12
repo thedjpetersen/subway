@@ -325,7 +325,9 @@ app.collections.Users = Backbone.Collection.extend({
 
   sortAll: function() {
     // Sort users alphabetically
-    var users = this.sortBy("nick");
+    var users = this.sortBy(function(user) {
+      return user.get("nick").toLowerCase();
+    });
 
     // Sort users by whether or not they are an operator
     users = _.sortBy(users, function(user) {

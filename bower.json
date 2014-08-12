@@ -8,7 +8,7 @@
     "underscore": "1.5.2",
     "font-awesome": "4.0.3",
     "moment": "2.4.0",
-    "socket.io-client": "0.9.16",
+    "socket.io-client": "1.0.4",
     "react": "0.10.0",
     "modernizr": "2.6.2"
   }
