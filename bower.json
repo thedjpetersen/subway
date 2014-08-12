@@ -1,15 +1,15 @@
 {
   "name": "subway",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "jquery": "~2.0.2",
-    "backbone": "1.1.0",
-    "react.backbone": "0.1.3",
-    "underscore": "1.5.2",
-    "font-awesome": "4.0.3",
-    "moment": "2.4.0",
-    "socket.io-client": "1.0.4",
+    "backbone": "1.1.2",
+    "react.backbone": "0.5.0",
+    "underscore": "1.6.0",
+    "font-awesome": "4.1.0",
+    "moment": "2.8.1",
+    "socket.io-client": "1.0.6",
     "react": "0.10.0",
-    "modernizr": "2.6.2"
+    "modernizr": "2.8.3"
   }
 }
