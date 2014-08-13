@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* The Subway IRC client
  * Written By: David Petersen (thedjpetersen)
  *
