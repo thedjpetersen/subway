@@ -3,7 +3,7 @@
 app.components.message_input = function() {
   var MessageInput = React.createBackboneClass({
     keyDown: function(ev) {
-      if (ev.keyCode === 9) {
+      if (ev.charCode === 9) {
         // handle tab complete
         event.preventDefault();
       }

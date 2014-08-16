@@ -81,7 +81,7 @@ app.components.startMenu = function() {
 
   var Connect = React.createBackboneClass({
     checkKey: function(ev) {
-      if(ev.keyCode === 13) {
+      if(ev.charCode === 13) {
         this.connect();
       }
     },
@@ -202,7 +202,7 @@ app.components.startMenu = function() {
 
   var Login = React.createClass({
     checkKey: function(ev) {
-      if(ev.keyCode === 13) {
+      if(ev.charCode === 13) {
         this.login();
       }
     },
