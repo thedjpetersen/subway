@@ -46,36 +46,19 @@ Discussion about the client takes place on this repository's [Issues](https://gi
 Contributors are welcome and greatly appreciated.
 
 
-History
+Goals
 -------
 
-Subway is a combination of two projects that started independently
-with a similar technology stack and similar aims:
-
-- [subway-web](https://github.com/thedjpetersen/subway-web) /
-  [subway-server](https://github.com/thedjpetersen/subway-server)
-  by David Petersen
-- [web-irc](https://github.com/akavlie/web-irc) by Aaron Kavlie
-
 Its goals are twofold:
+
 1) Become the best web-based IRC client available
+
 2) Provide a really easy method of persistent IRC connections, available
    from any web browser
 
 The inspiration for Subway was trying to watch a fellow programmer try
 to explain how to set up screen/irssi to a non-technical person.
 
-Credits
--------
-
-Major Subway contributors include:
-
-- [David Petersen](https://github.com/thedjpetersen), developer
-- [Aaron Kavlie](https://github.com/akavlie), developer
-- [Eric Barch](https://github.com/ericbarch), developer
-- [HyeonJe Jun](https://github.com/noraesae), developer
-- [Jamie Soar](http://www.jamiesoarmusic.co.uk/), notification sounds
-- Yusuke Kamiyamane, some icons
 
 License
 -------
