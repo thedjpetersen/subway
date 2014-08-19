@@ -213,7 +213,9 @@ app.components.startMenu = function() {
     login: function() {
       var _this = this;
       var form_data = _.parseForm(this.refs);
-      form_data.socketid = app.io.socket.sessionid;
+
+      form_data.socketid = app.io.io.engine.id;
+
       $.post("login/", form_data, function(data) {
 
         // Notify server of login

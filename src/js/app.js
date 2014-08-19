@@ -13,7 +13,7 @@ app.io.on("connect", function() {
   menu.show();
 
   if(app.user) {
-    $.post('restore_connection/', {socketid: app.io.socket.sessionid});
+    $.post('restore_connection/', {socketid: app.io.io.engine.id});
   }
 
   util.loadPlugins(app.settings.plugins);
