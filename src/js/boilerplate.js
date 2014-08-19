@@ -171,6 +171,8 @@ window.util = {
           // Render ten messages and then wait 50 milliseconds
           // then render ten more messages
           // this allows us to switch channels quickly
+          var mess = document.getElementsByClassName("messages")[0];
+
           for(x=0; x<10; x++) {
             if(_this.queue.length === 0) {
               clearInterval(this.queueInt);
@@ -178,7 +180,16 @@ window.util = {
             } else {
               var entry = _this.queue.pop();
               var processedText = entry.getModel().getText();
+              // we need to evaluate if the messages is scrolled to the bottom
+              // and then stay there if we are there
+              var is_at_bottom = mess.scrollTop + mess.offsetHeight === mess.scrollHeight;
+
               $(entry.getDOMNode()).find(".messageText").html(processedText.text);
+
+              if(is_at_bottom) {
+                mess.scrollTop = mess.scrollHeight;
+              }
+
               entry.attachListeners(processedText);
             }
           }
