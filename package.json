@@ -5,7 +5,7 @@
     "irc"
   ],
   "author": "David Petersen <davjpetersen@gmail.com>",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "./lib/subway.js",
   "bin": {
     "subway": "./subway.js"
