@@ -1,7 +1,65 @@
 /** @jsx React.DOM */
 
 app.components.message_input = function() {
+  var nickBox = React.createBackboneClass({
+    componentDidUpdate: function() {
+      var position = $('ul li:nth-child(' + this.props.selectedIndex + ')', this.getDOMNode()).position();
+      position = position ? position.top : 0;
+      if(this.props.tabMode) {
+        $(this.getDOMNode()).animate({
+          scrollTop: position
+        }, 200);
+      }
+    },
+
+    handleSelect: function(ev) {
+      this.props.selectUser($(ev.target).index());
+    },
+
+    render: function() {
+      var _this = this;
+      return (
+        <div className={this.props.tabMode ? "nickBox" : "nickBox hide"}>
+          <ul>
+            {this.props.nicks.map(function(user, idx){
+              return (
+                <li onClick={_this.handleSelect} className={_this.props.selectedIndex-1 === idx ? "selected": ""}>
+                  <span className={user.isActive()}>
+                    <i className="fa fa-circle"></i>
+                  </span>
+                  <span>{user.get("type")}{user.get("nick")}</span>
+                  <span className="lastActive">{user.getActive()}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    }
+  });
+
   var MessageInput = React.createBackboneClass({
+    getInitialState: function() {
+      return {
+        nicks: [],
+        selectedIndex: 0
+      };
+    },
+
+    selectUser: function(index) {
+      this.state.selectedIndex = index;
+
+      // We pass a pseudo event to our keyDown handler
+      this.keyDown({
+        keyCode: 9,
+        target: $('input', this.getDOMNode())[0],
+        preventDefault: function() {}
+      });
+
+      // This will cause the nick box to close
+      this.setState({tabMode: false});
+    },
+
     keyDown: function(ev) {
       // handle tabKey and autocompletion
       if (ev.keyCode === 9) {
@@ -13,18 +71,10 @@ app.components.message_input = function() {
         ev.preventDefault();
 
         // Variable to keep track of
-        if(!this.tabMode) {
-          this.tabMode = true;
-          this.userOffset = 0;
+        if(!this.state.tabMode) {
+          this.setState({tabMode: true})
           this.partialMatch = new RegExp(sentence.pop(), "i");
-        } else {
-          // Remove last unsuccessful match
-          // increment our user count
-          if (sentence.length === 2 && sentence[1] !== "") {
-            sentence = [];
-          } else {
-            sentence.pop();
-          }
+          this.originalSentence = _.extend([], sentence);
         }
 
         // Filter our channels users to the ones that start with our
@@ -35,22 +85,25 @@ app.components.message_input = function() {
                   user.get("nick") !== server.get("nick"));
         });
 
-        if (this.userOffset >= users.length) {
-          this.userOffset = 0;
+        this.setState({nicks: users});
+
+        if (this.state.selectedIndex >= users.length) {
+          this.state.selectedIndex = 0;
         }
 
         if (users.length) {
-          sentence.push(users[this.userOffset].get('nick'));
-          if (sentence.length === 1) {
-            ev.target.value = sentence.join(' ') + ": ";
+          //sentence.push(users[this.state.selectedIndex].get('nick'));
+          var usr = users[this.state.selectedIndex].get('nick');
+          if (this.originalSentence.length === 0) {
+            ev.target.value = this.originalSentence.join(' ') + usr + ": ";
           } else {
-            ev.target.value = sentence.join(' ');
+            ev.target.value = this.originalSentence.join(' ') + " " + usr;
           }
         }
 
-        ++this.userOffset;
+        this.setState({selectedIndex: ++this.state.selectedIndex});
       } else {
-        this.tabMode = false;
+        this.setState({tabMode: false, selectedIndex: 0})
       }
     },
 
@@ -103,6 +156,7 @@ app.components.message_input = function() {
     render: function() {
       return (
         <div className="messageInput">
+          <nickBox selectUser={this.selectUser} nicks={this.state.nicks} selectedIndex={this.state.selectedIndex} tabMode={this.state.tabMode}/>
           <input ref="messageInput" onKeyDown={this.keyDown} onKeyUp={this.handleInput} placeholder="You type here..."/>
         </div>
       );
