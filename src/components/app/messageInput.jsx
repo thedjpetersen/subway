@@ -1,11 +1,40 @@
 /** @jsx React.DOM */
 
 app.components.message_input = function() {
+  var messageBox = React.createBackboneClass({
+    componentDidUpdate: function() {
+      if(this.props.historyMode) {
+        var position = $('ul li:nth-child(' + this.props.historyOffset + ')', this.getDOMNode()).position();
+        position = position ? position.top : 0;
+        $(this.getDOMNode()).animate({
+          scrollTop: position
+        }, 200);
+      }
+    },
+
+    render: function() {
+      var _this = this;
+      return (
+        <div className={this.props.historyMode ? "messageBox" : "messageBox hide"}>
+          <ul>
+            {this.props.history.map(function(message, idx){
+              return (
+                <li onClick={_this.handleSelect} className={_this.props.historyOffset-1 === idx ? "selected": ""}>
+                  <span>{message}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )
+    }
+  });
+
   var nickBox = React.createBackboneClass({
     componentDidUpdate: function() {
-      var position = $('ul li:nth-child(' + this.props.selectedIndex + ')', this.getDOMNode()).position();
-      position = position ? position.top : 0;
       if(this.props.tabMode) {
+        var position = $('ul li:nth-child(' + this.props.selectedIndex + ')', this.getDOMNode()).position();
+        position = position ? position.top : 0;
         $(this.getDOMNode()).animate({
           scrollTop: position
         }, 200);
@@ -42,7 +71,8 @@ app.components.message_input = function() {
     getInitialState: function() {
       return {
         nicks: [],
-        selectedIndex: 0
+        selectedIndex: 0,
+        history: []
       };
     },
 
@@ -61,10 +91,43 @@ app.components.message_input = function() {
     },
 
     keyDown: function(ev) {
+      var server = app.irc.getActiveServer();
+      var channel = app.irc.getActiveChannel();
+      var historyVal;
+
+      if (ev.keyCode === 38) {
+        // handle up key
+        historyVal = channel.getNextHistory();
+      }
+
+      if (ev.keyCode === 40) {
+        // handle down key
+        historyVal = channel.getPrevHistory();
+      }
+
+      if (ev.keyCode === 38 || ev.keyCode === 40) {
+        this.setState({
+          history: channel.attributes.history,
+          historyMode: true,
+          historyOffset: channel.attributes.history_offset
+        });
+
+        if (historyVal !== undefined) {
+          ev.target.value = historyVal;
+        } else {
+          ev.target.value = "";
+        }
+      } else {
+        this.setState({historyMode: false})
+      }
+
+      // Handle esc key
+      if (ev.keyCode === 27) {
+        this.setState({historyMode: false, tabMode: false})
+      }
+
       // handle tabKey and autocompletion
       if (ev.keyCode === 9) {
-        var server = app.irc.getActiveServer();
-        var channel = app.irc.getActiveChannel();
 
         var sentence = ev.target.value.split(" ");
         ev.target.focus();
@@ -142,20 +205,12 @@ app.components.message_input = function() {
         ev.target.value = "";
       }
 
-      if (ev.keyCode === 38) {
-        // handle up key
-        ev.target.value = channel.getNextHistory();
-      }
-
-      if (ev.keyCode === 40) {
-        // handle down key
-        ev.target.value = channel.getPrevHistory();
-      }
     },
 
     render: function() {
       return (
         <div className="messageInput">
+          <messageBox history={this.state.history} historyMode={this.state.historyMode} historyOffset={this.state.historyOffset} />
           <nickBox selectUser={this.selectUser} nicks={this.state.nicks} selectedIndex={this.state.selectedIndex} tabMode={this.state.tabMode}/>
           <input ref="messageInput" onKeyDown={this.keyDown} onKeyUp={this.handleInput} placeholder="You type here..."/>
         </div>

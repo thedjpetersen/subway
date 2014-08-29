@@ -1,27 +1,44 @@
 .messageInput
   position: relative
 
+.messageBox
+  background: white;
+  right: 0
+
 .nickBox
+  background: #F8F8F8
+  border-radius: 0 5px 0 0
+  border-right: 1px solid #DDD
+
+.nickBox, .messageBox
   position: absolute
   bottom: 63px
   left: 0
-  background: #F8F8F8
-  border-radius: 0 5px 0 0
   border-top: 1px solid #DDD
-  border-right: 1px solid #DDD
 
   max-height: 250px
   overflow: scroll
 
-.nickBox ul
+.nickBox ul, .messageBox ul
   list-style: none
   margin: 0
   padding: 0
   overflow: hidden
 
+.messageBox li.selected
+  background: #BBBBBB
+  color: white
+
 .nickBox li.selected
   background: #8D8D8D
   color: white
+
+.messageBox li
+  padding: 8px
+  border-bottom: 1px solid #EEE
+
+  &:last-child
+    border-bottom: none
 
 .nickBox li
   padding-right: 250px

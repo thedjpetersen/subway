@@ -24,7 +24,6 @@ util.handle_irc = function(message, irc, app_ref) {
       if (!app.initialized && message.client_server) {
         app.initialized = true;
 
-        console.log(app);
         app.irc.set({
           active_server: message.client_server,
           active_channel: "status"
