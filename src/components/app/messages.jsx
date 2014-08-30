@@ -163,19 +163,6 @@ app.components.messages = function() {
               return;
             }
 
-            /* 
-             * loading message this should go in
-             * the private message before it is 
-             * to scrolled 
-            if (false) {
-              return (
-                <div className="message loading">
-                  <img src="img/bubbles.svg" />
-                </div>
-              );
-            }
-           */
-
             switch (message.get("type")) {
               case "PRIVMSG":
                 return <Message model={message} />

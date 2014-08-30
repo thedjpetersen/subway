@@ -283,4 +283,6 @@ if(isChromium !== null && vendorName === "Google Inc." && Notification.permissio
   }, 5000);
 }
 
+app.loading_template = _.template("<div class=\"loading_default\"><strong>Loading default channels...</strong><br/><img src=\"/img/bubbles.svg\"/></div>")();
+
 app.io = io(null, {port: document.location.port});

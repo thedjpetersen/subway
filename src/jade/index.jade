@@ -28,4 +28,5 @@ html
     | app.user = new app.models.SubwayUser({username: "<%= user.username %>" });
     | <% } %>
     | app.settings = _.extend(app.settings, <%- settings %>);
+    | app.default_servers = <%- default_servers %>;
     | </script>

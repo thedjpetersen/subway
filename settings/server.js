@@ -29,7 +29,20 @@ settings = {
   use_polling: process.env.USE_POLLING || false, // Use polling if websockets aren't supported
 
   // limit each user's connection log to this amount of messages (***not implemented yet***)
-  max_log_size: 4096
+  max_log_size: 4096,
+
+  // Default servers
+  // list default servers which you want the users 
+  // to connect to on startup
+  /*
+  default_servers: [
+    {
+      server: 'localhost',
+      nick: 'guest',
+      channels: ['#test_metro']
+    }
+  ]
+ */
 };
 
 

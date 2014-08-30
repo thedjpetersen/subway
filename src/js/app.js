@@ -16,6 +16,13 @@ app.io.on("connect", function() {
     $.post('restore_connection/', {socketid: app.io.io.engine.id});
   }
 
+  // If we have default servers we want to hide the menu
+  // and show the loading servers message
+  if(app.default_servers && _.isUndefined(app.user)) {
+    $(".mainMenu").toggleClass("hide");
+    $("main").html(app.loading_template);
+  }
+
   util.loadPlugins(app.settings.plugins);
   util.highlightCss();
 });
