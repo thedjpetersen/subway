@@ -106,6 +106,7 @@ app.components.message_input = function() {
       }
 
       if (ev.keyCode === 38 || ev.keyCode === 40) {
+        console.log(channel.attributes.history_offset);
         this.setState({
           history: channel.attributes.history,
           historyMode: true,

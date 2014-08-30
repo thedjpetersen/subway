@@ -166,13 +166,14 @@ app.models.Channel = Backbone.Model.extend({
   getPrevHistory: function() {
     var history = this.attributes.history;
     var offset = this.attributes.history_offset;
-    var entry = history[offset];
 
     if(offset === 0) {
       this.attributes.history_offset = history.length;
     } else  {
       this.attributes.history_offset = offset-1;
     }
+
+    var entry = history[this.attributes.history_offset-1];
     return entry;
   },
 
