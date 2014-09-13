@@ -106,7 +106,6 @@ app.components.message_input = function() {
       }
 
       if (ev.keyCode === 38 || ev.keyCode === 40) {
-        console.log(channel.attributes.history_offset);
         this.setState({
           history: channel.attributes.history,
           historyMode: true,
@@ -171,6 +170,10 @@ app.components.message_input = function() {
       }
     },
 
+    handleBlur: function(ev) {
+      this.setState({tabMode: false, historyMode: false});
+    },
+
     handleInput: function(ev) {
       // If the user pushed enter
       var server = app.irc.getActiveServer();
@@ -213,7 +216,7 @@ app.components.message_input = function() {
         <div className="messageInput">
           <messageBox history={this.state.history} historyMode={this.state.historyMode} historyOffset={this.state.historyOffset} />
           <nickBox selectUser={this.selectUser} nicks={this.state.nicks} selectedIndex={this.state.selectedIndex} tabMode={this.state.tabMode}/>
-          <input ref="messageInput" onKeyDown={this.keyDown} onKeyUp={this.handleInput} placeholder="You type here..."/>
+          <input ref="messageInput" onKeyDown={this.keyDown} onKeyUp={this.handleInput} onBlur={this.handleBlur} placeholder="You type here..."/>
         </div>
       );
     }
