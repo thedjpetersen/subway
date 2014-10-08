@@ -34,7 +34,7 @@ Installation
 
 3. Launch the web server
 
-        $ ./subway
+        $ ./subway.js
 
 4. Point your browser at `http://localhost:3000/`
 
