@@ -1,3 +1,6 @@
+// Get our command line arguments
+var argv = require("yargs").argv;
+
 // Cache the plugin directory for a week
 settings = {
   plugin_directory_expiry: 604800,
@@ -19,14 +22,14 @@ settings = {
   },
 
   dev: {
-    port: process.env.PORT || 3000
+    port: argv.port || argv.p || process.env.PORT || 3000
   },
 
   prod: {
-    port: process.env.PORT || 14858 // Nodester port
+    port: argv.port || argv.p || process.env.PORT || 14858 // Nodester port
   },
 
-  use_polling: process.env.USE_POLLING || false, // Use polling if websockets aren't supported
+  use_polling: argv.polling || process.env.USE_POLLING || false, // Use polling if websockets aren't supported
 
   // limit each user's connection log to this amount of messages (***not implemented yet***)
   max_log_size: 4096,

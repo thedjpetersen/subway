@@ -2,6 +2,7 @@ var _ = typeof _ !== 'undefined' ? _ : require("underscore");
 var util = typeof util !== 'undefined' ? util : {};
 
 util.handle_irc = function(message, irc, app_ref) {
+  console.log(message);
   var app = typeof window !== 'undefined' ? window.app : app_ref;
   var conn = irc.get("connections");
 

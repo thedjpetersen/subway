@@ -19,6 +19,10 @@ var express = require("express"),
 
 var server_settings = require("./settings/server");
 
+
+//Get current environment
+var env = process.env.IRC_ENV || "dev";
+
 // These are our local lib files. The initialize function in our plugin module
 // fetches the different plugins(github gists) we have and downloads them to 
 // the plugin_cache directory.
@@ -46,7 +50,8 @@ async.waterfall([
     // TODO
     // resolve Fatal error: getaddrinfo ENOTFOUND
     // when we don't have active internet connection
-    init_plugins(callback);
+    //init_plugins(callback);
+    callback(null);
   },
   function(callback) {
     // We download all of our third party dependencies or upgrade any if
@@ -80,10 +85,11 @@ async.waterfall([
 
 
   var http = require("http").Server(app);
-  //var server = http.createServer(app).listen(process.env.PORT || 3000);
   var io = require("socket.io")(http);
 
-  http.listen(process.env.PORT || 3000);
+  // We can get the port of the server from the command line
+  // or from the server settings
+  http.listen(server_settings[env] ? server_settings[env].port : server_settings.dev.port);
 
   // We pass off our socket.io listener to the connection module
   // so it can handle incoming events and emit different actions

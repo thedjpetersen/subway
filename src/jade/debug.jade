@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title Subway IRC client
+    meta(name='description', content='The Subway IRC client')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800" rel="stylesheet" type="text/css")
+    link(rel="stylesheet", href="/css/subway.css")
+    link(rel="stylesheet", href="/css/debug.css")
+
+  body
+    .container 
+      main
+        .objects
+        .irc_log
+    script(src="libs/underscore/underscore.js")
+    script(src="libs/socket.io-client/socket.io.js")
+    script(src="js/debug.js")
