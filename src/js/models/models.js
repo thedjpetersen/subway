@@ -223,6 +223,10 @@ app.models.Message = Backbone.Model.extend({
       default_props.type = "PRIVMSG";
     }
 
+    if(this.get("attributes")) {
+      _.extend(default_props, JSON.parse(this.get("attributes")));
+    }
+
     this.set(default_props);
   },
 

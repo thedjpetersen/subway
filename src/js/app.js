@@ -60,6 +60,10 @@ app.io.on("raw", function(message) {
   util.handle_irc(message, app.irc);
 });
 
+app.io.on("disconnect", function(data) {
+  console.log("disconnected");
+});
+
 app.io.on("history", function(data) {
   var server = app.irc.get("connections").get(data.server);
   var channel;

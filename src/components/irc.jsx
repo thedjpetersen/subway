@@ -157,7 +157,7 @@ app.components.irc = function() {
             {this.getModel().get("channels").map(function(chan) {
               return (
                 <li data-channel={chan.get("name")} onClick={_this.setActive} className={_this.isActive(chan) ? "active" : "" }>
-                  {chan.get("name")}
+                  <span className="nav_server_name">{chan.get("name")}</span>
                   {function() {
                     if (chan.get("unread")) {
                       return (
