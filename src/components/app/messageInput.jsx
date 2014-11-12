@@ -1,7 +1,5 @@
-/** @jsx React.DOM */
-
 app.components.message_input = function() {
-  var messageBox = React.createBackboneClass({
+  var MessageBox = React.createBackboneClass({
     componentDidUpdate: function() {
       if(this.props.historyMode) {
         var position = $('ul li:nth-child(' + this.props.historyOffset + ')', this.getDOMNode()).position();
@@ -30,7 +28,7 @@ app.components.message_input = function() {
     }
   });
 
-  var nickBox = React.createBackboneClass({
+  var NickBox = React.createBackboneClass({
     componentDidUpdate: function() {
       if(this.props.tabMode) {
         var position = $('ul li:nth-child(' + this.props.selectedIndex + ')', this.getDOMNode()).position();
@@ -214,8 +212,8 @@ app.components.message_input = function() {
     render: function() {
       return (
         <div className="messageInput">
-          <messageBox history={this.state.history} historyMode={this.state.historyMode} historyOffset={this.state.historyOffset} />
-          <nickBox selectUser={this.selectUser} nicks={this.state.nicks} selectedIndex={this.state.selectedIndex} tabMode={this.state.tabMode}/>
+          <MessageBox history={this.state.history} historyMode={this.state.historyMode} historyOffset={this.state.historyOffset} />
+          <NickBox selectUser={this.selectUser} nicks={this.state.nicks} selectedIndex={this.state.selectedIndex} tabMode={this.state.tabMode}/>
           <input ref="messageInput" onKeyDown={this.keyDown} onKeyUp={this.handleInput} onBlur={this.handleBlur} placeholder="You type here..."/>
         </div>
       );
