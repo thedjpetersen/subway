@@ -84,7 +84,6 @@ util.handle_irc = function(message, irc, app_ref) {
       } else {
         //user mode message
         var user = message.args[0];
-
       }
       break;
 
