@@ -1,6 +1,8 @@
 Subway
 ======
 
+*Subway is not currently functional and not under active development. While the plan is to finish this project some point in the future, currently the maintainer strongly suggests taking a look at [shout](https://github.com/erming/shout)*
+
 Subway is a web-based IRC client with a multi-user backend and a
 JavaScript-heavy UI. Frontend/backend communication is done with
 websockets (or best available fallback where not available).
@@ -68,7 +70,7 @@ or directories), this project is covered by the MIT License:
 
 
 The MIT License (MIT)
-Copyright (c) 2014 David Petersen
+Copyright (c) 2015 David Petersen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
