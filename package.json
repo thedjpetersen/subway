@@ -19,6 +19,7 @@
     "request": "2.33.x",
     "express": "3.5.x",
     "irc": "git://github.com/thedjpetersen/node-irc.git",
+    "slate-irc": "0.8.0",
     "socket.io": "1.0.x",
     "bcrypt-nodejs": "0.0.x",
     "jugglingdb": "0.2.x",
