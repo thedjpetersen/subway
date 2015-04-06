@@ -1,0 +1,35 @@
+{
+  "highlights": [
+    {
+      "regex": "\\b(<%= connection.get(\"nick\") %>)\\b",
+      "color": "#0B2666",
+      "name": "mentions",
+      "notify": true
+    }
+  ],
+
+  "plugins": [
+    "thedjpetersen/9140203",
+    "thedjpetersen/9265479"
+  ],
+
+  "time_format": "HH:mm",
+
+  "enabled_message_types": [
+    "PRIVMSG",
+    "NOTICE",
+    "MODE",
+    "PART",
+    "QUIT",
+    "KICK",
+    "JOIN",
+    "TOPIC",
+    "NICK",
+    "ACTION"
+  ],
+
+  "disabled_message_types": [
+  ],
+
+  "notify_pm": true
+}

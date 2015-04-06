@@ -17,6 +17,9 @@ var express = require("express"),
       bower = require("bower"),
       async = require("async");
 
+var bodyParser = require("body-parser");
+var session = require("express-session");
+
 var server_settings = require("./settings/server");
 
 
@@ -35,8 +38,8 @@ var env = process.env.IRC_ENV || "dev";
 // all incoming IRC commands are hanndled here. It was also handle IRC logging
 // and any other info that needs to be sent to the client(plugin info or settings)
 var init_plugins = require("./lib/plugins").initialize,
-          static = require("./lib/static"),
-      connection = require("./lib/connection");
+          static = require("./lib/static");
+      connection = require("./lib/new_connection");
 
 var cwd = __dirname;
 
@@ -73,8 +76,14 @@ async.waterfall([
   // All static content is placed in the tmp ./tmp directory
   // we use this directory as the root of our server
   var app = express()
-            .use(express.urlencoded())
-            .use(express.cookieParser(server_settings.cookie_secret || "subway_secret"))
+            .use(bodyParser.urlencoded({extended: true}))
+            .use(bodyParser.raw())
+            .use((session({
+              secret: "changeme", 
+              cookie: {secure: false},
+              resave: false,
+              saveUninitialized: true
+            })))
             .use(express.static(cwd + "/tmp"));
 
   app.configure(function() {

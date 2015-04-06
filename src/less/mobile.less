@@ -1,0 +1,38 @@
+.mobile-nav {
+  display: none;
+}
+
+.toggleSideNav {
+  font-size: 1.5em;
+}
+
+.mobile-header {
+  background: @base-background-color;
+  border-bottom: 1px solid @base-border-color;
+  padding: 10px 20px;
+}
+
+@media @mobile, @tablet {
+  .mobile-nav {
+    display: block;
+  }
+
+  .config-menu {
+    display: none;
+  }
+
+  nav {
+    margin-left: -240px;
+  }
+
+  nav.open {
+    margin-left: 0;
+    transition: 0.5s;
+    transform: translateX(0);
+  }
+
+  nav.closed {
+    transition: 0.5s;
+    transform: translateX(0);
+  }
+}

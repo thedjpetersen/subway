@@ -82,9 +82,11 @@ window.util = {
       app.plugin_registry = data;
     });
 
-    plugins.map(function(plugin) {
-      util.loadPlugin(plugin);
-    });
+    if (typeof plugins !== "undefined") {
+      plugins.map(function(plugin) {
+        util.loadPlugin(plugin);
+      });
+    }
   },
 
   // Check for highlights and set the text

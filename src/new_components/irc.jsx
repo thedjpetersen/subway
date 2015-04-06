@@ -1,0 +1,2 @@
+app.components.irc = function() {
+}

@@ -273,7 +273,10 @@ app.components.startMenu = function() {
   var Register = React.createClass({
     register: function() {
       var form_data = _.parseForm(this.refs);
-      app.io.emit("register", form_data);
+      $.post('/register/', form_data, function(data) {
+        console.log(data);
+      });
+      //app.io.emit("register", form_data);
     },
 
     render: function() {
@@ -381,10 +384,6 @@ app.components.startMenu = function() {
 
   this.show = function() {
     this.menu = React.renderComponent(new Menu(), $(".mainMenu").get(0));
-
-    $("nav img").click(function() {
-      $(".mainMenu").toggleClass("hide");
-    });
   }
 
   this.render = function() {

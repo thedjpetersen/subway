@@ -3,30 +3,19 @@ html
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    title Subway IRC client
-    meta(name='description', content='The Subway IRC client')
+    title Subway
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800" rel="stylesheet" type="text/css")
     each file in css_output
       link(rel="stylesheet", href="#{file}")
 
   body
-    .mainMenu
-    .container
-      nav
+    .subway-container
+      nav.tree-view.closed
         .text-center
-          img(src="/img/subway.png")
           h1 Subway
-            br
-            small IRC Client
         .nav-area
       main
+        .menu
     each file in js_output
       script(src="#{file}")
-    | <script>
-    | <% if (user) { %>
-    | app.user = new app.models.SubwayUser({username: "<%= user.username %>" });
-    | <% } %>
-    | app.settings = _.extend(app.settings, <%- settings %>);
-    | app.default_servers = <%- default_servers %>;
-    | </script>
