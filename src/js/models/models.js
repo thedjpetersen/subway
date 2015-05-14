@@ -51,6 +51,8 @@ app.models.Connection = Backbone.Model.extend({
     this.attributes.channels = new app.collections.Channels(attrs.channels || []);
     this.attributes.list = new app.collections.ChannelList(attrs.list || []);
 
+    this.attributes.channels.serverName = attrs.name;
+
     // When we have an update on the model we want to bubble the change
     // on up to the connection
     this.attributes.channels.on("all", function()  {
@@ -204,6 +206,29 @@ app.models.Channel = Backbone.Model.extend({
     }
   },
 
+  setActive: function() {
+    if (this.get("name") !== app.irc.get("active_channel")) {
+      util.renderQueue.clearQueue();
+    }
+
+    // Otherwise set the active server and channel
+    app.irc.set("active_server", this.getServerName());
+    app.irc.set("active_channel", this.get("name"));
+
+    // Clear notifications highlights and unreads
+    this.clearNotifications();
+
+    if (typeof app.user !== "undefined") {
+      app.io.emit("set_active", {
+        active_server: this.getServerName(),
+        active_channel: this.get("name")
+      })
+    }
+  },
+
+  getServerName: function() {
+    return this.collection.serverName;
+  },
 
   isPm: function() {
     return this.get("name").indexOf("#") === -1;
@@ -238,8 +263,22 @@ app.models.Message = Backbone.Model.extend({
     return this.get("from");
   },
 
+  getPreviousMessage: function() {
+    var index = this.collection.indexOf(this);
+    if (index === 0) {
+      return;
+    } else {
+      return this.collection.models[index-1];
+    }
+  },
+
   getClass: function() {
     var classList = "message";
+
+    if(this.getPreviousMessage() && this.get("from") === this.getPreviousMessage().get("from")) {
+      classList = classList + " sameAuthor";
+    }
+
     if (this.isMe()) {
       classList = classList + " isMe";
     }
@@ -247,6 +286,7 @@ app.models.Message = Backbone.Model.extend({
     if (this.get("specialType") === "MOTD") {
       classList = classList + " motd";
     }
+
     return classList;
   },
 

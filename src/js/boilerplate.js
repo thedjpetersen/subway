@@ -13,6 +13,9 @@ window.app = {
   },
 };
 
+// Write our client settings to the defaults
+_.extend(window.app.settings, window.subway_settings);
+
 window.util = {
   title: document.title,
 
@@ -116,7 +119,7 @@ window.util = {
       }
 
       var num = channel.get(highlight.name) || 0;
-      var re = new RegExp(_.template(highlight.regex, {message: message, channel: undefined, connection: connection}), "g");
+      var re = new RegExp(_.template(highlight.regex)({message: message, channel: undefined, connection: connection}), "g");
 
       if (text.search(re) !== -1) {
         channel.set(highlight.name, ++num);
@@ -252,13 +255,7 @@ if ("Notification" in window) {
       if (!('permission' in Notification)) {
         Notification.permission = permission;
       }
-
-      if(permission === 'granted') {
-        util.displayNotification(title, body);
-      }
     });
-  } else {
-    util.displayNotification(title, body);
   }
 }
 

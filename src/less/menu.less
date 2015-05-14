@@ -10,6 +10,7 @@
   color: @text-color;
   background-color: @pane-item-background-color;
   height: 100%;
+  display: flex;
 }
 
 .config-menu {
@@ -21,4 +22,9 @@
 // the border radius on the menu
 .config-menu .nav > li > a {
   border-radius: 0;
+}
+
+.menu-content {
+  flex: 1;
+  padding: 10px 20px;
 }

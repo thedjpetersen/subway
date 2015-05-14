@@ -4,7 +4,7 @@ var argv = require("yargs").argv;
 // Cache the plugin directory for a week
 settings = {
   plugin_directory_expiry: 604800,
-  dbadapter: "sqlite3",
+  dbadapter: "sqlite",
   dbname: "subway.db",
   dbusername: "",
   dbpassword: "",

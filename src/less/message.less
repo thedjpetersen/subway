@@ -1,0 +1,80 @@
+.messages {
+  flex: 1;
+  overflow: auto;
+  background-color: #FFF;
+}
+
+.message {
+  display: flex;
+  padding: 5px 0;
+  & > div {
+    padding: 7px;
+  }
+}
+
+.messageAuthor {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  color: #555;
+}
+
+.messageText {
+  flex: 1;
+  word-wrap: break-word;
+  text-rendering: optimizeLegibility;
+}
+
+.messageTimestamp {
+  width: 100px;
+  color: #AAA;
+}
+
+.isMe {
+  background: #F7F7FA;
+}
+
+.mention {
+  color: #0B2666;
+  font-weight: bold;
+}
+
+.message > div > .fa {
+  margin-right: 5px;
+  opacity: 0.6;
+}
+
+.message:hover > div > .fa {
+  opacity: 1.0;
+}
+
+.message > div > .fa-sign-in {
+  color: #66AF2C;
+}
+
+.message > div > .fa-sign-out {
+  color: #AF2C36;
+}
+
+.message > div > .fa-sign-circle {
+  color: #2C7BAF;
+}
+
+.motd .messageText {
+  white-space: pre;
+  background: #FAFAFA;
+  border-radius: 4px;
+}
+
+.sameAuthor .messageAuthor {
+  opacity: 0;
+}
+
+.sameAuthor .messageTimestamp {
+  opacity: 0;
+}
+
+.sameAuthor:hover .messageTimestamp {
+  opacity: 1;
+}

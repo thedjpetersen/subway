@@ -12,10 +12,12 @@ html
   body
     .subway-container
       nav.tree-view.closed
-        .text-center
-          h1 Subway
+        div
+          h2 Subway
         .nav-area
       main
         .menu
+    script.
+      window.subway_settings = <%- settings %>;
     each file in js_output
       script(src="#{file}")

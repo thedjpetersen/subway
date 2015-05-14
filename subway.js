@@ -22,6 +22,12 @@ var session = require("express-session");
 
 var server_settings = require("./settings/server");
 
+var sessionMiddleware = session({
+  secret: "changeme", 
+  cookie: {secure: false},
+  resave: false,
+  saveUninitialized: true
+});
 
 //Get current environment
 var env = process.env.IRC_ENV || "dev";
@@ -78,12 +84,7 @@ async.waterfall([
   var app = express()
             .use(bodyParser.urlencoded({extended: true}))
             .use(bodyParser.raw())
-            .use((session({
-              secret: "changeme", 
-              cookie: {secure: false},
-              resave: false,
-              saveUninitialized: true
-            })))
+            .use(sessionMiddleware)
             .use(express.static(cwd + "/tmp"));
 
   app.configure(function() {
@@ -94,6 +95,10 @@ async.waterfall([
 
   var http = require("http").Server(app);
   var io = require("socket.io")(http);
+
+  io.use(function(socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+  });
 
   // We can get the port of the server from the command line
   // or from the server settings

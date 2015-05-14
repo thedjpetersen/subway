@@ -46,7 +46,18 @@ app.components.Menu = React.createBackboneClass({
             </li>
           </ul>
         </div>
-        <div className="panels">
+        <div className="menu-content">
+        {function(active) {
+          if (active === "connect") {
+            return <app.components.Connect />
+          } else if (active === "login") {
+            return <app.components.Login />
+          } else if (active === "settings") {
+            return <app.components.Settings />
+          } else {
+            return "";
+          }
+        }(active)}
         </div>
       </div>
     )

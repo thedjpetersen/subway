@@ -4,9 +4,24 @@ main {
 }
 
 nav {
-  padding: 15px;
+  padding: 20px 30px;
 }
 
 .text-center {
   text-align: center;
 }
+
+textarea, input,
+textarea.form-control, input.form-control {
+  background: @input-background-color;
+  border: 1px solid @input-border-color;
+  border-radius: 3px;
+  box-shadow: none;
+  padding: 10px 15px;
+  -webkit-font-smoothing: antialiased;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+

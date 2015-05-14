@@ -3,6 +3,11 @@ app.initialized = false;
 
 app.irc = new app.models.App();
 
+app.irc.on("start", function() {
+  React.render(React.createElement(app.components.irc, {model: app.irc}), document.querySelectorAll("main")[0]);
+  $(".menu").addClass("hide");
+});
+
 // Display startup menu
 // TODO if the user is already logged in we need to connect them directly
 // their session
@@ -10,6 +15,8 @@ app.irc = new app.models.App();
 // we need to immediately go into the connecting mode
 app.io.on("connect", function() {
   React.render(React.createElement(app.components.Menu, {}), document.querySelectorAll("div.menu")[0]);
+
+  React.render(React.createElement(app.components.sideNav, {collection: app.irc.get("connections")}), document.querySelectorAll("div.nav-area")[0]);
 
   // If we have default servers we want to hide the menu
   // and show the loading servers message
@@ -20,10 +27,8 @@ app.io.on("connect", function() {
   }
  */
 
-  /*
   util.loadPlugins(app.settings.plugins);
   util.highlightCss();
- */
 });
 
 app.io.on("connection_removed", function(data) {

@@ -20,8 +20,7 @@ util.handle_irc = function(message, irc, app_ref) {
       break;
 
     case "NOTICE":
-      // If our app is not initialized we need to start it now
-      if (!app.initialized && message.client_server) {
+      if (!app.initialized) {
         app.initialized = true;
 
         app.irc.set({
@@ -34,15 +33,7 @@ util.handle_irc = function(message, irc, app_ref) {
         // We a status channel for our new connection
         conn.first().addChannel("status");
 
-        if (typeof module === 'undefined') {
-          $(".mainMenu").addClass("hide");
-
-          var irc = new app.components.irc({
-            collection: conn
-          });
-          irc.show();
-        }
-
+        app.irc.trigger("start");
       } else {
         if(conn.get(message.client_server) === undefined) {
           conn.addServer(message.client_server);

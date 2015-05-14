@@ -2,7 +2,7 @@
   "highlights": [
     {
       "regex": "\\b(<%= connection.get(\"nick\") %>)\\b",
-      "color": "#0B2666",
+      "color": "#6566AD",
       "name": "mentions",
       "notify": true
     }

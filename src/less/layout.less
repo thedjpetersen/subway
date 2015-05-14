@@ -17,3 +17,75 @@ nav {
   height: 100%;
   width: 240px;
 }
+
+.app {
+  display: flex;
+  flex: 1;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+}
+
+.titlebar {
+  display: flex;
+  padding: 10px;
+  background: #FFF;
+
+  strong {
+    font-size: 1.1em;
+    margin-right: 10px;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.topic {
+  color: #777;
+}
+
+.messages-container {
+  display: flex;
+  flex: 1;
+}
+
+.messages {
+  flex-direction: column;
+  flex: 1;
+}
+
+.messageInput {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid @base-border-color;
+  background-color: @base-background-color;
+
+  input {
+    flex: 1;
+    margin-right: 10px;
+  }
+}
+
+.userList {
+  width: 250px;
+  background-color: #FFF;
+  padding: 0 20px;
+  overflow: scroll;
+
+  .user {
+    padding-bottom: 5px;
+  }
+
+  .activeUser, .notActiveUser {
+    margin-right: 5px;
+  }
+
+  .notActiveUser {
+    color: #999;
+  }
+}
