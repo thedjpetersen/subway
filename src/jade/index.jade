@@ -5,17 +5,21 @@ html
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title Subway
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800" rel="stylesheet" type="text/css")
+    link(href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700,800" rel="stylesheet" type="text/css" async)
     each file in css_output
       link(rel="stylesheet", href="#{file}")
 
   body
     .subway-container
       nav.tree-view.closed
-        div
+        div.logo
           h2 Subway
+            a.settings-link
+              small
+                i.fa.fa-gear
         .nav-area
       main
+        .app-container
         .menu
     script.
       window.subway_settings = <%- settings %>;

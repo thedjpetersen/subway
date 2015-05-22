@@ -215,6 +215,12 @@ app.models.Channel = Backbone.Model.extend({
     app.irc.set("active_server", this.getServerName());
     app.irc.set("active_channel", this.get("name"));
 
+    // The react component for the side navigation
+    // is listening to each of the channel models
+    // so we have to trigger a change event to get 
+    // it to update correctly
+    app.irc.getActiveChannel().trigger("change");
+
     // Clear notifications highlights and unreads
     this.clearNotifications();
 
@@ -294,8 +300,8 @@ app.models.Message = Backbone.Model.extend({
     return channel.isPm() && channel.get("name") === this.getAuthor();
   },
 
-  getText: function() {
     // Highlight any mentions or other regexes
+  getText: function() {
     var text = util.highlightText(this);
 
     // Apply any loaded plugins to the message
@@ -368,11 +374,17 @@ app.collections.Users = Backbone.Collection.extend({
     return [user.get("last_active")*-1, user.get("nick")];
   },
 
-  sortAll: function() {
+  sortAll: function(type) {
     // Sort users alphabetically
     var users = this.sortBy(function(user) {
       return user.get("nick").toLowerCase();
     });
+
+    if(typeof type !== "undefined") {
+      users = _.filter(users, function(user) {
+        return user.get("type") === type;
+      });
+    }
 
     // Sort users by whether or not they are an operator
     users = _.sortBy(users, function(user) {

@@ -104,7 +104,7 @@ window.util = {
       if(highlight.name === undefined) {
         return;
       }
-      var re = new RegExp(_.template(highlight.regex, {message: message, channel: undefined, connection: connection}), "g");
+      var re = new RegExp(_.template(highlight.regex)({message: message, channel: undefined, connection: connection}), "g");
       text = text.replace(re, template(highlight));
     });
     return text;

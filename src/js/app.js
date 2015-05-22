@@ -4,7 +4,9 @@ app.initialized = false;
 app.irc = new app.models.App();
 
 app.irc.on("start", function() {
-  React.render(React.createElement(app.components.irc, {model: app.irc}), document.querySelectorAll("main")[0]);
+  $(".settings-link").click(function() {$(".menu").toggleClass("hide");});
+
+  React.render(React.createElement(app.components.irc, {model: app.irc}), document.querySelectorAll("div.app-container")[0]);
   $(".menu").addClass("hide");
 });
 

@@ -14,7 +14,12 @@ app.components.UserList = React.createBackboneClass({
     return (
       <div className="userList">
         <div className="usersListed">
-          {this.getCollection().sortAll().map(function(user) {
+          <small><strong>Operators</strong></small>
+          {this.getCollection().sortAll("@").map(function(user) {
+            return <app.components.User model={user} />
+          })}
+          <small><strong>Users</strong></small>
+          {this.getCollection().sortAll("").map(function(user) {
             return <app.components.User model={user} />
           })}
         </div>

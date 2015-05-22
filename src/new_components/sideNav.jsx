@@ -8,7 +8,7 @@ app.components.Channel = React.createBackboneClass({
 
     return (
       <div className="sideNav-channel" onClick={this.setActive}>
-        <span>{chan.get("name")}</span>
+        <span className={app.irc.getActiveChannel().cid === chan.cid ? "active" : ""}>{chan.get("name")}</span>
 
         {function() {
           if (chan.get("unread")) {
