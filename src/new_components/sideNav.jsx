@@ -3,7 +3,12 @@ app.components.Channel = React.createBackboneClass({
     this.getModel().setActive();
   },
 
+  leave: function() {
+    app.io.emit("command", {server: this.getModel().getServerName(), target: this.getModel().get("name"), command: "leave"});
+  },
+
   render: function() {
+    var _this = this;
     var chan = this.getModel();
 
     return (
@@ -25,7 +30,11 @@ app.components.Channel = React.createBackboneClass({
             )
           }
         })}
-        <i className="fa fa-times pull-right" onClick={this.leave}></i>
+        {function() {
+          if (chan.get("name") !== "status") {
+            return <i className="fa fa-times pull-right" onClick={_this.leave}></i>
+          }
+        }()}
       </div>
     )
   }

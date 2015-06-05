@@ -1,0 +1,57 @@
+.messageTypes {
+  background: white;
+  list-style-type: none;
+  padding: 0;
+  width: 200px;
+
+  li {
+    padding: 10px 15px 10px 30px;
+
+    &:hover {
+      background: #ACDF98;
+      color: white;
+    }
+  }
+
+  .fa-check {
+    float: right;
+  }
+
+  .active {
+    color: white;
+    background: #8CC077;
+  }
+}
+
+.menuPlugins {
+  padding: 20px;
+  background: #FFF;
+  border-radius: 4px;
+  margin-top: 10px;
+  max-height: 400px;
+  overflow: scroll;
+
+  .menuPlugin {
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 10px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover .pluginButtons {
+      display: block;
+    }
+  }
+}
+
+.pluginButtons {
+  display: none;
+  float: right;
+}
+
+.menuHighlight {
+  border-top: 1px solid #CCC;
+  margin-top: 10px;
+  padding-top: 10px;
+}

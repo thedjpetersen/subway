@@ -6,10 +6,18 @@
   font-size: 1.5em;
 }
 
-.mobile-header {
+.menu-container .mobile-header {
   background: @base-background-color;
   border-bottom: 1px solid @base-border-color;
   padding: 10px 20px;
+}
+
+.titlebar .mobile-header {
+  margin-right: 10px;
+
+  a {
+    vertical-align: top;
+  }
 }
 
 @media @mobile, @tablet {

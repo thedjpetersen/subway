@@ -92,8 +92,8 @@ util.handle_irc = function(message, irc, app_ref) {
 
     case "PART":
       if(message.nick === server.get("nick")) {
-        server.get("channels").remove(message.args[0]);
         app.irc.set("active_channel", "status");
+        server.get("channels").remove(message.args[0]);
         conn.trigger("sort");
       } else {
         var channel = server.get("channels").get(message.args[0]);

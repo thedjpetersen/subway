@@ -1,7 +1,19 @@
 app.components.TitleBar = React.createBackboneClass({
+  toggleSideNav: function() {
+    $("nav").toggleClass("open").toggleClass("closed");
+  },
+
   render: function() {
     return (
       <div className="titlebar">
+        <div className="mobile-nav">
+          <div className="mobile-header">
+            <a className="toggleSideNav" onClick={this.toggleSideNav}>
+              <span className="fa fa-bars"></span>
+            </a>
+          </div>
+        </div>
+
         <strong>{this.getModel().get("name")}</strong>
         <span className="topic">  {this.getModel().get("topic")}</span>
       </div>

@@ -30,6 +30,7 @@ app.components.Menu = React.createBackboneClass({
           <select onChange={this.selectActive} className="form-control" value={this.props.active}>
             <option value="connect">Connect</option>
             <option value="login">Login</option>
+            <option value="register">Register</option>
             <option value="settings">Settings</option>
           </select>
         </div>
@@ -40,6 +41,9 @@ app.components.Menu = React.createBackboneClass({
             </li>
             <li className={active === "login" ? "active": ""}>
               <a onClick={this.setActive.bind(this, "login")}>Login</a>
+            </li>
+            <li className={active === "register" ? "active": ""}>
+              <a onClick={this.setActive.bind(this, "register")}>Register</a>
             </li>
             <li className={active === "settings" ? "active": ""}>
               <a onClick={this.setActive.bind(this, "settings")}>Settings</a>
@@ -52,6 +56,8 @@ app.components.Menu = React.createBackboneClass({
             return <app.components.Connect />
           } else if (active === "login") {
             return <app.components.Login />
+          } else if (active === "register") {
+            return <app.components.Register />
           } else if (active === "settings") {
             return <app.components.Settings />
           } else {

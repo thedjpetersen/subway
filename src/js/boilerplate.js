@@ -71,7 +71,7 @@ window.util = {
       util.embedJs(base_url + "plugin.js");
       util.embedCss(base_url + "plugin.css");
       app.plugin_data[data.pluginId] = data;
-      app.settings.active_plugins.push(data.pluginId);
+      app.settings.active_plugins = _.union(app.settings.active_plugins, [data.pluginId]);
 
       if (cb) {
         cb.call(this);

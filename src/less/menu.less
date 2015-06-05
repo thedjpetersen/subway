@@ -28,3 +28,32 @@
   flex: 1;
   padding: 10px 20px;
 }
+
+.navBar {
+  list-style: none;
+  color: #585858;
+  border: 1px solid #CCC;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0;
+
+  .navActive {
+    background: #CCC;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0;
+    padding: 10px;
+    border-right: 1px solid #CCC;
+  }
+
+  li:last-child {
+    border-right: none;
+  }
+
+  li:not(.navActive):hover {
+    cursor: pointer;
+    color: #888;
+  }
+}

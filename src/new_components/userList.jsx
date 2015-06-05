@@ -10,16 +10,35 @@ app.components.User = React.createBackboneClass({
 });
 
 app.components.UserList = React.createBackboneClass({
+  getInitialState: function() {
+    return {
+      searchString: ""
+    }
+  },
+
+  matchesSearch: function(value) {
+    return value.get("nick").indexOf(this.state.searchString) !== -1;
+  },
+
+  updateSearch: function(ev) {
+    this.setState({searchString: ev.target.value});
+  },
+
   render: function() {
     return (
       <div className="userList">
+        <div className="userSearch">
+          <input placeholder="Search users" defaultValue={this.state.searchString} onChange={this.updateSearch} />
+        </div>
         <div className="usersListed">
-          <small><strong>Operators</strong></small>
-          {this.getCollection().sortAll("@").map(function(user) {
+          <div>
+            <small><strong>Operators</strong></small>
+          </div>
+          {this.getCollection().sortAll("@").filter(this.matchesSearch).map(function(user) {
             return <app.components.User model={user} />
           })}
           <small><strong>Users</strong></small>
-          {this.getCollection().sortAll("").map(function(user) {
+          {this.getCollection().sortAll("").filter(this.matchesSearch).map(function(user) {
             return <app.components.User model={user} />
           })}
         </div>
