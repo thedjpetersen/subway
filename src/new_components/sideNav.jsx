@@ -1,10 +1,22 @@
 app.components.Channel = React.createBackboneClass({
   setActive: function() {
+    // Hide server view/settings if showing
+    app.irc.set("serverView", undefined);
+    $(".menu").addClass("hide");
+
     this.getModel().setActive();
   },
 
   leave: function() {
-    app.io.emit("command", {server: this.getModel().getServerName(), target: this.getModel().get("name"), command: "leave"});
+    var channel = this.getModel().get("name");
+
+    if (channel.indexOf("#") === -1) {
+      // If it is a private message we just want to remove it
+      this.getModel().collection.models[0].setActive();
+      this.getModel().collection.remove(this.getModel());
+    } else {
+      app.io.emit("command", {server: this.getModel().getServerName(), target: this.getModel().get("name"), command: "leave"});
+    }
   },
 
   render: function() {
@@ -13,7 +25,7 @@ app.components.Channel = React.createBackboneClass({
 
     return (
       <div className="sideNav-channel" onClick={this.setActive}>
-        <span className={app.irc.getActiveChannel().cid === chan.cid ? "active" : ""}>{chan.get("name")}</span>
+        <span className={app.irc.getActiveChannel() === chan ? "active" : ""}>{chan.get("name")}</span>
 
         {function() {
           if (chan.get("unread")) {
@@ -41,10 +53,18 @@ app.components.Channel = React.createBackboneClass({
 });
 
 app.components.Connection = React.createBackboneClass({
+  serverDetails: function() {
+    if (typeof app.irc.get("serverView") === "undefined") {
+      app.irc.set("serverView", this.getModel().get("name"));
+    } else {
+      app.irc.set("serverView", undefined);
+    }
+  },
+
   render: function() {
     return (
       <div className="sideNav-connection">
-        <strong>{this.getModel().get("name")}</strong>
+        <strong onClick={this.serverDetails} className="pointer">{this.getModel().get("name")}</strong>
         {this.getModel().get("channels").map(function(chan) {
           return <app.components.Channel model={chan} />
         })}

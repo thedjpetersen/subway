@@ -1,22 +1,16 @@
-app.components.UserList = React.createBackboneClass({
-  render: function() {
-    return (
-      <div>
-      </div>
-    )
-  }
-});
-
 app.components.irc = React.createBackboneClass({
   render: function() {
-    var channel = this.getModel().getActiveChannel();
-
-    // If we don't currently have a channel
-    if (!channel) { return <div></div> }
+    var _this = this;
 
     return (
       <div className="app">
-        <app.components.Chat model={channel} />
+        {function() {
+          if(_this.getModel().get("serverView")) {
+            return <app.components.Server model={_this.getModel().get("connections").get(_this.getModel().get("serverView"))} />
+          } else {
+            return <app.components.Chat model={_this.getModel().getActiveChannel()} />
+          }
+        }()}
       </div>
     );
   }

@@ -186,13 +186,14 @@ util.handle_irc = function(message, irc, app_ref) {
     case "322":
       server._list_store.push({
         channel: message.args[1],
-        users: message.args[2],
+        users: Number(message.args[2]),
         topic: message.args[3]
       });
       break;
 
     case "323":
       server.get("list").reset(server._list_store);
+      server.trigger("change");
       server._list_store = [];
       break;
 

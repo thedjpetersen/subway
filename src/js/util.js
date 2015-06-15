@@ -32,3 +32,19 @@ _.validateForm = function(refs) {
 
   return isValid;
 };
+
+_.makeWorkingButton = function(node) {
+  var oldHTML = node.innerHTML;
+
+  node.restore = function() {
+    node.innerHTML = oldHTML;
+    node.classList.remove("disabled");
+  };
+
+  node.classList.add("disabled");
+  var icon = document.createElement("i");
+  icon.classList.add("fa", "fa-circle-o-notch", "fa-spin", "spacing-left");
+  node.appendChild(icon);
+
+  return node;
+}

@@ -1,8 +1,22 @@
 app.components.User = React.createBackboneClass({
+  openPm: function() {
+    var server = app.irc.getActiveServer();
+    var nick = this.getModel().get("nick");
+
+    // You can not PM yourself
+    if(nick === server.get("nick")) {
+      return;
+    }
+
+    // Add channel and activate it
+    server.addChannel(nick);
+    server.get("channels").get(nick).setActive();
+  },
+
   render: function() {
     return (
       <div className="user">
-        <span className={this.getModel().isActive()}>{this.getModel().get("type")}{this.getModel().get("nick")}</span>
+        <span className={this.getModel().isActive() + " pointer"} onClick={this.openPm}>{this.getModel().get("type")}{this.getModel().get("nick")}</span>
         <span className="lastActive">{this.getModel().getActive()}</span>
       </div>
     )

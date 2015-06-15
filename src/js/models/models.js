@@ -97,7 +97,8 @@ app.models.Connection = Backbone.Model.extend({
 
     // If we are not idling on the active channel we want to 
     // increment the number of unread messages in the server
-    if(channel.get("name") !== app.irc.getActiveChannel().get("name") && _.contains(["PRIVMSG"], added_message.get("type"))) {
+    if(channel.get("name") !== app.irc.getActiveChannel().get("name") 
+       && _.contains(["PRIVMSG"], added_message.get("type"))) {
       if (!channel.get("unread")) {
         channel.set("unread", 0);
       }
@@ -105,6 +106,10 @@ app.models.Connection = Backbone.Model.extend({
       var unread = channel.get("unread");
       channel.set("unread", ++unread);
 
+      if (typeof util !== "undefined") {
+        util.checkHighlights(added_message, channel, this);
+      }
+    } else if (document.hidden) {
       if (typeof util !== "undefined") {
         util.checkHighlights(added_message, channel, this);
       }
@@ -405,6 +410,22 @@ app.models.SubwayUser = Backbone.Model.extend({
 });
 
 app.collections.ChannelList = Backbone.Collection.extend({
+  getPage: function(state) {
+    var models = this.sortBy(state.sortAttr);
+
+    models = _.filter(models, function(model) {
+      var channel = model.get("channel") || "";
+      var topic = model.get("topic") || "";
+
+      return (Boolean(channel) && channel.toLowerCase().indexOf(state.filter.toLowerCase()) !== -1)
+             || (Boolean(topic) && topic.toLowerCase().indexOf(state.filter.toLowerCase()) !== -1);
+    });
+
+    if(state.sortDir === -1) {
+      models.reverse();
+    }
+    return models.slice((state.page-1)*state.per_page, state.page*state.per_page);
+  }
 });
 
 // to export our models code to work server side

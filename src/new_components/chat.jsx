@@ -30,7 +30,7 @@ app.components.Chat = React.createBackboneClass({
         <div className="messages-container">
           <app.components.Messages collection={this.getModel().get("messages")} fetchHistory={this.fetchHistory} />
           {function() {
-          if(_this.getModel().get("name") !== "status") {
+          if(_this.getModel().get("name").indexOf("#") === 0) {
             return <app.components.UserList collection={_this.getModel().get("users")} />
           }
           }()}

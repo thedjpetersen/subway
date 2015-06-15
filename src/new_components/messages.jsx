@@ -157,7 +157,7 @@ app.components.Messages = React.createBackboneClass({
       <div className="messages" onscroll={this.checkscroll}>
         {this.getCollection().map(function(message) {
           if (!(_.contains(app.settings.enabled_message_types, message.get("type")))) {
-            //return;
+            return;
           }
 
           switch (message.get("type")) {
