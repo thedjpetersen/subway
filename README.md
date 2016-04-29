@@ -1,7 +1,7 @@
 Subway
 ======
 
-*Subway is not currently functional and not under active development. While the plan is to finish this project some point in the future, currently the maintainer strongly suggests taking a look at [shout](https://github.com/erming/shout).*
+*Subway is not currently functional and not under active development. While the plan is to finish this project some point in the future, currently the maintainer strongly suggests taking a look at [The Lounge](https://github.com/thelounge/lounge).*
 
 Subway is a web-based IRC client with a multi-user backend and a
 JavaScript-heavy UI. Frontend/backend communication is done with
