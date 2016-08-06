@@ -1,0 +1,15 @@
+description 'subway upstart script'
+author '@hoxca'
+
+start on stopped rc or RUNLEVEL=[2345]
+stop on runlevel [!2345]
+
+instance "Subway"
+
+respawn
+respawn limit 5 60
+
+script
+  . /etc/default/subway
+  exec sudo -u irc NODE_ENV=${NODE_ENV} /usr/bin/node ${EXEC_PATH} >> ${LOG_PATH} 2>&1
+end script

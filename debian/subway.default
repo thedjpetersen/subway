@@ -1,0 +1,12 @@
+# Defaults for subway initscript
+# sourced by /etc/init/subway.conf
+# installed at /etc/default/subway by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# Additional options that are passed to the Daemon.
+EXEC_PATH="/usr/bin/subway"
+LOG_PATH="/var/log/subway/subway.log"
+NODE_ENV="production"
