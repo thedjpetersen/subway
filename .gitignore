@@ -71,3 +71,6 @@ plugin_cache/
 # Temporary files
 *.tmp
 .cache/
+
+# GitHub Actions workflows (add manually via web interface)
+.github/workflows/
