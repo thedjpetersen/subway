@@ -1,8 +1,8 @@
 // Get our command line arguments
-var argv = require("yargs").argv;
+const argv = require("yargs").argv;
 
 // Cache the plugin directory for a week
-settings = {
+const settings = {
   plugin_directory_expiry: 604800,
   dbadapter: "sqlite3",
   dbname: "subway.db",
