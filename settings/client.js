@@ -1,5 +1,5 @@
 // inspired by http://stackoverflow.com/a/5870544/324085
-var settings = {};
+const settings = {};
 
 settings.highlights = [
   {
