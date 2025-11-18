@@ -7,7 +7,7 @@
  * to those new to IRC.
 */
 
-// Basic dependencies. We use connect/http to server our content. 
+// Basic dependencies. We use connect/http to server our content.
 // Bower manages our 3rd party dependcies allowing us to upgrade them
 // easily(just update the bower.json file). The async module manages our flow -
 // instead of nesting callbacks we try to follow the waterfall pattern
@@ -15,7 +15,9 @@
 var express = require("express"),
        http = require("http"),
       bower = require("bower"),
-      async = require("async");
+      async = require("async"),
+ bodyParser = require("body-parser"),
+cookieParser = require("cookie-parser");
 
 var server_settings = require("./settings/server");
 
@@ -73,13 +75,11 @@ async.waterfall([
   // All static content is placed in the tmp ./tmp directory
   // we use this directory as the root of our server
   var app = express()
-            .use(express.urlencoded())
-            .use(express.cookieParser(server_settings.cookie_secret || "subway_secret"))
+            .use(bodyParser.urlencoded({ extended: true }))
+            .use(cookieParser(server_settings.cookie_secret || "subway_secret"))
             .use(express.static(cwd + "/tmp"));
 
-  app.configure(function() {
-    app.set("views", __dirname + "/tmp");
-  });
+  app.set("views", __dirname + "/tmp");
   app.engine("ejs", require("ejs").renderFile);
 
 
