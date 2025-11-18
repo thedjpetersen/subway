@@ -1,0 +1,7 @@
+{
+  "require": ["test/helpers/setup.js"],
+  "timeout": 10000,
+  "color": true,
+  "recursive": true,
+  "spec": ["test/**/*.test.js"]
+}

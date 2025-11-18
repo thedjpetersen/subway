@@ -43,7 +43,19 @@
     "grunt-contrib-jade": "^1.0.0",
     "grunt": "^1.6.1"
   },
+  "devDependencies": {
+    "mocha": "^10.7.3",
+    "chai": "^4.5.0",
+    "sinon": "^19.0.2",
+    "supertest": "^7.0.0",
+    "socket.io-client": "^4.7.5",
+    "proxyquire": "^2.1.3"
+  },
   "scripts": {
-    "start": "./subway.js"
+    "start": "./subway.js",
+    "test": "mocha test/**/*.test.js --timeout 10000",
+    "test:unit": "mocha test/unit/**/*.test.js",
+    "test:integration": "mocha test/integration/**/*.test.js --timeout 10000",
+    "test:watch": "mocha test/**/*.test.js --watch"
   }
 }
