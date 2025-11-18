@@ -1,0 +1,78 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "script"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": ["warn", {
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_"
+    }],
+    "no-undef": "error",
+    "no-redeclare": "error",
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    "no-unreachable": "warn",
+    "no-irregular-whitespace": "warn",
+    "semi": ["warn", "always"],
+    "quotes": "off",
+    "indent": "off",
+    "no-mixed-spaces-and-tabs": "warn",
+    "no-trailing-spaces": "off",
+    "eol-last": "off",
+    "comma-dangle": "off"
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.js"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "expect": "readonly"
+      },
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    },
+    {
+      "files": ["src/js/**/*.js", "src/components/**/*.jsx"],
+      "env": {
+        "browser": true,
+        "jquery": true
+      },
+      "globals": {
+        "app": "writable",
+        "util": "readonly",
+        "_": "readonly",
+        "$": "readonly",
+        "React": "readonly",
+        "Backbone": "readonly",
+        "moment": "readonly"
+      },
+      "rules": {
+        "no-undef": "off"
+      }
+    },
+    {
+      "files": ["settings/**/*.js"],
+      "globals": {
+        "settings": "writable"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "node_modules/",
+    "tmp/",
+    "coverage/",
+    "bower_components/",
+    "plugin_cache/"
+  ]
+}
