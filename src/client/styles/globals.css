@@ -1,0 +1,556 @@
+/* Subway IRC Client - Styles matching original design */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 14px;
+  color: #333333;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+textarea, input {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  background: #FFF;
+  border: 1px solid #DBDFE5;
+  border-radius: 3px;
+  padding: 10px 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #A7DBD8;
+}
+
+button {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  border: none;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+main {
+  height: 100%;
+  display: flex;
+  background: whitesmoke;
+  flex: 1;
+  overflow: hidden;
+}
+
+.hide {
+  display: none !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* Navigation */
+nav {
+  flex: 0 0 14em;
+  order: -1;
+  width: 14em;
+  background: #E7E9ED;
+  border-right: 1px solid #DDDDDD;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+nav .text-center {
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+nav img {
+  width: 80px;
+  cursor: pointer;
+}
+
+nav h1 {
+  margin: 10px 0 0 0;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #333;
+}
+
+nav h1 small {
+  font-size: 0.6em;
+  font-weight: 400;
+  color: #666;
+}
+
+.nav-area {
+  flex: 1;
+  overflow: auto;
+}
+
+.nav-area ul {
+  padding: 0;
+  margin: 0;
+}
+
+.nav-area li {
+  padding: 10px 10px 10px 40px;
+  list-style-type: none;
+}
+
+.nav-area li:hover {
+  cursor: pointer;
+  background: #A7DBD8;
+}
+
+.nav-area li:hover i {
+  display: inline-block;
+  opacity: 0.6;
+  margin-right: 10px;
+}
+
+.nav-area li:hover i:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.nav-area li.active:hover {
+  background: #315857;
+  cursor: default;
+}
+
+.nav-area li i {
+  display: none;
+  float: right;
+  margin-top: 2px;
+}
+
+.active {
+  background: #315857;
+  color: white;
+}
+
+.server_name, .server_nick {
+  background: #434950;
+  padding: 10px 10px 10px 40px;
+  color: white;
+}
+
+.server_name {
+  border-left: 5px solid #FA6900;
+}
+
+.server_nick {
+  border-left: 5px solid #8A9B0F;
+}
+
+.unread, .unread_highlight {
+  padding: 2px 6px;
+  color: whitesmoke;
+  border-radius: 4px;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+.unread {
+  background: #980000;
+}
+
+.unread_highlight {
+  background: #FA6900;
+}
+
+.nav_server_name {
+  line-height: 23px;
+}
+
+/* App Layout */
+.app {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.chatContent {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Title Bar */
+.titlebar {
+  display: flex;
+  padding: 10px;
+  color: white;
+  background: #434950;
+}
+
+.titlebar strong {
+  margin-right: 10px;
+}
+
+.titlebar span {
+  flex: 1;
+}
+
+/* Messages */
+.messages {
+  flex: 1;
+  overflow: auto;
+  background: white;
+}
+
+.message {
+  display: flex;
+  border-bottom: 1px solid #EEE;
+  padding: 5px 0;
+}
+
+.message > div {
+  padding: 7px;
+}
+
+.messageAuthor {
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  color: #555;
+  text-align: right;
+}
+
+.messageText {
+  flex: 1;
+  word-wrap: break-word;
+  text-rendering: optimizeLegibility;
+}
+
+.messageTimestamp {
+  width: 80px;
+  color: #AAA;
+  text-align: right;
+}
+
+.isMe {
+  background: #ECECF5;
+}
+
+.mention {
+  color: #0B2666;
+  font-weight: bold;
+}
+
+.motd .messageText {
+  white-space: pre;
+  background: #FAFAFA;
+  border-radius: 4px;
+}
+
+/* Message Input */
+.messageInput {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #DDD;
+  background: white;
+}
+
+.messageInput input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+/* User List */
+.userList {
+  width: 200px;
+  background: #E7E9ED;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.userList .titlebar {
+  border-left: 1px solid #4E5257;
+}
+
+.usersListed {
+  overflow: auto;
+  flex: 1;
+  border-left: 1px solid #DDD;
+}
+
+.user {
+  border-bottom: 1px solid #DDD;
+  padding: 7px 10px;
+}
+
+.activeUser, .notActiveUser {
+  border-right: 1px solid #DDD;
+  display: inline-block;
+  padding: 7px;
+  margin-right: 5px;
+  background: #F5F5F5;
+}
+
+.activeUser {
+  color: #66AF2C;
+}
+
+.notActiveUser {
+  color: #F78E22;
+}
+
+/* Main Menu Overlay */
+.mainMenu {
+  position: absolute;
+  top: 0;
+  left: 14em;
+  right: 0;
+  height: 100%;
+  background: #EEE;
+  z-index: 1000;
+  display: inline-block;
+}
+
+.mainMenu h1 {
+  margin: 0 0 20px 0;
+}
+
+.mainMenu input {
+  margin-bottom: 10px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.menuContainer {
+  display: flex;
+  height: 100%;
+}
+
+.menuArea {
+  flex: 1;
+  display: inline-block;
+  padding: 20px 40px;
+  overflow: auto;
+}
+
+.menuList {
+  display: flex;
+  flex-direction: column;
+  background: #333;
+  list-style: none;
+  width: 170px;
+  margin: 0;
+  padding: 20px 0;
+  height: 100%;
+}
+
+.menuList li {
+  padding: 15px 15px 15px 25px;
+  color: #C2C2C2;
+}
+
+.menuList li:not(.activeMenuItem):hover {
+  color: white;
+  background: #494949;
+  cursor: pointer;
+}
+
+.menuList span {
+  margin-right: 10px;
+}
+
+li.activeMenuItem {
+  background: #272727;
+  color: white;
+  font-weight: 600;
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #315857;
+  color: white;
+  border-radius: 3px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #3d6d6c;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Navbar tabs */
+.navBar {
+  list-style: none;
+  color: #585858;
+  border: 1px solid #CCC;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.navBar .navActive {
+  background: #CCC;
+}
+
+.navBar li {
+  display: inline-block;
+  margin: 0;
+  padding: 10px;
+  border-right: 1px solid #CCC;
+}
+
+.navBar li:last-child {
+  border-right: none;
+}
+
+.navBar li:not(.navActive):hover {
+  cursor: pointer;
+  color: #888;
+  background: #f5f5f5;
+}
+
+/* Active Connections */
+.activeConnections {
+  margin-top: 30px;
+}
+
+.activeConnections span,
+.activeConnections strong,
+.activeConnections i {
+  margin-right: 10px;
+}
+
+.activeConnections i {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.activeConnections i:hover {
+  opacity: 1;
+}
+
+/* Alerts */
+.alert {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.alert.error {
+  background: #B97676;
+  color: white;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.spacing-right {
+  margin-right: 5px;
+}
+
+/* More Options */
+.moreOptions {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #DDD;
+}
+
+.moreOptions label {
+  margin-left: 5px;
+}
+
+/* Badge */
+.badge {
+  font-size: 12px;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  background: #9696CE;
+}
+
+/* Loading state */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: whitesmoke;
+}
+
+.loading h2 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.loading p {
+  color: #666;
+}
+
+/* Icon placeholder */
+.icon {
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+  margin-right: 5px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #E7E9ED;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #CCC;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #AAA;
+}

@@ -2,7 +2,9 @@
  * Test setup and helper utilities
  */
 
-const chai = require('chai');
+import chai from 'chai';
+import bcrypt from 'bcrypt';
+import { v1 as uuidv1 } from 'uuid';
 
 // Global test configuration
 global.expect = chai.expect;
@@ -12,30 +14,13 @@ if (typeof process.env.TEST_TIMEOUT === 'undefined') {
   process.env.TEST_TIMEOUT = '10000';
 }
 
-// Suppress console output during tests unless explicitly enabled
-// (Can be enabled with DEBUG_TESTS=1 environment variable)
-if (!process.env.DEBUG_TESTS) {
-  const originalConsoleLog = console.log;
-  const originalConsoleError = console.error;
-  const originalConsoleWarn = console.warn;
-
-  // Suppress console output immediately
-  console.log = function() {};
-  console.error = function() {};
-  console.warn = function() {};
-
-  // Restore on process exit
-  process.on('exit', function() {
-    console.log = originalConsoleLog;
-    console.error = originalConsoleError;
-    console.warn = originalConsoleWarn;
-  });
-}
+// Note: Console output is not suppressed to allow mocha reporter to work properly.
+// Use DEBUG_TESTS=1 for additional debug output if needed.
 
 /**
  * Helper to create a mock socket.io socket
  */
-function createMockSocket() {
+export function createMockSocket() {
   const events = {};
 
   return {
@@ -69,7 +54,7 @@ function createMockSocket() {
 /**
  * Helper to create a mock IRC client
  */
-function createMockIRCClient() {
+export function createMockIRCClient() {
   const events = {};
 
   return {
@@ -119,7 +104,7 @@ function createMockIRCClient() {
 /**
  * Helper to wait for a condition
  */
-async function waitFor(conditionFn, timeout = 5000) {
+export async function waitFor(conditionFn, timeout = 5000) {
   const startTime = Date.now();
   while (Date.now() - startTime < timeout) {
     if (conditionFn()) {
@@ -133,12 +118,9 @@ async function waitFor(conditionFn, timeout = 5000) {
 /**
  * Helper to create a test user object
  */
-function createTestUser(overrides = {}) {
-  const uuid = require('uuid');
-  const bcrypt = require('bcrypt');
-
+export function createTestUser(overrides = {}) {
   return {
-    user_id: uuid.v1(),
+    user_id: uuidv1(),
     username: 'testuser',
     password: bcrypt.hashSync('testpassword', 10),
     joined: new Date(),
@@ -146,10 +128,3 @@ function createTestUser(overrides = {}) {
     ...overrides
   };
 }
-
-module.exports = {
-  createMockSocket,
-  createMockIRCClient,
-  waitFor,
-  createTestUser
-};

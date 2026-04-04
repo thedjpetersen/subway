@@ -3,5 +3,6 @@
   "timeout": 10000,
   "color": true,
   "recursive": true,
-  "spec": ["test/**/*.test.js"]
+  "spec": ["test/**/*.test.js"],
+  "ignore": ["test/helpers/**"]
 }

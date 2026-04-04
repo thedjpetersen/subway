@@ -3,10 +3,10 @@
  * Tests the upgrade from Socket.io 1.0.x to 4.x
  */
 
-const { expect } = require('chai');
-const http = require('http');
-const { Server } = require('socket.io');
-const ioc = require('socket.io-client');
+import { expect } from 'chai';
+import http from 'http';
+import { Server } from 'socket.io';
+import { io as ioc } from 'socket.io-client';
 
 describe('Socket.io Integration', function() {
   let io, serverSocket, clientSocket, httpServer;

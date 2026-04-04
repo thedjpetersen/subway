@@ -3,8 +3,8 @@
  * Tests the upgrade from node-uuid to uuid
  */
 
-const { expect } = require('chai');
-const uuid = require('uuid');
+import { expect } from 'chai';
+import * as uuid from 'uuid';
 
 describe('UUID Integration', function() {
   describe('UUID v1 Generation', function() {

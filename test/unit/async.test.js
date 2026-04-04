@@ -3,8 +3,8 @@
  * Tests the upgrade from async 0.2.x to 3.x
  */
 
-const { expect } = require('chai');
-const async = require('async');
+import { expect } from 'chai';
+import async from 'async';
 
 describe('Async Library Integration', function() {
   describe('Waterfall Pattern', function() {

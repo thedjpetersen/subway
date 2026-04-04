@@ -1,0 +1,64 @@
+// Prisma schema for Subway IRC Client
+// Replaces JugglingDB models from lib/models.js
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("joined")
+  updatedAt DateTime @updatedAt
+  sessionId String?  @unique @map("session_id")
+
+  connection Connection?
+  settings   Settings?
+  messages   Message[]
+
+  @@map("users")
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  server     String
+  from       String
+  to         String
+  type       String
+  text       String?
+  attributes String?  // JSON stored as string for SQLite compatibility
+  timestamp  DateTime @default(now())
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([server, to, timestamp])
+  @@index([userId])
+  @@map("messages")
+}
+
+model Connection {
+  id             Int    @id @default(autoincrement())
+  userId         String @unique @map("user_id")
+  connectionData String @map("connection_data")  // JSON stored as string for SQLite compatibility
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("connections")
+}
+
+model Settings {
+  id       Int    @id @default(autoincrement())
+  userId   String @unique @map("user_id")
+  settings String  // JSON stored as string for SQLite compatibility
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("settings")
+}

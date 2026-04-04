@@ -3,8 +3,8 @@
  * Tests UUID integration in models and jugglingdb upgrade
  */
 
-const { expect } = require('chai');
-const uuid = require('uuid');
+import { expect } from 'chai';
+import * as uuid from 'uuid';
 
 describe('Database Models', function() {
   describe('User Model UUID Generation', function() {

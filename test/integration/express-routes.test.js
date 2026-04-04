@@ -3,11 +3,16 @@
  * Tests the migration from Express 3.x to 4.x with actual HTTP requests
  */
 
-const { expect } = require('chai');
-const express = require('express');
-const request = require('supertest');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+import { expect } from 'chai';
+import express from 'express';
+import request from 'supertest';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe('Express Routes Integration', function() {
   let app;

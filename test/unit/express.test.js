@@ -3,10 +3,16 @@
  * Tests the upgrade from Express 3.x to Express 4.x
  */
 
-const { expect } = require('chai');
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+import { expect } from 'chai';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import ejs from 'ejs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe('Express 4.x Integration', function() {
   describe('Middleware Setup', function() {
@@ -64,7 +70,6 @@ describe('Express 4.x Integration', function() {
 
     it('should set view engine', function() {
       const app = express();
-      const ejs = require('ejs');
 
       app.engine('ejs', ejs.renderFile);
       app.set('view engine', 'ejs');

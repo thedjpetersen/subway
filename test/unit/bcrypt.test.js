@@ -3,8 +3,8 @@
  * Tests the upgrade from bcrypt-nodejs to bcrypt
  */
 
-const { expect } = require('chai');
-const bcrypt = require('bcrypt');
+import { expect } from 'chai';
+import bcrypt from 'bcrypt';
 
 describe('bcrypt Integration', function() {
   describe('Password Hashing', function() {

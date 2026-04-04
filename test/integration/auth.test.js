@@ -3,10 +3,10 @@
  * Tests the complete auth flow with bcrypt and uuid
  */
 
-const { expect } = require('chai');
-const sinon = require('sinon');
-const bcrypt = require('bcrypt');
-const uuid = require('uuid');
+import { expect } from 'chai';
+import sinon from 'sinon';
+import bcrypt from 'bcrypt';
+import * as uuid from 'uuid';
 
 describe('Authentication Integration', function() {
   describe('User Registration Flow', function() {
