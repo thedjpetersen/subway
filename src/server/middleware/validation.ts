@@ -19,7 +19,7 @@ export function validateBody<T>(schema: ZodSchema<T>) {
         res.status(400).json({
           status: 'error',
           error: 'Validation failed',
-          details: error.errors.map((e) => ({
+          details: error.issues.map((e) => ({
             field: e.path.join('.'),
             message: e.message,
           })),
@@ -44,7 +44,7 @@ export function validateQuery<T>(schema: ZodSchema<T>) {
         res.status(400).json({
           status: 'error',
           error: 'Invalid query parameters',
-          details: error.errors.map((e) => ({
+          details: error.issues.map((e) => ({
             field: e.path.join('.'),
             message: e.message,
           })),
@@ -66,7 +66,7 @@ export function validateSocketPayload<T>(
 ): T | null {
   const result = schema.safeParse(data);
   if (!result.success) {
-    console.error('Socket payload validation failed:', result.error.errors);
+    console.error('Socket payload validation failed:', result.error.issues);
     return null;
   }
   return result.data;

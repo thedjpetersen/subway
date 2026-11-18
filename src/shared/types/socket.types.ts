@@ -82,7 +82,7 @@ export const LoadHistoryPayloadSchema = z.object({
 });
 export type LoadHistoryPayload = z.infer<typeof LoadHistoryPayloadSchema>;
 
-export const SaveSettingsPayloadSchema = z.record(z.unknown());
+export const SaveSettingsPayloadSchema = z.record(z.string(), z.unknown());
 export type SaveSettingsPayload = z.infer<typeof SaveSettingsPayloadSchema>;
 
 // ============================================
