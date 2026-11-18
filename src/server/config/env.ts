@@ -18,7 +18,7 @@ const envSchema = z.object({
     .string()
     .transform(Number)
     .pipe(z.number().int().positive())
-    .default('3000'),
+    .prefault('3000'),
 
   DATABASE_URL: z.string().default('file:./subway.db'),
 
@@ -36,13 +36,13 @@ const envSchema = z.object({
     .string()
     .transform(Number)
     .pipe(z.number().int().min(10).max(14))
-    .default('12'),
+    .prefault('12'),
 
   SESSION_MAX_AGE: z
     .string()
     .transform(Number)
     .pipe(z.number().int().positive())
-    .default('86400000'), // 24 hours
+    .prefault('86400000'), // 24 hours
 
   DEBUG_TOKEN: z.string().optional(),
 });

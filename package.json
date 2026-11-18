@@ -30,9 +30,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "socket.io": "^4.7.5",
-    "uuid": "^9.0.1",
+    "uuid": "^11.1.1",
     "winston": "^3.15.0",
-    "zod": "^3.23.8",
+    "zod": "^4.6.6",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
@@ -64,7 +64,18 @@
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
-    "vite": "^7.3.0"
+    "vite": "^7.3.7"
+  },
+  "overrides": {
+    "bcrypt": {
+      "@mapbox/node-pre-gyp": "^2.0.3"
+    },
+    "mocha": {
+      "serialize-javascript": "^7.1.3"
+    },
+    "istanbul-lib-processinfo": {
+      "uuid": "$uuid"
+    }
   },
   "scripts": {
     "dev": "npm run dev:server",
